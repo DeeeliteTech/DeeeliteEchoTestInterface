@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<svg width="600" height="400"></svg>
+<svg width="800" height="400"></svg>
 <div>
   <button class="w3-btn w3-white w3-border w3-border-black" style="margin-left: 100px; margin-top:20px" type="button" onclick="addPoints()"> Add New Point </button>
 </div>
@@ -51,12 +51,11 @@
     [1600,0],
     [1800,0]
 
-
   ];
 
 
 
-  var x = d3.scaleLinear().domain([0, 1000]).range([0, width]);
+  var x = d3.scaleLinear().domain([0, 10000]).range([0, width*0.9]);
 
   var y = d3.scaleLinear().domain([0, 100]).range([height, 0]);
 
@@ -109,7 +108,7 @@
       .data(points)
       .enter()
       .append('circle')
-      .attr('r', 5.0)
+      .attr('r', 8.0)
       .attr('cx', function(d) {
         return x(d[0]);
       })
@@ -117,10 +116,11 @@
         return y(d[1]);
       })
       .style('cursor', 'pointer')
-      .style('fill', 'steelblue');
-
-    focus.selectAll('circle')
+      .style('fill', 'steelblue')
       .call(drag);
+
+    // focus.selectAll('circle')
+    //   .call(drag);
 
     focus.append('g')
       .attr('class', 'axis axis--x')
@@ -149,7 +149,6 @@
     }
 
   }
-
 
 
   //add new POINTS

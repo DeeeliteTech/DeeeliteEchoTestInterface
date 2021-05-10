@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Haptic actuators test BLE</title>
+</head>
+<!-- Load in the d3 library -->
+<!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
+<script src="d3.v5.min.js"></script>
+<script src="bleserial.js"></script>
+<script src="vibrationControl.js"></script>
+<link rel="stylesheet" href="style.css">
+
+
+<body>
+  <div id="canvas">
+
+
+    <div id="admin-control">
+      <h2> Admin Control</h3>
+      <label>Repeat: </label>
+      <input id="repeat_count" type="number" min="1" max="99" value="1" />
+      <label>Loop: </label>
+      <input type="checkbox" id="loopSet">
+      <br>
+      <br>
+      <table>
+        <tr>
+          <td>
+            <label>Frequency: </label>
+            <br>
+            <input id="vibrator_freq_input" type="range" min="10" max="250" step="1" value="31" oninput="showVal(this,'vibrator_freq_val')" /> <span id="vibrator_freq_val">31</span>
+            <br>
+            <br>
+            <h3>Add segments</h3>
+            <label class="control-type">Ramp On</label>
+            <br>
+            <label>Strength: </label>
+            <input type="number" min="0" max="100" id="vibrator_rampon_strength_input" value="100">
+            <label>Duration: </label>
+            <input type="number" min="1" max="99999" id="vibrator_rampon_duration_input" value="1000">
+            <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampon_strength_input','vibrator_rampon_duration_input','R','vibrator_code')">ADD</button>
+            <br>
+            <label class="control-type">Ramp Off</label>
+            <br>
+            <label>Strength: </label>
+            <input type="number" min="0" max="100" id="vibrator_rampoff_strength_input" value="0" disabled>
+            <label>Duration: </label>
+            <input type="number" min="1" max="99999" id="vibrator_rampoff_duration_input" value="1000">
+            <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampoff_strength_input','vibrator_rampoff_duration_input','R','vibrator_code')">ADD</button>
+            <br>
+            <label class="control-type">Keep On</label>
+            <br>
+            <label>Strength: </label>
+            <input type="number" min="0" max="100" id="vibrator_keepon_strength_input" value="100">
+            <label>Duration: </label>
+            <input type="number" min="1" max="99999" id="vibrator_keepon_duration_input" value="1000">
+            <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepon_strength_input','vibrator_keepon_duration_input','K','vibrator_code')">ADD</button>
+            <br>
+            <label class="control-type">Keep Off</label>
+            <br>
+            <label>Strength: </label>
+            <input type="number" min="0" max="100" id="vibrator_keepoff_strength_input" value="0" disabled>
+            <label>Duration: </label>
+            <input type="number" min="1" max="99999" id="vibrator_keepoff_duration_input" value="1000">
+            <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepoff_strength_input','vibrator_keepoff_duration_input','K','vibrator_code')">ADD</button>
+          </td>
+        </tr>
+      </table>
+      <br>
+      <label>Code</label>
+      <input type="text" id="vibrator_code" size="54" oninput="parseVibratorCode('vibrator_code')" code </div>
+      <br>
+      <p class="margin_left_30">*Strength ranges from 0-100. Duration is in millisecond.</p>
+
+      <button onclick="connectionToggle()" id="clientConnectButton">Connect Motherboard</button>
+      <br>
+      <button onclick="startActuator()">Run</button>
+      <button onclick="stopActuator()">Stop</button>
+      <div style="height: 1000px"></div>
+    </div>
+    <div id="user-control">
+      <h2> User Control </h2>
+      <svg width="800" height="400"></svg>
+    </div>
+
+
+</body>
+<script>
+  // initGraph("vibrator");
+</script>
+
+</html>

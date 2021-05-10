@@ -1,0 +1,37 @@
+html,
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-weight: inherit;
+    font-size: 100%;
+    font-family: 'Roboto', sans-serif;
+    vertical-align: baseline;
+    line-height: 1.5;
+
+}
+
+#canvas{
+  display:flex;
+
+}
+
+#admin-control{
+  /* margin-left: 30px; */
+  background-color: #d4d4d4;
+  padding:30px 20px 30px 30px;
+
+
+}
+
+#user-control{
+  padding:30px 20px 30px 40px;
+
+
+}
+
+.control-type{
+  font-weight: bold;
+
+}
