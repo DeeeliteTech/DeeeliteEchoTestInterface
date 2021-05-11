@@ -12,11 +12,13 @@
 <script src="vibrationControl.js"></script>
 <link rel="stylesheet" href="style.css">
 
+<!-- <script>
+  initGraph("vibrator");
+</script> -->
+
 
 <body>
   <div id="canvas">
-
-
     <div id="admin-control">
       <h2> Admin Control</h3>
       <label>Repeat: </label>
@@ -32,12 +34,11 @@
             <br>
             <input id="vibrator_freq_input" type="range" min="10" max="250" step="1" value="31" oninput="showVal(this,'vibrator_freq_val')" /> <span id="vibrator_freq_val">31</span>
             <br>
-            <br>
             <h3>Add segments</h3>
             <label class="control-type">Ramp On</label>
             <br>
             <label>Strength: </label>
-            <input type="number" min="0" max="100" id="vibrator_rampon_strength_input" value="100">
+            <input type="number" min="0" max="100" id="vibrator_rampon_strength_input" value="40">
             <label>Duration: </label>
             <input type="number" min="1" max="99999" id="vibrator_rampon_duration_input" value="1000">
             <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampon_strength_input','vibrator_rampon_duration_input','R','vibrator_code')">ADD</button>
@@ -53,7 +54,7 @@
             <label class="control-type">Keep On</label>
             <br>
             <label>Strength: </label>
-            <input type="number" min="0" max="100" id="vibrator_keepon_strength_input" value="100">
+            <input type="number" min="0" max="100" id="vibrator_keepon_strength_input" value="40">
             <label>Duration: </label>
             <input type="number" min="1" max="99999" id="vibrator_keepon_duration_input" value="1000">
             <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepon_strength_input','vibrator_keepon_duration_input','K','vibrator_code')">ADD</button>
@@ -70,7 +71,7 @@
       </table>
       <br>
       <label>Code</label>
-      <input type="text" id="vibrator_code" size="54" oninput="parseVibratorCode('vibrator_code')" code </div>
+      <input type="text" id="vibrator_code" size="40" oninput="parseVibratorCode('vibrator_code')" code </div>
       <br>
       <p class="margin_left_30">*Strength ranges from 0-100. Duration is in millisecond.</p>
 
@@ -82,13 +83,16 @@
     </div>
     <div id="user-control">
       <h2> User Control </h2>
-      <svg width="800" height="400"></svg>
+      <svg id="vibrator_graph" width="800" height="400"></svg>
+      <script src="vibrationControl.js"></script>
     </div>
 
-
+    <script>
+      //initGrpah("vibrator");
+      initGraph("vibrator");
+    </script>
 </body>
-<script>
-  // initGraph("vibrator");
-</script>
+
+
 
 </html>
