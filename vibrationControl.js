@@ -4,7 +4,7 @@ let endPlayTimeoutID = null;
 let margin = {
   top: 10
   , right: 30
-  , bottom: 30
+  , bottom: 35
   , left: 40
 }
 , width = 800 - margin.left - margin.right
@@ -58,7 +58,7 @@ function convertDataToVibrationCode(dataPoints) {
       prevStrength = currentStrength;
     }
   }
-  console.log(codeResult);
+  //console.log(codeResult);
 
   //update the codeinput field to reflect changes
   let codeInput = document.getElementById("vibrator_code");
@@ -83,6 +83,21 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
 
   let xAxis = d3.axisBottom(x),
           yAxis = d3.axisLeft(y);
+
+  let xLabel = svg.append("text")
+            .attr("transform",
+                  "translate(" + (width/2) + " ," +
+                                 (height + margin.top + 30) + ")")
+            .style("text-anchor", "middle")
+            .text("Time");
+
+  let yLabel = svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", margin.left-40)
+                .attr("x",0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .text("Power");
 
   let line = d3.line()
           .x(function(d) { return x(d[0]); })
@@ -149,37 +164,39 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
   function dragged(d) {
     d[0] = x.invert(d3.event.x);
     d[1] = y.invert(d3.event.y);
-    d3.select(this)
-            .attr('cx', x(d[0]))
-            .attr('cy', y(d[1]))
-    console.log(dataPoints);
-    convertDataToVibrationCode(dataPoints);
-    focus.select('path').attr('d', line);
+    let currentX = this.getAttribute("cx");
+    let currentY = this.getAttribute("cy");
+
+    if (currentX ==0 && currentY == height) {
+      console.log("draggin the initial point is not allowed");
+    }
+    else {
+      d3.select(this)
+              .attr('cx', x(d[0]))
+              .attr('cy', y(d[1]))
+      convertDataToVibrationCode(dataPoints);
+      focus.select('path').attr('d', line);
+
+    }
   }
 
   function dragended(d) {
     d3.select(this).classed('active', false);
   }
 
-  let initDataset = [
-    {
-      x: 0
-      , y: 0
-    }
-    , {
-      x: 100
-      , y: 0
-    }];
+
 
   let newGraphElement = {
     svg: svg
     , x: x
     , xAxis: xAxis
+    // , xLabel:xLable
     , y: y
     , yAxis: yAxis
+    // , yLable:yLabel
     , line: graphLine
     , circle: circle
-    , dataset: initDataset
+    , dataset: dataPoints
     , focus: focus
     , drag: drag
   }
@@ -189,7 +206,7 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
 
 function initGraph(actuatorName) {
   let currentGraphSVG = d3.select("#" + actuatorName + "_graph").append("svg");
-  let points = [];
+  let points = [[0,0]];
   updateSVG(currentGraphSVG, points, actuatorName, 1000);
 }
 
@@ -271,6 +288,7 @@ function parseVibratorCode(codeInputID) {
     }
   }
   let formattedData = [];
+  formattedData.push([0,0]);
   let xData = [];
   for (let i=0; i<dataset.length; i++) {
     let point = [];
