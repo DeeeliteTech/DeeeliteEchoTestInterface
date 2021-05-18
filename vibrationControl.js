@@ -1,14 +1,26 @@
-let currentSVG;
-let actuatorsDictionary = {};
-let endPlayTimeoutID = null;
-let margin = {
+
+var actuatorsDictionary = {};
+var endPlayTimeoutID = null;
+var margin = {
   top: 10
   , right: 30
   , bottom: 35
   , left: 40
 }
-, width = 800 - margin.left - margin.right
+, width = 700 - margin.left - margin.right
 , height = 340 - margin.top - margin.bottom;
+
+
+function initGraph(actuatorName) {
+
+  let currentGraphSVG = d3.select("#" + actuatorName + "_graph").append("svg");
+  let points = [[0,0],[1000,0],[1000,50],[2000,50],[2000,0],[3000,0]];
+  // let maxX = Math.max(...points);
+  // // console.log(formattedData);
+  updateSVG(currentGraphSVG, points, actuatorName, 4000);
+  convertDataToVibrationCode(points);
+  console.log ("initiated graph at: " + points )
+}
 
 //this function converts the data point on the graph to string to send to actuator
 function convertDataToVibrationCode(dataPoints) {
@@ -76,9 +88,9 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   let x = d3.scaleLinear()
-          .rangeRound([0, width]);
+          .domain([0,domainMax]).rangeRound([0, width]);
 
-  let y = d3.scaleLinear()
+  let y = d3.scaleLinear().domain([0, 100])
           .rangeRound([height, 0]);
 
   let xAxis = d3.axisBottom(x),
@@ -89,6 +101,7 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
                   "translate(" + (width/2) + " ," +
                                  (height + margin.top + 30) + ")")
             .style("text-anchor", "middle")
+            .style("font", "12px arial")
             .text("Time");
 
   let yLabel = svg.append("text")
@@ -97,6 +110,7 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
                 .attr("x",0 - (height / 2))
                 .attr("dy", "1em")
                 .style("text-anchor", "middle")
+                .style("font", "12px arial")
                 .text("Power");
 
   let line = d3.line()
@@ -108,9 +122,9 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
           .on('drag', dragged)
           .on('end', dragended);
 
+
   svg.append('rect')
           .attr('class', 'zoom')
-          .attr('cursor', 'move')
           .attr('fill', 'none')
           .attr('pointer-events', 'all')
           .attr('width', width)
@@ -120,11 +134,7 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
   let focus = svg.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  // x.domain(d3.extent(points, function(d) { return d[0]; }));
-  // y.domain(d3.extent(points, function(d) { return d[1]; }));
 
-  x.domain([0,domainMax]);
-  y.domain([0, 100]);
 
   let graphLine = focus.append("path")
           .datum(dataPoints)
@@ -146,7 +156,30 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
           .style('fill', 'steelblue');
 
   focus.selectAll('circle')
+          .on('mouseover', function(d,i){
+            d3.select(this)
+              .transition()
+              .duration(100)
+              .attr('r',8.0)
+
+          })
+          .on('mouseout',function(d,i){
+
+            d3.select(this)
+              .transition()
+              .duration(100)
+              .attr('r',5.0)
+              .attr('fill', 'steelblue')
+
+          })
+
           .call(drag);
+
+  d3.select('rect').
+            on("dblclick",function(d){
+            console.log("node was double clicked")
+            console.log(d3.event.x, d3.event.y)
+          })
 
   focus.append('g')
           .attr('class', 'axis axis--x')
@@ -156,6 +189,8 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
   focus.append('g')
           .attr('class', 'axis axis--y')
           .call(yAxis);
+
+
 
   function dragstarted(d) {
     d3.select(this).raise().classed('active', true);
@@ -185,30 +220,53 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
   }
 
 
-
   let newGraphElement = {
     svg: svg
     , x: x
     , xAxis: xAxis
-    // , xLabel:xLable
     , y: y
     , yAxis: yAxis
-    // , yLable:yLabel
     , line: graphLine
     , circle: circle
     , dataset: dataPoints
     , focus: focus
     , drag: drag
   }
+
   actuatorsDictionary[actuatorName + "Graph"] = newGraphElement;
 }
 
 
-function initGraph(actuatorName) {
-  let currentGraphSVG = d3.select("#" + actuatorName + "_graph").append("svg");
-  let points = [[0,0]];
-  updateSVG(currentGraphSVG, points, actuatorName, 1000);
+
+//reset the graph
+function resetGraph(actuatorName){
+  let resetButton = document.createElement('button');
+  resetButton.id = "reset-button";
+  resetButton.textContent ="Reset to Default";
+  resetButton.addEventListener('click', function(){
+      actuatorsDictionary[actuatorName + "Graph"].svg.selectAll('*').remove();
+      initGraph("vibrator");
+  });
+  let presets = document.getElementById("presets");
+  presets.appendChild(resetButton);
 }
+
+
+function addPoint(actuatorName){
+  // let dataArray= actuatorsDictionary[actuatorName].dataset;
+  let addPointButton = document.getElementById("reset-button");
+
+  addPointButton.addEventListener ('click', function(){
+      document.getElementById("vibrator_code").value += " K50F31D1000 K0F31D1000"
+      parseVibratorCode("vibrator_code");
+  })
+
+}
+
+window.onload=function(){resetGraph("vibrator")}
+  // initGraph("vibrator")
+//-----------------old code below----------------------------------------
+
 
 function vibratorAddControl(frequencyInputID, strengthInputID, durationInputID, command, codeInputID) {
   let freqVal = document.getElementById(frequencyInputID).value;
@@ -284,7 +342,7 @@ function parseVibratorCode(codeInputID) {
       else {
         return;
       }
-      //console.log(oneCode, oneCode[0]);
+
     }
   }
   let formattedData = [];
@@ -302,28 +360,28 @@ function parseVibratorCode(codeInputID) {
   console.log(formattedData);
   actuatorsDictionary[actuatorName + "Dataset"] = dataset;
   //let currentSVG = actuatorsDictionary[actuatorName + "Graph"].svg;
-  updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, formattedData, actuatorName, maxX);
+  updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, formattedData, actuatorName, maxX * 1.5);
   // updateGraph(actuatorName);
 }
 
-function updateGraph(actuatorName) {
-  let channelGraph = actuatorsDictionary[actuatorName + "Graph"];
-  let dataset = actuatorsDictionary[actuatorName + "Dataset"];
-  console.log(dataset);
-
-  channelGraph.focus.selectAll("circle")
-          .data(dataset)
-          .enter()
-          .append('circle')
-          .attr('r', 5.0)
-          .attr('cx', function(d) { return channelGraph.x(d.x);  })
-          .attr('cy', function(d) { return channelGraph.y(d.y); })
-          .style('cursor', 'pointer')
-          .style('fill', 'steelblue')
-
-  channelGraph.focus.selectAll("circle").call(channelGraph.drag);
-
-}
+// function updateGraph(actuatorName) {
+//   let channelGraph = actuatorsDictionary[actuatorName + "Graph"];
+//   let dataset = actuatorsDictionary[actuatorName + "Dataset"];
+//   console.log(dataset);
+//
+//
+//   channelGraph.focus.selectAll("circle")
+//           .data(dataset)
+//           .enter()
+//           .append('circle')
+//           .attr('r', 5.0)
+//           .attr('cx', function(d) { return channelGraph.x(d.x);  })
+//           .attr('cy', function(d) { return channelGraph.y(d.y); })
+//           .style('cursor', 'pointer')
+//           .style('fill', 'steelblue')
+//   channelGraph.focus.selectAll("circle").exit().remove();
+//   channelGraph.focus.selectAll("circle").call(channelGraph.drag);
+// }
 
 
 function startActuator() {
@@ -344,9 +402,13 @@ function startActuator() {
     }
     //send actuator control commands
     var actuatorsSendString = "N "; //stop all actuators
+    if (document.getElementById("loopSet").checked) {
+        actuatorsSendString = actuatorsSendString + "L ";
+    }
     //send vibrator
     var vibratorCodeContent = document.getElementById("vibrator_code").value.trim();
     if (vibratorCodeContent.length > 0) {
+        actuatorsSendString = actuatorsSendString + "V ";
         for (j = 0; j < repeat_count; j++) {
             actuatorsSendString = actuatorsSendString + vibratorCodeContent + " ";
         }
@@ -370,7 +432,7 @@ function endOfActuator() {
 function stopActuator() {
     console.log("stopActuator");
     clearTimeout(endPlayTimeoutID);
-    nusSendString('N\n');
+    nusSendString('N \n');
 }
 
 function showVal(slider, textID) {

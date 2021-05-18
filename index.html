@@ -10,7 +10,7 @@
 <script src="d3.v5.min.js"></script>
 <script src="bleserial.js"></script>
 <script src="vibrationControl.js"></script>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="main.css">
 
 <!-- <script>
   initGraph("vibrator");
@@ -20,71 +20,81 @@
 <body>
   <div id="canvas">
     <div id="admin-control">
-      <h2> Admin Control</h3>
-        <label>Repeat: </label>
-        <input id="repeat_count" type="number" min="1" max="99" value="1" />
-        <label>Loop: </label>
-        <input type="checkbox" id="loopSet">
-        <br>
-        <br>
-        <table>
-          <tr>
-            <td>
+      <h2> Admin Control</h2>
+      <button onclick="connectionToggle()" id="clientConnectButton" style="padding:5px">Connect Motherboard</button>
+      <br>
+      <br>
 
-              <h3>Add segments</h3>
-              <label class="control-type">Ramp On</label>
-              <br>
-              <label>Strength: </label>
-              <input type="number" min="0" max="100" id="vibrator_rampon_strength_input" value="40">
-              <label>Duration: </label>
-              <input type="number" min="1" max="99999" id="vibrator_rampon_duration_input" value="1000">
-              <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampon_strength_input','vibrator_rampon_duration_input','R','vibrator_code')">ADD</button>
-              <br>
-              <label class="control-type">Ramp Off</label>
-              <br>
-              <label>Strength: </label>
-              <input type="number" min="0" max="100" id="vibrator_rampoff_strength_input" value="0" disabled>
-              <label>Duration: </label>
-              <input type="number" min="1" max="99999" id="vibrator_rampoff_duration_input" value="1000">
-              <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampoff_strength_input','vibrator_rampoff_duration_input','R','vibrator_code')">ADD</button>
-              <br>
-              <label class="control-type">Keep On</label>
-              <br>
-              <label>Strength: </label>
-              <input type="number" min="0" max="100" id="vibrator_keepon_strength_input" value="40">
-              <label>Duration: </label>
-              <input type="number" min="1" max="99999" id="vibrator_keepon_duration_input" value="1000">
-              <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepon_strength_input','vibrator_keepon_duration_input','K','vibrator_code')">ADD</button>
-              <br>
-              <label class="control-type">Keep Off</label>
-              <br>
-              <label>Strength: </label>
-              <input type="number" min="0" max="100" id="vibrator_keepoff_strength_input" value="0" disabled>
-              <label>Duration: </label>
-              <input type="number" min="1" max="99999" id="vibrator_keepoff_duration_input" value="1000">
-              <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepoff_strength_input','vibrator_keepoff_duration_input','K','vibrator_code')">ADD</button>
-            </td>
-          </tr>
-        </table>
-        <br>
-        <label>Code</label>
-        <input type="text" id="vibrator_code" size="40" oninput="parseVibratorCode('vibrator_code')" code </div> <br>
-        <p class="margin_left_30">*Strength ranges from 0-100. Duration is in millisecond.</p>
+      <label>Repeat: </label>
+      <input id="repeat_count" type="number" min="1" max="99" value="1" />
+      <label>Loop: </label>
+      <input type="checkbox" id="loopSet">
+      <br>
+      <hr>
+      <table>
+        <tr>
+          <td>
+            <h4 style="margin-top:0.19em;margin-bottom:0.19em;">ADD SEGMENTS</h4>
+            <label class="control-type">Ramp On</label>
+            <br>
+            <label>Strength: </label>
+            <input type="number" min="0" max="100" id="vibrator_rampon_strength_input" value="40">
+            <label>Duration: </label>
+            <input type="number" min="1" max="99999" id="vibrator_rampon_duration_input" value="1000">
+            <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampon_strength_input','vibrator_rampon_duration_input','R','vibrator_code')">ADD</button>
+            <br>
+            <label class="control-type">Ramp Off</label>
+            <br>
+            <label>Strength: </label>
+            <input type="number" min="0" max="100" id="vibrator_rampoff_strength_input" value="0" disabled>
+            <label>Duration: </label>
+            <input type="number" min="1" max="99999" id="vibrator_rampoff_duration_input" value="1000">
+            <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampoff_strength_input','vibrator_rampoff_duration_input','R','vibrator_code')">ADD</button>
+            <br>
+            <hr>
+            <label class="control-type">Keep On</label>
+            <br>
+            <label>Strength: </label>
+            <input type="number" min="0" max="100" id="vibrator_keepon_strength_input" value="40">
+            <label>Duration: </label>
+            <input type="number" min="1" max="99999" id="vibrator_keepon_duration_input" value="1000">
+            <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepon_strength_input','vibrator_keepon_duration_input','K','vibrator_code')">ADD</button>
+            <br>
+            <label class="control-type">Keep Off</label>
+            <br>
+            <label>Strength: </label>
+            <input type="number" min="0" max="100" id="vibrator_keepoff_strength_input" value="0" disabled>
+            <label>Duration: </label>
+            <input type="number" min="1" max="99999" id="vibrator_keepoff_duration_input" value="1000">
+            <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepoff_strength_input','vibrator_keepoff_duration_input','K','vibrator_code')">ADD</button>
+          </td>
+        </tr>
+      </table>
+      <br>
+      <label>Code</label>
+      <input type="text" id="vibrator_code" size="40" oninput="parseVibratorCode('vibrator_code')" code </div> <br>
+      <p class="margin_left_30" style="font-size:14px; color: #DDDDDD">*Strength ranges from 0-100. Duration is in millisecond.</p>
 
-        <button onclick="connectionToggle()" id="clientConnectButton">Connect Motherboard</button>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div class=actuator-control >
-          <button id="start-button" onclick="startActuator()">Run</button>
-          <button id="stop-button" onclick="stopActuator()">Stop</button>
-        </div>
-        <div style="height: 1000px"></div>
+      <br>
+
+      <br>
+      <div class=actuator-control>
+        <button id="start-button" onclick="startActuator()">Run</button>
+        <button id="stop-button" onclick="stopActuator()">Stop</button>
+      </div>
+      <div style="height: 1000px"></div>
     </div>
+    <br>
     <div id="user-control">
       <h2> User Control </h2>
-      <svg id="vibrator_graph" width="800" height="400"></svg>
+      <div id="instruct">
+        <p> The following graph reflects the wave pattern you are experiencing. Drag the blue dots on the graph to find your opimized setting.
+        Use the slider below to adjust how fast it vibrates.</p>
+      </div>
+      <div id="presets">
+        <button id="reset-button" onclick="addPoint()"> Add points </button>
+      </div>
+      <svg id="vibrator_graph" width="700" height="350"></svg>
       <script src="vibrationControl.js"></script>
       <div class="slidercontainer">
         <label>Frequency: </label>
