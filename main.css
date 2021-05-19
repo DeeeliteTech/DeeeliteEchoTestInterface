@@ -43,27 +43,36 @@ h2{
 
 }
 
-.actuator-control button{
+.center{
+  margin: auto;
+  width: 30%;
+  /* border: 3px solid green; */
+  padding: 10px;
+
+}
+
+.actuator-control{
   border: none;
   color: white;
-  padding: 10px 32px;
+  padding: 5px 15px;
 
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   border-radius: 6px
 }
 
 #start-button{
   background-color: #4CAF50; /* Green */
-  margin-right: 10px;
+  margin-right: 3px;
+  margin-left: 12px;
 }
 
 #stop-button{
   background-color: #FF0000; /* red */
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 #user-control{
@@ -128,6 +137,18 @@ h2{
   color:#367BF5;
 
 
+}
+
+#update-button{
+  border: none;
+  padding: 0.6em 1.3em;
+  text-align: center;
+  display: inline-block;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: #4CAF50;
+  color:#fff;
 }
 
 #vibrator_graph{

@@ -10,11 +10,32 @@ var margin = {
 , width = 700 - margin.left - margin.right
 , height = 340 - margin.top - margin.bottom;
 
+presets=[
+"K0F31D1000 K50F31D1000",
+"K15F31D200 K0F31D100 K40F31D200 K0F31D550", "K0F31D1000 K50F31D1000 R0F31D1000"]
+
+
+// function selectPreset(){
+//   // let addPointButton = document.getElementById("reset-button");
+//   //
+//   // addPointButton.addEventListener ('click', function(){
+//   //     document.getElementById("vibrator_code").value += " K0F31D100"
+//   //     parseVibratorCode("vibrator_code");
+//   // })
+//   //
+//   console.log("changing preset")
+//   let selectedValue = document.getElementById("presetsFromServer").value;
+//   let currentPresets = presets[selectedValue-1];
+//   document.getElementById("vibrator_code").value = currentPresets;
+//   parseVibratorCode("vibrator_code");
+//   // updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, currentPresets, actuatorName, maxX * 1.5);
+// }
+
 
 function initGraph(actuatorName) {
 
   let currentGraphSVG = d3.select("#" + actuatorName + "_graph").append("svg");
-  let points = [[0,0],[1000,0],[1000,50],[2000,50],[2000,0],[3000,0]];
+  let points = [[0,0],[1000,0],[1000,40],[2000,40],[2000,0]];
   // let maxX = Math.max(...points);
   // // console.log(formattedData);
   updateSVG(currentGraphSVG, points, actuatorName, 4000);
@@ -102,7 +123,7 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
                                  (height + margin.top + 30) + ")")
             .style("text-anchor", "middle")
             .style("font", "12px arial")
-            .text("Time");
+            .text("Time/Duration(millisecond)");
 
   let yLabel = svg.append("text")
                 .attr("transform", "rotate(-90)")
@@ -111,7 +132,7 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
                 .attr("dy", "1em")
                 .style("text-anchor", "middle")
                 .style("font", "12px arial")
-                .text("Power");
+                .text("Intensity");
 
   let line = d3.line()
           .x(function(d) { return x(d[0]); })
@@ -257,7 +278,7 @@ function addPoint(actuatorName){
   let addPointButton = document.getElementById("reset-button");
 
   addPointButton.addEventListener ('click', function(){
-      document.getElementById("vibrator_code").value += " K50F31D1000 K0F31D1000"
+      document.getElementById("vibrator_code").value += " K0F31D100"
       parseVibratorCode("vibrator_code");
   })
 
