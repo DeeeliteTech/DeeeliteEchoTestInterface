@@ -1,18 +1,18 @@
-
 var actuatorsDictionary = {};
 var endPlayTimeoutID = null;
 var margin = {
-  top: 10
-  , right: 30
-  , bottom: 35
-  , left: 40
-}
-, width = 700 - margin.left - margin.right
-, height = 340 - margin.top - margin.bottom;
+    top: 10,
+    right: 30,
+    bottom: 35,
+    left: 40
+  },
+  width = 700 - margin.left - margin.right,
+  height = 340 - margin.top - margin.bottom;
 
-presets=[
-"K0F31D1000 K50F31D1000",
-"K15F31D200 K0F31D100 K40F31D200 K0F31D550", "K0F31D1000 K50F31D1000 R0F31D1000"]
+presets = [
+  "K0F31D1000 K50F31D1000",
+  "K15F31D200 K0F31D100 K40F31D200 K0F31D550", "K0F31D1000 K50F31D1000 R0F31D1000"
+]
 
 
 // function selectPreset(){
@@ -33,14 +33,19 @@ presets=[
 
 
 function initGraph(actuatorName) {
-
   let currentGraphSVG = d3.select("#" + actuatorName + "_graph").append("svg");
-  let points = [[0,0],[1000,0],[1000,40],[2000,40],[2000,0]];
+  let points = [
+    [0, 0],
+    [1000, 0],
+    [1000, 40],
+    [2000, 40],
+    [2000, 0]
+  ];
   // let maxX = Math.max(...points);
   // // console.log(formattedData);
   updateSVG(currentGraphSVG, points, actuatorName, 4000);
   convertDataToVibrationCode(points);
-  console.log ("initiated graph at: " + points )
+  console.log("initiated graph at: " + points)
 }
 
 //this function converts the data point on the graph to string to send to actuator
@@ -48,12 +53,11 @@ function convertDataToVibrationCode(dataPoints) {
   let freqVal = document.getElementById('vibrator_freq_input').value;
   let codeResult = "";
   if (dataPoints.length < 2) {
-      return codeResult;
-  }
-  else {
+    return codeResult;
+  } else {
     let prevTime = dataPoints[0][0];
     let prevStrength = dataPoints[0][1];
-    for (let i=1; i < dataPoints.length; i++) {
+    for (let i = 1; i < dataPoints.length; i++) {
       let currentResult = "";
       let currentTime = dataPoints[i][0];
       let currentStrength = dataPoints[i][1];
@@ -61,19 +65,18 @@ function convertDataToVibrationCode(dataPoints) {
       duration = Math.trunc(duration);
       currentStrength = Math.trunc(currentStrength);
       if (prevStrength != currentStrength) {
-          if (duration > 0) {
-            currentResult += "R";
-            let strengthString = currentStrength.toString();
-            let durationString = duration.toString();
-            currentResult += strengthString;
-            currentResult += "F";
-            currentResult += freqVal.toString();
-            currentResult += "D";
-            currentResult += durationString;
-            currentResult += " ";
-          }
-      }
-      else {
+        if (duration > 0) {
+          currentResult += "R";
+          let strengthString = currentStrength.toString();
+          let durationString = duration.toString();
+          currentResult += strengthString;
+          currentResult += "F";
+          currentResult += freqVal.toString();
+          currentResult += "D";
+          currentResult += durationString;
+          currentResult += " ";
+        }
+      } else {
         currentResult += "K";
         let strengthString = currentStrength.toString();
         let durationString = duration.toString();
@@ -85,7 +88,7 @@ function convertDataToVibrationCode(dataPoints) {
         currentResult += " ";
       }
       if (currentResult != "") {
-          codeResult += currentResult;
+        codeResult += currentResult;
       }
       prevTime = currentTime;
       prevStrength = currentStrength;
@@ -104,112 +107,120 @@ function convertDataToVibrationCode(dataPoints) {
 function updateSVG(svg, dataPoints, actuatorName, domainMax) {
   svg.selectAll('*').remove();
   svg.attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-          .append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   let x = d3.scaleLinear()
-          .domain([0,domainMax]).rangeRound([0, width]);
+    .domain([0, domainMax]).rangeRound([0, width]);
 
   let y = d3.scaleLinear().domain([0, 100])
-          .rangeRound([height, 0]);
+    .rangeRound([height, 0]);
 
   let xAxis = d3.axisBottom(x),
-          yAxis = d3.axisLeft(y);
+    yAxis = d3.axisLeft(y);
 
   let xLabel = svg.append("text")
-            .attr("transform",
-                  "translate(" + (width/2) + " ," +
-                                 (height + margin.top + 30) + ")")
-            .style("text-anchor", "middle")
-            .style("font", "12px arial")
-            .text("Time/Duration(millisecond)");
+    .attr("transform",
+      "translate(" + (width / 2) + " ," +
+      (height + margin.top + 30) + ")")
+    .style("text-anchor", "middle")
+    .style("font", "12px arial")
+    .text("Time/Duration(millisecond)");
 
   let yLabel = svg.append("text")
-                .attr("transform", "rotate(-90)")
-                .attr("y", margin.left-40)
-                .attr("x",0 - (height / 2))
-                .attr("dy", "1em")
-                .style("text-anchor", "middle")
-                .style("font", "12px arial")
-                .text("Intensity");
+    .attr("transform", "rotate(-90)")
+    .attr("y", margin.left - 40)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .style("font", "12px arial")
+    .text("Intensity");
 
   let line = d3.line()
-          .x(function(d) { return x(d[0]); })
-          .y(function(d) { return y(d[1]); });
+    .x(function(d) {
+      return x(d[0]);
+    })
+    .y(function(d) {
+      return y(d[1]);
+    });
 
   let drag = d3.drag()
-          .on('start', dragstarted)
-          .on('drag', dragged)
-          .on('end', dragended);
+    .on('start', dragstarted)
+    .on('drag', dragged)
+    .on('end', dragended);
 
 
   svg.append('rect')
-          .attr('class', 'zoom')
-          .attr('fill', 'none')
-          .attr('pointer-events', 'all')
-          .attr('width', width)
-          .attr('height', height)
-          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+    .attr('class', 'zoom')
+    .attr('fill', 'none')
+    .attr('pointer-events', 'all')
+    .attr('width', width)
+    .attr('height', height)
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
   let focus = svg.append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
 
   let graphLine = focus.append("path")
-          .datum(dataPoints)
-          .attr("fill", "none")
-          .attr("stroke", "steelblue")
-          .attr("stroke-linejoin", "round")
-          .attr("stroke-linecap", "round")
-          .attr("stroke-width", 1.5)
-          .attr("d", line);
+    .datum(dataPoints)
+    .attr("fill", "none")
+    .attr("stroke", "steelblue")
+    .attr("stroke-linejoin", "round")
+    .attr("stroke-linecap", "round")
+    .attr("stroke-width", 1.5)
+    .attr("d", line);
 
   let circle = focus.selectAll('circle')
-          .data(dataPoints)
-          .enter()
-          .append('circle')
-          .attr('r', 5.0)
-          .attr('cx', function(d) { return x(d[0]);  })
-          .attr('cy', function(d) { return y(d[1]); })
-          .style('cursor', 'pointer')
-          .style('fill', 'steelblue');
+    .data(dataPoints)
+    .enter()
+    .append('circle')
+    .attr('r', 5.0)
+    .attr('cx', function(d) {
+      return x(d[0]);
+    })
+    .attr('cy', function(d) {
+      return y(d[1]);
+    })
+    .style('cursor', 'pointer')
+    .style('fill', 'steelblue');
 
   focus.selectAll('circle')
-          .on('mouseover', function(d,i){
-            d3.select(this)
-              .transition()
-              .duration(100)
-              .attr('r',8.0)
+    .on('mouseover', function(d, i) {
+      d3.select(this)
+        .transition()
+        .duration(100)
+        .attr('r', 8.0)
 
-          })
-          .on('mouseout',function(d,i){
+    })
+    .on('mouseout', function(d, i) {
 
-            d3.select(this)
-              .transition()
-              .duration(100)
-              .attr('r',5.0)
-              .attr('fill', 'steelblue')
+      d3.select(this)
+        .transition()
+        .duration(100)
+        .attr('r', 5.0)
+        .attr('fill', 'steelblue')
 
-          })
+    })
 
-          .call(drag);
+    .call(drag);
 
   d3.select('rect').
-            on("dblclick",function(d){
-            console.log("node was double clicked")
-            console.log(d3.event.x, d3.event.y)
-          })
+  on("dblclick", function(d) {
+    console.log("node was double clicked")
+    console.log(d3.event.x, d3.event.y)
+  })
 
   focus.append('g')
-          .attr('class', 'axis axis--x')
-          .attr('transform', 'translate(0,' + height + ')')
-          .call(xAxis);
+    .attr('class', 'axis axis--x')
+    .attr('transform', 'translate(0,' + height + ')')
+    .call(xAxis);
 
   focus.append('g')
-          .attr('class', 'axis axis--y')
-          .call(yAxis);
+    .attr('class', 'axis axis--y')
+    .call(yAxis);
 
 
 
@@ -223,13 +234,12 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
     let currentX = this.getAttribute("cx");
     let currentY = this.getAttribute("cy");
 
-    if (currentX ==0 && currentY == height) {
+    if (currentX == 0 && currentY == height) {
       console.log("draggin the initial point is not allowed");
-    }
-    else {
+    } else {
       d3.select(this)
-              .attr('cx', x(d[0]))
-              .attr('cy', y(d[1]))
+        .attr('cx', x(d[0]))
+        .attr('cy', y(d[1]))
       convertDataToVibrationCode(dataPoints);
       focus.select('path').attr('d', line);
 
@@ -242,16 +252,16 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
 
 
   let newGraphElement = {
-    svg: svg
-    , x: x
-    , xAxis: xAxis
-    , y: y
-    , yAxis: yAxis
-    , line: graphLine
-    , circle: circle
-    , dataset: dataPoints
-    , focus: focus
-    , drag: drag
+    svg: svg,
+    x: x,
+    xAxis: xAxis,
+    y: y,
+    yAxis: yAxis,
+    line: graphLine,
+    circle: circle,
+    dataset: dataPoints,
+    focus: focus,
+    drag: drag
   }
 
   actuatorsDictionary[actuatorName + "Graph"] = newGraphElement;
@@ -260,32 +270,37 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
 
 
 //reset the graph
-function resetGraph(actuatorName){
+function resetGraph(actuatorName) {
   let resetButton = document.createElement('button');
   resetButton.id = "reset-button";
-  resetButton.textContent ="Reset to Default";
-  resetButton.addEventListener('click', function(){
-      actuatorsDictionary[actuatorName + "Graph"].svg.selectAll('*').remove();
-      initGraph("vibrator");
+  resetButton.textContent = "Reset to Default";
+  resetButton.addEventListener('click', function() {
+    actuatorsDictionary[actuatorName + "Graph"].svg.selectAll('*').remove();
+    initGraph("vibrator");
   });
   let presets = document.getElementById("presets");
   presets.appendChild(resetButton);
 }
 
 
-function addPoint(actuatorName){
+function addPoint(actuatorName) {
   // let dataArray= actuatorsDictionary[actuatorName].dataset;
   let addPointButton = document.getElementById("reset-button");
 
-  addPointButton.addEventListener ('click', function(){
-      document.getElementById("vibrator_code").value += " K0F31D100"
-      parseVibratorCode("vibrator_code");
+  addPointButton.addEventListener('click', function() {
+    document.getElementById("vibrator_code").value += " K0F31D100"
+    parseVibratorCode("vibrator_code");
   })
 
 }
 
-window.onload=function(){resetGraph("vibrator")}
-  // initGraph("vibrator")
+window.onload = function() {
+  resetGraph("vibrator")
+}
+
+
+
+// initGraph("vibrator")
 //-----------------old code below----------------------------------------
 
 
@@ -311,65 +326,62 @@ function parseVibratorCode(codeInputID) {
   if (allCode.length == 0) {
     //default off
     dataset = [{
-      x: 0
-      , y: 0
+      x: 0,
+      y: 0
     }, {
-      x: 100
-      , y: 0
+      x: 100,
+      y: 0
     }];
-  }
-  else {
+  } else {
     let processedTime = 0;
     let accuTime = 0;
-    let codes = allCode.split(" ");//return an array of code command e.g. ["K100F31D1000", "K0F31D1000"]
+    let codes = allCode.split(" "); //return an array of code command e.g. ["K100F31D1000", "K0F31D1000"]
     let prevStrength = 0;
     for (let i = 0; i < (codes.length); i++) {
-      let oneCode = codes[i];//loop through each value in the array
+      let oneCode = codes[i]; //loop through each value in the array
       if (oneCode.length == 0) return;
       if (oneCode[0] == "K" || oneCode[0] == "R") {
         let locationOfF = oneCode.indexOf("F");
         let locationOfD = oneCode.indexOf("D");
-        let val_str = oneCode.substring(1, locationOfF);//get intensity value
-        let dur_str = oneCode.substring(locationOfD + 1);//get duration value
-        let strVal = parseInt(val_str)//convert intensity string to int
-        let durVal = parseInt(dur_str)//convert duration string to int
+        let val_str = oneCode.substring(1, locationOfF); //get intensity value
+        let dur_str = oneCode.substring(locationOfD + 1); //get duration value
+        let strVal = parseInt(val_str) //convert intensity string to int
+        let durVal = parseInt(dur_str) //convert duration string to int
         if (isNaN(strVal) || isNaN(durVal) || (durVal < 1)) return;
         if (oneCode[0] == "K") {
           dataset.push({
-            x: accuTime
-            , y: strVal
+            x: accuTime,
+            y: strVal
           });
           accuTime += durVal;
           dataset.push({
-            x: accuTime
-            , y: strVal
+            x: accuTime,
+            y: strVal
           });
-        }
-        else if (oneCode[0] == "R") {
+        } else if (oneCode[0] == "R") {
           if (dataset.length == 0) {
             dataset.push({
-              x: 0
-              , y: 0
+              x: 0,
+              y: 0
             });
           }
           accuTime += durVal;
           dataset.push({
-            x: accuTime
-            , y: strVal
+            x: accuTime,
+            y: strVal
           });
           prevStrength = strVal;
         }
-      }
-      else {
+      } else {
         return;
       }
 
     }
   }
   let formattedData = [];
-  formattedData.push([0,0]);
+  formattedData.push([0, 0]);
   let xData = [];
-  for (let i=0; i<dataset.length; i++) {
+  for (let i = 0; i < dataset.length; i++) {
     let point = [];
     let datasetPointX = dataset[i].x;
     let datasetPointY = dataset[i].y;
@@ -406,57 +418,172 @@ function parseVibratorCode(codeInputID) {
 
 
 function startActuator() {
-    console.log("startActuator");
-    var repeat_count = parseInt(document.getElementById("repeat_count").value);
-    stopActuator();
-    var maxLoopTime = 0;
-    var actuatorsDictionaryKeys = Object.keys(actuatorsDictionary)
-    for (i = 0; i < actuatorsDictionaryKeys.length; i++) {
-        var keyStr = actuatorsDictionaryKeys[i];
-        if (keyStr.endsWith("Dataset")) {
-            var dataSet = actuatorsDictionary[keyStr];
-            if (dataSet.length > 0) {
-                var time_total = dataSet[dataSet.length - 1].x * repeat_count;
-                if (time_total > maxLoopTime) maxLoopTime = time_total;
-            }
-        }
+  console.log("startActuator");
+  var repeat_count = parseInt(document.getElementById("repeat_count").value);
+  stopActuator();
+  var maxLoopTime = 0;
+  var actuatorsDictionaryKeys = Object.keys(actuatorsDictionary)
+  for (i = 0; i < actuatorsDictionaryKeys.length; i++) {
+    var keyStr = actuatorsDictionaryKeys[i];
+    if (keyStr.endsWith("Dataset")) {
+      var dataSet = actuatorsDictionary[keyStr];
+      if (dataSet.length > 0) {
+        var time_total = dataSet[dataSet.length - 1].x * repeat_count;
+        if (time_total > maxLoopTime) maxLoopTime = time_total;
+      }
     }
-    //send actuator control commands
-    var actuatorsSendString = "N "; //stop all actuators
-    if (document.getElementById("loopSet").checked) {
-        actuatorsSendString = actuatorsSendString + "L ";
+  }
+  //send actuator control commands
+  var actuatorsSendString = "N "; //stop all actuators
+  if (document.getElementById("loopSet").checked) {
+    actuatorsSendString = actuatorsSendString + "L ";
+  }
+  //send vibrator
+  var vibratorCodeContent = document.getElementById("vibrator_code").value.trim();
+  if (vibratorCodeContent.length > 0) {
+    actuatorsSendString = actuatorsSendString + "V ";
+    for (j = 0; j < repeat_count; j++) {
+      actuatorsSendString = actuatorsSendString + vibratorCodeContent + " ";
     }
-    //send vibrator
-    var vibratorCodeContent = document.getElementById("vibrator_code").value.trim();
-    if (vibratorCodeContent.length > 0) {
-        actuatorsSendString = actuatorsSendString + "V ";
-        for (j = 0; j < repeat_count; j++) {
-            actuatorsSendString = actuatorsSendString + vibratorCodeContent + " ";
-        }
-    }
-    //end command
-    actuatorsSendString = actuatorsSendString + "\n";
-    console.log(actuatorsSendString);
-    if (maxLoopTime > 0) {
-        endPlayTimeoutID = setTimeout(endOfActuator, maxLoopTime);
-    }
-    nusSendString(actuatorsSendString);
+  }
+  //end command
+  actuatorsSendString = actuatorsSendString + "\n";
+  console.log(actuatorsSendString);
+  if (maxLoopTime > 0) {
+    endPlayTimeoutID = setTimeout(endOfActuator, maxLoopTime);
+  }
+  nusSendString(actuatorsSendString);
 }
 
 function endOfActuator() {
-    console.log("Play ends");
-    if (document.getElementById("loopSet").checked) {
-        startActuator();
-    }
+  console.log("Play ends");
+  if (document.getElementById("loopSet").checked) {
+    startActuator();
+  }
 }
 
 function stopActuator() {
-    console.log("stopActuator");
-    clearTimeout(endPlayTimeoutID);
-    nusSendString('N \n');
+  console.log("stopActuator");
+  clearTimeout(endPlayTimeoutID);
+  nusSendString('N \n');
 }
 
 function showVal(slider, textID) {
-    var value_txt_div = document.getElementById(textID);
-    value_txt_div.innerHTML = slider.value;
+  var value_txt_div = document.getElementById(textID);
+  value_txt_div.innerHTML = slider.value;
 }
+
+function onFetchUserDataSuccess(response) {
+  var div = document.getElementById('emailID');
+  div.innerHTML = response["emailID"];
+  //console.log(response["emailID"]);
+}
+
+function onFetchPresetsSuccess(response) {
+  presetsDataFromServer = response;
+  var presetSelect = document.getElementById("presetsFromServer");
+  var selectedValue = presetSelect.value;
+  //remove additional
+  var presetSelectLength = presetSelect.options.length;
+  for (var i = 0; i < presetSelectLength; i++) {
+    presetSelect.remove(1);
+  }
+  if (document.getElementById("savePresetName").value.length == 0) {
+    loadOnePreset(); //prefill save name
+  }
+  //console.log(response);
+  if (response.length > 0) {
+    for (var i = 0; i < response.length; i++) {
+      var onePreset = response[i];
+      var option = document.createElement("option");
+      option.text = onePreset.preset;
+      option.value = option.text;
+      presetSelect.add(option);
+      if (selectedValue == option.text) {
+        presetSelect.selectedIndex = presetSelect.options.length - 1;
+      }
+    }
+  }
+}
+
+function loadOnePreset() {
+  var presetMenuValue = document.getElementById("presetsFromServer").value;
+  if (presetMenuValue != "New Preset") {
+    for (var i = 0; i < presetsDataFromServer.length; i++) {
+      var onePreset = presetsDataFromServer[i];
+      if (onePreset.preset == presetMenuValue) {
+        document.getElementById("vibrator_code").value = onePreset.vibratorSetting;
+        parseActuatorCode('vibrator_code', 'vibrator')
+        document.getElementById("heater_code").value = onePreset.heaterSetting;
+        parseActuatorCode('heater_code', 'heater');
+      }
+      document.getElementById("savePresetName").value = presetMenuValue;
+    }
+    //console.log(presetMenuValue);
+  } else {
+    var presetCounter = 1;
+    var newPresetName = "Preset " + presetCounter;
+    for (presetCounter = 1; presetCounter < 100; presetCounter++) {
+      var sameNameExist = false;
+      newPresetName = "Preset " + presetCounter;
+      for (var i = 0; i < presetsDataFromServer.length; i++) {
+        var onePreset = presetsDataFromServer[i];
+        if (onePreset.preset == newPresetName) {
+          sameNameExist = true;
+        }
+      }
+      if (!sameNameExist) break;
+    }
+    document.getElementById("savePresetName").value = newPresetName;
+  }
+}
+
+function savePreset() {
+  var presetName = document.getElementById("savePresetName").value;
+  var vibratorSetting = document.getElementById("vibrator_code").value;
+  var heaterSetting = document.getElementById("heater_code").value;
+  var shrotIDName = document.getElementById("shortIDText").value;
+  if (typeof google !== 'undefined') { //the page is running on google app script server
+    google.script.run.withSuccessHandler(onFetchPresetsSuccess).savePresetsOfCurrentUser(presetName, vibratorSetting, heaterSetting, shrotIDName);
+  } else {
+    var presets = presetsDataFromServer;
+    var alreadyInPresets = false;
+    for (var i = 0; i < presets.length; i++) {
+      var onePreset = presetsDataFromServer[i];
+      if (onePreset.preset == presetName) {
+        onePreset.heaterSetting = heaterSetting;
+        onePreset.vibratorSetting = vibratorSetting;
+        alreadyInPresets = true;
+        break;
+      }
+    }
+    if (!alreadyInPresets) {
+      presets.push({
+        "preset": presetName,
+        "vibratorSetting": vibratorSetting,
+        "heaterSetting": heaterSetting
+      });
+    }
+    onFetchPresetsSuccess(presets);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  initGraph("vibrator");
+  // initGrpah("heater");
+  if (typeof google !== 'undefined') { //the page is running on google app script server
+    google.script.run.withSuccessHandler(onFetchUserDataSuccess).fetchUserData();
+    google.script.run.withSuccessHandler(onFetchPresetsSuccess).getPresetsOfCurrentUser();
+  } else { //the page is running on local test server, pretent we load something
+    onFetchUserDataSuccess({
+      "emailID": "tesetuser"
+    });
+    onFetchPresetsSuccess([{
+      "preset": "test 1",
+      "vibratorSetting": "K10F31D1000 K0F31D1000 "
+    }, {
+      "preset": "test 2",
+      "vibratorSetting": "K10F31D100 K0F31D1000 "
+    }]);
+  }
+});
