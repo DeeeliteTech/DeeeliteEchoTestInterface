@@ -472,25 +472,3 @@ function showVal(slider, textID) {
   var value_txt_div = document.getElementById(textID);
   value_txt_div.innerHTML = slider.value;
 }
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-  initGraph("vibrator");
-  // initGrpah("heater");
-  if (typeof google !== 'undefined') { //the page is running on google app script server
-    google.script.run.withSuccessHandler(onFetchUserDataSuccess).fetchUserData();
-    google.script.run.withSuccessHandler(onFetchPresetsSuccess).getPresetsOfCurrentUser();
-  } else { //the page is running on local test server, pretent we load something
-    onFetchUserDataSuccess({
-      "emailID": "tesetuser"
-    });
-    onFetchPresetsSuccess([{
-      "preset": "test 1",
-      "vibratorSetting": "K10F31D1000 K0F31D1000 "
-    }, {
-      "preset": "test 2",
-      "vibratorSetting": "K10F31D100 K0F31D1000 "
-    }]);
-  }
-});
