@@ -41,8 +41,8 @@ function loadOnePreset() {
       if (onePreset.preset == presetMenuValue) {
         document.getElementById("vibrator_code").value = onePreset.vibratorSetting;
         parseActuatorCode('vibrator_code', 'vibrator')
-        document.getElementById("heater_code").value = onePreset.heaterSetting;
-        parseActuatorCode('heater_code', 'heater');
+        // document.getElementById("heater_code").value = onePreset.heaterSetting;
+        // parseActuatorCode('heater_code', 'heater');
       }
       document.getElementById("savePresetName").value = presetMenuValue;
     }
@@ -71,7 +71,7 @@ function savePreset() {
   // var heaterSetting = document.getElementById("heater_code").value;
   var shrotIDName = document.getElementById("shortIDText").value;
   if (typeof google !== 'undefined') { //the page is running on google app script server
-    google.script.run.withSuccessHandler(onFetchPresetsSuccess).savePresetsOfCurrentUser(presetName, vibratorSetting, heaterSetting, shrotIDName);
+    google.script.run.withSuccessHandler(onFetchPresetsSuccess).savePresetsOfCurrentUser(presetName, vibratorSetting, shrotIDName);
   } else {
     var presets = presetsDataFromServer;
     var alreadyInPresets = false;
