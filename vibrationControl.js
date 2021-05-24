@@ -1,3 +1,6 @@
+ //Created by Huiyi Chen and Deqing Sun, May 2021
+
+
 var actuatorsDictionary = {};
 var endPlayTimeoutID = null;
 var margin = {
@@ -15,21 +18,21 @@ presets = [
 ]
 
 
-// function selectPreset(){
-//   // let addPointButton = document.getElementById("reset-button");
-//   //
-//   // addPointButton.addEventListener ('click', function(){
-//   //     document.getElementById("vibrator_code").value += " K0F31D100"
-//   //     parseVibratorCode("vibrator_code");
-//   // })
-//   //
-//   console.log("changing preset")
-//   let selectedValue = document.getElementById("presetsFromServer").value;
-//   let currentPresets = presets[selectedValue-1];
-//   document.getElementById("vibrator_code").value = currentPresets;
-//   parseVibratorCode("vibrator_code");
-//   // updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, currentPresets, actuatorName, maxX * 1.5);
-// }
+function selectPreset(){
+  let addPointButton = document.getElementById("reset-button");
+
+  addPointButton.addEventListener ('click', function(){
+      document.getElementById("vibrator_code").value += " K0F31D100"
+      parseVibratorCode("vibrator_code");
+  })
+
+  console.log("changing preset")
+  let selectedValue = document.getElementById("presetsFromServer").value;
+  let currentPresets = presets[selectedValue-1];
+  document.getElementById("vibrator_code").value = currentPresets;
+  parseVibratorCode("vibrator_code");
+  // updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, currentPresets, actuatorName, maxX * 1.5);
+}
 
 
 function initGraph(actuatorName) {
@@ -267,7 +270,11 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
   actuatorsDictionary[actuatorName + "Graph"] = newGraphElement;
 }
 
+function setFreq(frequencyInputID,codeInputID){
+  let codeElement = document.getElementById(codeInputID);
+  let freqVal = document.getElementById(frequencyInputID).value;
 
+}
 
 //reset the graph
 function resetGraph(actuatorName) {
@@ -306,6 +313,7 @@ window.onload = function() {
 
 function vibratorAddControl(frequencyInputID, strengthInputID, durationInputID, command, codeInputID) {
   let freqVal = document.getElementById(frequencyInputID).value;
+  console.log(freqVal)
   let strText = document.getElementById(strengthInputID).value;
   let strVal = parseInt(strText)
   if (isNaN(strVal)) return;

@@ -1,4 +1,5 @@
 // init and server access code:
+//Created by Deqing Sun, May 2021
 var presetsDataFromServer = {};
 function onFetchUserDataSuccess(response) {
   var div = document.getElementById('emailID');
@@ -70,8 +71,9 @@ function savePreset() {
   var vibratorSetting = document.getElementById("vibrator_code").value;
   // var heaterSetting = document.getElementById("heater_code").value;
   var shrotIDName = document.getElementById("shortIDText").value;
+  var name = document.getElementById("name").value;
   if (typeof google !== 'undefined') { //the page is running on google app script server
-    google.script.run.withSuccessHandler(onFetchPresetsSuccess).savePresetsOfCurrentUser(presetName, vibratorSetting, shrotIDName);
+    google.script.run.withSuccessHandler(onFetchPresetsSuccess).savePresetsOfCurrentUser(presetName, vibratorSetting, shrotIDName, name);
   } else {
     var presets = presetsDataFromServer;
     var alreadyInPresets = false;

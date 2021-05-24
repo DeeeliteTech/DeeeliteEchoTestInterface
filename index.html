@@ -28,7 +28,9 @@
       <label id="emailID"></label>
       <br>
       <label>Short ID: </label>
-      <input type="text" id="shortIDText" />
+      <input type="text" id="shortIDText" size="10" />
+      <label>Name: </label>
+      <input type="name" id="name" size="10" />
       <br>
       <div id="preset">
         <label>Load preset:</label>
@@ -118,8 +120,9 @@
       <svg id="vibrator_graph" width="700" height="350"></svg>
       <!-- <script src="vibrationControl.js"></script> -->
       <div class="slidercontainer">
-        <label>Slow/Fast </label>
-        <input class="slider" id="vibrator_freq_input" type="range" min="10" max="100" step="1" value="31" oninput="showVal(this,'vibrator_freq_val')" /> <span id="vibrator_freq_val">31</span>
+        <label>Pitch </label>
+        <input class="slider" id="vibrator_freq_input" type="range" min="10" max="100" step="1" value="31" oninput="showVal(this,'vibrator_freq_val')" />
+        <span id="vibrator_freq_val">31</span>``
       </div>
       <br>
       <div class="center">
