@@ -1,61 +1,82 @@
 html,
 body {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-weight: inherit;
-    font-size: 100%;
-    font-family: "Roboto",sans-serif;
-    font-style: normal;
-    /* font-weight: 900; */
-    letter-spacing:1.5px
-    vertical-align: baseline;
-    line-height: 1.6;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-size: 100%;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  /* font-weight: 900; */
+  letter-spacing: 1.5px vertical-align: baseline;
+  line-height: 1.6;
 }
 
-p{
-  width:80%;
+p {
+  width: 80%;
   color: #696969;
   line-height: 1.4;
-
+  font-size: 100%;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
 }
 
 hr {
-  opacity:0.7;
-
+  opacity: 0.7;
 }
 
-h2{
-  margin-bottom:0.5em;
+h2 {
+  margin-bottom: 0.5em;
+  font-family: GT America;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 29px;
+  /* identical to box height */
+  color: #FFFFFF;
 }
-#canvas{
-  display:flex;
+
+button{
+
+  border: 1px solid #FFFFFF;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding:0.45em 1em;
+  font-family: Inter,sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 14px;
+  align-items: center;
+  text-align: center;
+
+  background: none;
+  color:#FFFFFF
 
 }
+#canvas {
+  display: flex;
+}
 
-#admin-control{
+#admin-control {
   /* margin-left: 30px; */
-  background-color: #000;
-  padding:30px 30px 30px 60px;
+  background-color: #1B1B26;
+  padding: 30px 30px 30px 60px;
   color: #fff;
-
-
 }
 
-.center{
+.center {
   margin: auto;
   width: 30%;
   /* border: 3px solid green; */
   padding: 10px;
-
 }
 
-.actuator-control{
+.actuator-control {
   border: none;
   color: white;
   padding: 5px 15px;
-
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -64,27 +85,30 @@ h2{
   border-radius: 6px
 }
 
-#start-button{
-  background-color: #4CAF50; /* Green */
+#start-button {
+  background-color: #4CAF50;
+  /* Green */
   margin-right: 3px;
   margin-left: 12px;
 }
 
-#stop-button{
-  background-color: #FF0000; /* red */
+#stop-button {
+  background-color: #FF0000;
+  /* red */
   margin-right: 5px;
 }
 
-#user-control{
-  padding:30px 20px 30px 40px;
+#user-control {
+  padding: 30px 20px 30px 40px;
+  /* background-color: #343450; */
 }
 
-.slidercontainer{
-  width:100%;
-  padding:5px 10px 10px 30px;
+.slidercontainer {
+  width: 100%;
+  padding: 5px 10px 10px 30px;
 }
 
-.slider{
+.slider {
   -webkit-appearance: none;
   width: 70%;
   height: 10px;
@@ -118,14 +142,11 @@ h2{
   cursor: pointer;
 }
 
-
-
-.control-type{
+.control-type {
   font-weight: bold;
-
 }
 
-#user-ctl-bttns button{
+#user-ctl-bttns button {
   border: solid 1px #367BF5;
   padding: 0.6em 1em;
   text-align: center;
@@ -133,13 +154,11 @@ h2{
   font-size: 14px;
   cursor: pointer;
   border-radius: 6px;
-  background:none;
-  color:#367BF5;
-
-
+  background: none;
+  color: #367BF5;
 }
 
-#update-button{
+#update-button {
   border: none;
   padding: 0.6em 1.3em;
   text-align: center;
@@ -148,16 +167,13 @@ h2{
   cursor: pointer;
   border-radius: 6px;
   background-color: #4CAF50;
-  color:#fff;
+  color: #fff;
 }
 
-#vibrator_graph{
-  margin:30px 5px 10px 0px;
+#vibrator_graph {
+  margin: 30px 5px 10px 0px;
 }
 
-
-.axis axis--y
-.ticks{
+.axis axis--y .ticks {
   opacity: 0;
-
 }

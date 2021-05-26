@@ -21,6 +21,8 @@
  let selectedPoint = null;
  let selectedPointData = null;
 
+ let running = false;
+
 
  function selectPreset() {
    // let addPointButton = document.getElementById("reset-button");
@@ -504,6 +506,15 @@
    nusSendString(actuatorsSendString);
  }
 
+ function actuatorControl(){
+      if (running) {
+           stopActuator() ;
+       }
+       else {
+           startActuator() ;
+       }
+ }
+
  function endOfActuator() {
    console.log("Play ends");
    if (document.getElementById("loopSet").checked) {
@@ -521,7 +532,7 @@
    let fIndex = currentCommand.indexOf("F");
    let dIndex = currentCommand.indexOf("D");
    let freqFirstPart = currentCommand.slice(0, fIndex+1); //This includes f
-   let dSecondPart = currentCommand.slice(dIndex); 
+   let dSecondPart = currentCommand.slice(dIndex);
    let newString = freqFirstPart + currentValue.toString() + dSecondPart;
    console.log(newString);
    return newString;
@@ -535,7 +546,7 @@
    let individualCodeArray = currentCodeToProcess.split(" ");
    let result = "";
    for (let i=0; i< individualCodeArray.length; i++){
-     let newCommand = replaceCommandValue(newFreqValue, individualCodeArray[i]); 
+     let newCommand = replaceCommandValue(newFreqValue, individualCodeArray[i]);
      result += newCommand;
      result += " ";
    }
