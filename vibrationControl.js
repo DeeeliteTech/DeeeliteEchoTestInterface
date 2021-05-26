@@ -1,6 +1,5 @@
  //Created by Huiyi Chen and Deqing Sun, May 2021
 
-
 var actuatorsDictionary = {};
 var endPlayTimeoutID = null;
 var margin = {
@@ -11,6 +10,8 @@ var margin = {
   },
   width = 700 - margin.left - margin.right,
   height = 340 - margin.top - margin.bottom;
+
+let selectedPoint = null;
 
 presets = [
   "K0F31D1000 K50F31D1000",
@@ -196,16 +197,20 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
         .transition()
         .duration(100)
         .attr('r', 8.0)
-
     })
     .on('mouseout', function(d, i) {
-
       d3.select(this)
         .transition()
         .duration(100)
         .attr('r', 5.0)
         .attr('fill', 'steelblue')
-
+    })
+    .on('click', function(d, i){
+      d3.select(this)
+        .transition()
+        .duration(100)
+        .attr('r', 5.0)
+        .attr('fill', 'red')
     })
 
     .call(drag);
@@ -226,8 +231,8 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
     .call(yAxis);
 
 
-
   function dragstarted(d) {
+    selectedPoint = d;
     d3.select(this).raise().classed('active', true);
   }
 
@@ -269,6 +274,23 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
 
   actuatorsDictionary[actuatorName + "Graph"] = newGraphElement;
 }
+
+function keydown(event) {
+    if (!selected) return;
+    switch (event.key) {
+      case "Backspace":
+      case "Delete": {
+        event.preventDefault();
+        // const i = mutable points.indexOf(selected);
+        // mutable points.splice(i, 1);
+        // mutable points = mutable points;
+        // selected = mutable points.length ? mutable points[i > 0 ? i - 1 : 0] : null;
+        // update();
+
+        break;
+      }
+    }
+  }
 
 function setFreq(frequencyInputID,codeInputID){
   let codeElement = document.getElementById(codeInputID);
