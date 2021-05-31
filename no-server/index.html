@@ -16,7 +16,16 @@
 <link rel="stylesheet" href="main.css">
 
 <script>
-  initGraph("vibrator");
+  var data = new FormData();
+  data.append('entry.1795158497', 'person');
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://cors-anywhere.deqing.workers.dev/?https://docs.google.com/forms/d/e/1FAIpQLSf8yqVax-KR3s37N-WvDXOyZTqpGfal-2uVxOSSRqzFNcbNmA/formResponse', true);
+  xhr.onload = function () {
+    // do something to response
+    //console.log(this.responseText);
+  };
+  xhr.send(data);
 </script>
 
 
