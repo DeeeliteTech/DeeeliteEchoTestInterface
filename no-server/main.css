@@ -314,20 +314,21 @@ button {
   position: relative;
   top: 430px;
   right: 30px;
-  border: solid 1px #fff;
+  border: solid 2px #44CD5A;
   padding: 0.8em 1em;
   text-align: center;
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
   border-radius: 6px;
-  background-color: none;
-  color: #fff;
+  background-color: #44CD5A;
+  color: #000;
 }
 
 #update-button:hover {
-  background-color: white;
-  color: #000;
+  background-color: #44CD5A;
+  color: #fff;
+  border: solid 3px #44CD5A;
 }
 
 #vibrator_graph {
