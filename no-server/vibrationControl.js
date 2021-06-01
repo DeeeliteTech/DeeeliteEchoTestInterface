@@ -3,21 +3,27 @@
 
  var actuatorsDictionary = {};
  var endPlayTimeoutID = null;
- var margin = {
-     top: 10,
-     right: 30,
-     bottom: 35,
-     left: 40
-   },
-   width = 700 - margin.left - margin.right,
-   height = 340 - margin.top - margin.bottom;
 
- presets = [
-   "K0F31D1000 K50F31D1000",
-   "K15F31D200 K0F31D100 K40F31D200 K0F31D550",
-   "R7F31D628 R40F31D1142 R24F31D552 R30F31D1028 R7F31D571 K7F31D590 R0F31D742 R26F31D666 R46F31D838 R30F31D1161 R8F31D685 R0F31D1161",
-   "R11F31D414 R20F31D414 R54F31D628 R22F31D585 R39F31D485 R30F31D371 R17F31D557 R4F31D300 R20F31D428 R24F31D442 R16F31D842 R1F31D1342"
- ]
+ var width = 0;
+ var height = 0;
+
+  var margin = {
+      top: 80,
+      right: 20,
+      bottom: 40,
+      left: 40
+    },
+presets = [
+      "K0F31D1000 K50F31D1000 ",
+      "K15F31D200 K0F31D100 K40F31D200 K0F31D550 ",
+      "R7F31D628 R40F31D1142 R24F31D552 R30F31D1028 R7F31D571 K7F31D590 R0F31D742 R26F31D666 R46F31D838 R30F31D1161 R8F31D685 R0F31D1161 ",
+      "R11F31D414 R20F31D414 R54F31D628 R22F31D585 R39F31D485 R30F31D371 R17F31D557 R4F31D300 R20F31D428 R24F31D442 R16F31D842 R1F31D1342 "
+    ]
+ width =  700 - margin.left - margin.right;
+ height = 400 - margin.top - margin.bottom;
+ console.log(width);
+ console.log(height);
+
  let selectedPoint = null;
  let selectedPointData = null;
 
@@ -135,23 +141,27 @@
      .rangeRound([height, 0]);
 
    let xAxis = d3.axisBottom(x),
-     yAxis = d3.axisLeft(y).tickSize(0).ticks(1);
+     yAxis = d3.axisLeft(y).ticks(5);
+
+
 
    let xLabel = svg.append("text")
      .attr("transform",
        "translate(" + (width / 2) + " ," +
        (height + margin.top + 30) + ")")
      .style("text-anchor", "middle")
-     .style("font", "12px arial")
-     .text("Duration(seconds)");
+     .style("font", "12px roboto,sans-serif")
+     .style("fill", "#D4D4D4")
+     .text("Duration");
 
    let yLabel = svg.append("text")
      .attr("transform", "rotate(-90)")
-     .attr("y", margin.left - 20)
-     .attr("x", 0 - (height / 2))
+     .attr("y", margin.left - 25)
+     .attr("x", 0 - (height / 2) - margin.top)
      .attr("dy", "1em")
      .style("text-anchor", "middle")
-     .style("font", "12px arial")
+     .style("font", "12px roboto,sans-serif")
+     .style("fill", "#D4D4D4")
      .text("Intensity");
 
    let line = d3.line()
@@ -183,10 +193,12 @@
      .datum(dataPoints)
      .attr("fill", "none")
      .attr("stroke", "#ff9500")
+
      .attr("stroke-linejoin", "round")
      .attr("stroke-linecap", "round")
      .attr("stroke-width", 2.5)
      .attr("d", line);
+
 
    let circle = focus.selectAll('circle')
      .data(dataPoints)
@@ -224,30 +236,34 @@
      .on("keydown", keydown)
      .call(drag);
 
+
    focus.append('g')
      .attr('class', 'axis axis--x')
      .attr('transform', 'translate(0,' + height + ')')
-     .call(xAxis.ticks(5));
+     .call(xAxis.ticks(5))
+     .call(xAxis.tickFormat(function(d) {
+       return d + 's'
+     }));
 
-   let tickLabels = ['0','max'];
+   let tickLabels = ['0', '', '', '', '', 'max'];
    // xAxisGenerator.tickFormat((d,i) => tickLabels[i]);
    focus.append('g')
      .attr('class', 'axis axis--y')
-     .call(yAxis.tickFormat((d,i)=>tickLabels[i]));
+     .call(yAxis.tickFormat((d, i) => tickLabels[i]));
 
 
    function dragstarted(d) {
      if (this !== selectedPoint) {
        d3.select(selectedPoint).style('fill', '#ff9500')
-       .style('stroke-width', '0')
+         .style('stroke-width', '0')
      }
      selectedPoint = this;
      selectedPointData = d;
 
      d3.select(this)
        .attr('r', 8.0)
-       .style('stroke-width', '3.5')
-       .style('stroke',"#ff5500");
+       .style('stroke-width', '3')
+       .style('stroke', "#fff");
 
      d3.select(this).raise().classed('active', true);
 
@@ -257,22 +273,22 @@
    d3.select('body').on("keydown", keydown);
 
    function keydown() {
-      console.log("keydown")
-      let tagName = d3.select(d3.event.target).node().tagName;
-      console.log(tagName);
-      if (!selectedPointData) return;
-      switch (d3.event.keyCode) {
-        case 189:
-     {
-          event.preventDefault();
-          const i = dataPoints.indexOf(selectedPointData);
-          dataPoints.splice(i, 1);
-          updateSVG(svg, dataPoints, actuatorName, domainMax);
-          convertDataToVibrationCode(dataPoints);
-          break;
-        }
-      }
-    }
+     console.log("keydown")
+     let tagName = d3.select(d3.event.target).node().tagName;
+     console.log(tagName);
+     if (!selectedPointData) return;
+     switch (d3.event.keyCode) {
+       case 189:
+         {
+           event.preventDefault();
+           const i = dataPoints.indexOf(selectedPointData);
+           dataPoints.splice(i, 1);
+           updateSVG(svg, dataPoints, actuatorName, domainMax);
+           convertDataToVibrationCode(dataPoints);
+           break;
+         }
+     }
+   }
 
    function dragged(d) {
      d[0] = x.invert(d3.event.x);
@@ -325,7 +341,7 @@
  function resetGraph(actuatorName) {
    let resetButton = document.createElement('button');
    resetButton.id = "reset-btn";
-   resetButton.textContent = "Reset to Default";
+   resetButton.textContent = "Reset";
    resetButton.addEventListener('click', function() {
      actuatorsDictionary[actuatorName + "Graph"].svg.selectAll('*').remove();
      initGraph("vibrator");
@@ -338,13 +354,16 @@
  function addPoint(actuatorName) {
    // let dataArray= actuatorsDictionary[actuatorName].dataset;
 
-     document.getElementById(actuatorName+"_code").value += "K0F31D100 "
-     parseVibratorCode("vibrator_code");
+   document.getElementById(actuatorName + "_code").value += "K0F31D100 "
+   parseVibratorCode("vibrator_code");
 
 
  }
 
  window.onload = function() {
+
+
+
    resetGraph("vibrator");
  }
 
@@ -444,7 +463,7 @@
    console.log(formattedData);
    actuatorsDictionary[actuatorName + "Dataset"] = dataset;
    //let currentSVG = actuatorsDictionary[actuatorName + "Graph"].svg;
-   updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, formattedData, actuatorName, maxX * 1.5);
+   updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, formattedData, actuatorName, maxX * 1.2);
    // updateGraph(actuatorName);
  }
 
@@ -470,8 +489,12 @@
 
  function startActuator() {
    console.log("startActuator");
-   var repeat_count = parseInt(document.getElementById("repeat_count").value);
-   stopActuator();
+   document.getElementById('actuator-toggle').src = "public/running.svg";
+   let statusLable = document.getElementById('actuator-state-label');
+   statusLable.innerHTML = "Actuator Running";
+   statusLable.style.color = "#44CD5A";
+   // var repeat_count = parseInt(document.getElementById("repeat_count").value);
+   // stopActuator();
    var maxLoopTime = 0;
    var actuatorsDictionaryKeys = Object.keys(actuatorsDictionary)
    for (i = 0; i < actuatorsDictionaryKeys.length; i++) {
@@ -479,7 +502,7 @@
      if (keyStr.endsWith("Dataset")) {
        var dataSet = actuatorsDictionary[keyStr];
        if (dataSet.length > 0) {
-         var time_total = dataSet[dataSet.length - 1].x * repeat_count;
+         var time_total = dataSet[dataSet.length - 1].x * 2;
          if (time_total > maxLoopTime) maxLoopTime = time_total;
        }
      }
@@ -493,7 +516,7 @@
    var vibratorCodeContent = document.getElementById("vibrator_code").value.trim();
    if (vibratorCodeContent.length > 0) {
      actuatorsSendString = actuatorsSendString + "V ";
-     for (j = 0; j < repeat_count; j++) {
+     for (j = 0; j < 2; j++) {
        actuatorsSendString = actuatorsSendString + vibratorCodeContent + " ";
      }
    }
@@ -504,15 +527,18 @@
      endPlayTimeoutID = setTimeout(endOfActuator, maxLoopTime);
    }
    nusSendString(actuatorsSendString);
+   running = true;
  }
 
- function actuatorControl(){
-      if (running) {
-           stopActuator() ;
-       }
-       else {
-           startActuator() ;
-       }
+ function actuatorToggle() {
+   console.log("clicked you")
+   if (running) {
+     stopActuator();
+     console.log("stop Actuator");
+   } else {
+     startActuator();
+     console.log("start Actuator");
+   }
  }
 
  function endOfActuator() {
@@ -524,14 +550,18 @@
 
  function stopActuator() {
    console.log("stopActuator");
+   document.getElementById('actuator-toggle').src = "public/paused.svg";
+   document.getElementById('actuator-state-label').innerHTML = "Actuator Paused";
+   document.getElementById('actuator-state-label').style.color = "#FF0000";
    clearTimeout(endPlayTimeoutID);
    nusSendString('N \n');
+   running = false;
  }
 
- function replaceCommandValue(currentValue, currentCommand){
+ function replaceCommandValue(currentValue, currentCommand) {
    let fIndex = currentCommand.indexOf("F");
    let dIndex = currentCommand.indexOf("D");
-   let freqFirstPart = currentCommand.slice(0, fIndex+1); //This includes f
+   let freqFirstPart = currentCommand.slice(0, fIndex + 1); //This includes f
    let dSecondPart = currentCommand.slice(dIndex);
    let newString = freqFirstPart + currentValue.toString() + dSecondPart;
    console.log(newString);
@@ -540,12 +570,12 @@
 
  function showVal(slider, textID) {
    var value_txt_div = document.getElementById(textID);
-   let currentCodeToProcess  = document.getElementById("vibrator_code").value.trim();
+   let currentCodeToProcess = document.getElementById("vibrator_code").value.trim();
    let newFreqValue = slider.value;
    value_txt_div.innerHTML = newFreqValue;
    let individualCodeArray = currentCodeToProcess.split(" ");
    let result = "";
-   for (let i=0; i< individualCodeArray.length; i++){
+   for (let i = 0; i < individualCodeArray.length; i++) {
      let newCommand = replaceCommandValue(newFreqValue, individualCodeArray[i]);
      result += newCommand;
      result += " ";
