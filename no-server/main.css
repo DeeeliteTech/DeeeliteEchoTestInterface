@@ -1,3 +1,13 @@
+
+@font-face {
+font-family: "GT-America";
+src: url("font/GT-America-Mono-Medium.woff"),url,
+url("font/GT-America-Standard-Regular.woff"),
+url("font/GT-America-Standard-Medium.woff"),
+url("font/GT-America-Standard-Bold.woff"),
+url("font/GT-America-Standard-Light.woff");
+}
+
 html,
 body {
   width: 100%;
