@@ -1,13 +1,19 @@
+@import url(//db.onlinewebfonts.com/c/031da03967812d134ed68febd3ba78a9?family=GT+America);
 
 @font-face {
+  font-family: "GT America";
+  src: url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.eot");
+  src: url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.woff") format("woff"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.svg#GT America") format("svg");
+}
+
+/* @font-face {
 font-family: "GT-America";
 src: url("font/GT-America-Mono-Medium.woff"),url,
 url("font/GT-America-Standard-Regular.woff"),
 url("font/GT-America-Standard-Medium.woff"),
 url("font/GT-America-Standard-Bold.woff"),
 url("font/GT-America-Standard-Light.woff");
-}
-
+} */
 html,
 body {
   width: 100%;
@@ -202,7 +208,7 @@ button {
   padding: 20px 0px;
 }
 
-.add-segments  {
+.add-segments {
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -211,10 +217,8 @@ button {
   font-size: 12px;
 }
 
-
-
-.add-segments button{
-  font-size:12px;
+.add-segments button {
+  font-size: 12px;
 }
 
 #user-control {
