@@ -8,11 +8,11 @@
 
 @font-face {
 font-family: "GT-America";
-src: url("../no-server/source/GT-America-Mono-Medium.woff"),
-url("../no-server/source/GT-America-Standard-Regular.woff"),
-url("../no-server/source/GT-America-Standard-Medium.woff"),
-url("../no-server/source/GT-America-Standard-Bold.woff"),
-url("../no-server/source/GT-America-Standard-Light.woff");
+src: url("public/GT-America-Mono-Medium.woff"),
+url("public/GT-America-Standard-Regular.woff"),
+url("public/GT-America-Standard-Medium.woff"),
+url("public/source/GT-America-Standard-Bold.woff"),
+url("public/source/GT-America-Standard-Light.woff");
 }
 
 html,
