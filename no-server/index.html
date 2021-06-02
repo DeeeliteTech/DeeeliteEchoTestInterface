@@ -32,7 +32,9 @@
           <img class="svg-icon" id="actuator-toggle" src="public/paused.svg" alt="Paused icon" />
           <label class='mono' id="actuator-state-label"> Actuator paused</label>
           <!-- <button class="actuator-control" id="start-button" onclick="startActuator()">Run</button> -->
+          <!-- <button onclick =startActuator() style="margin-left:15px; font-size:11px; padding:0.2em,0.4em; cursor:pointer;" > pulse</button> -->
         </div>
+
 
         <div class="flex">
           <div class='round'>
@@ -86,9 +88,9 @@
               </div>
 
               <hr>
-                  <div class='add-segments'>
-              <label class="control-type">Keep On</label>
-              <br>
+              <div class='add-segments'>
+                <label class="control-type">Keep On</label>
+                <br>
 
                 <label>Strength: </label>
                 <input type="number" min="0" max="100" id="vibrator_keepon_strength_input" value="40">
@@ -110,10 +112,13 @@
         </tr>
       </table>
       <br>
+
       <label class="mono">Code</label>
       <input type="text" id="vibrator_code" size="50" oninput="parseVibratorCode('vibrator_code')" value="K0F31D1000 K40F31D1000">
       <br>
-      <p class="margin_left_30" style="font-size:14px; color: #DDDDDD">*Strength ranges from 0-100.Duration is in millisecond.</p>
+      <div id="timpestamps" style="width:360px">
+        <p id="timpestamps" style="font-size:12px; color: #DDDDDD"><b>Logs</b><br></p>
+      </div>
 
       <!-- <div>
         <input type="text" id="savePresetName" />
@@ -131,7 +136,7 @@
           <br>
           <span class="highlight"> Drag the orange dots </span> to explore different patterns.
           <br>
-          <span class="highlight"> Press - on keyboard </span> to delete an existing dot.
+          <span class="highlight"> Press "D" key on keyboard </span> to delete an existing dot.
           <br>
           <span class="highlight"> Use the slider</span> to adjust the pitch of the vibration.
         </p>
@@ -151,7 +156,7 @@
       </div>
       <br>
       <div class="center">
-        <button id="update-button" onclick="startActuator()"> Run </button>
+        <button id="update-button" onclick="update()"> Update </button>
       </div>
     </div>
 
