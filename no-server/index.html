@@ -18,7 +18,36 @@
 <link rel="stylesheet" href="main.css">
 
 <script>
-  initGraph("vibrator");
+  function updateTextRating(val) {
+    document.getElementById('rating_val').innerHTML=val; 
+  }
+    
+  function saveToCloud() {
+    var shortID = document.getElementById('textShortID').value;
+    var userName = document.getElementById('textUserName').value;
+    var presetElement = document.getElementById('presets-menu');
+    var presetName = presetElement.options[presetElement.selectedIndex].text;
+    var vibratorSetting = document.getElementById('vibrator_code').value;
+    var notes = document.getElementById('textNotes').value;
+    var rating = document.getElementById('rating_val').innerHTML;
+    
+    var data = new FormData();
+    data.append('entry.1795158497', shortID);
+    data.append('entry.73818570', userName);
+    data.append('entry.840664421', presetName);
+    data.append('entry.13846705', vibratorSetting);
+    data.append('entry.1403535318', notes);
+    data.append('entry.1300999916', rating);
+      
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://cors-anywhere.deqing.workers.dev/?https://docs.google.com/forms/d/e/1FAIpQLSf8yqVax-KR3s37N-WvDXOyZTqpGfal-2uVxOSSRqzFNcbNmA/formResponse', true);
+    xhr.onload = function () {
+      // do something to response
+      //console.log(this.responseText);
+      console.log("XMLHttpRequest to google form status: "+this.status);
+    };
+    xhr.send(data);
+  }
 </script>
 
 
@@ -115,10 +144,25 @@
       <br>
       <p class="margin_left_30" style="font-size:14px; color: #DDDDDD">*Strength ranges from 0-100.Duration is in millisecond.</p>
 
-      <!-- <div>
-        <input type="text" id="savePresetName" />
-        <button onclick="savePreset()">Save preset</button>
-      </div> -->
+      <div>
+        <label>Short ID</label>
+        <input type="text" id="textShortID" value="defaultShortID"/>
+        <br>
+        <label>User Name</label>
+        <input type="text" id="textUserName" value="defaultUserName"/>
+        <br>
+        <label>Notes</label>
+        <br>
+        <textarea id="textNotes" rows="10" cols="40">Leave some notes</textarea>
+        <br>
+        <label>Rating</label>
+        <span id="rating_val">5</span>
+        <br>
+        <input class="slider" id="inputRating" type="range" min="1" max="10" step="1" value="5" oninput="updateTextRating(this.value)" />
+        <br>
+        <br>
+        <button onclick="saveToCloud()">Save to Cloud</button>
+      </div>
 
 
       <div style="height: 1000px"></div>
