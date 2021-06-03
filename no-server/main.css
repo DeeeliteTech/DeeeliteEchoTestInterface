@@ -82,6 +82,7 @@ button {
   text-align: center;
   background: none;
   color: #FFFFFF;
+  cursor: pointer;
 }
 
 #canvas {
@@ -114,6 +115,11 @@ button {
 .flex {
   display: flex;
   align-items: center;
+}
+
+.btn-small{
+    padding: 0.3em 1em;
+    font-size:12px;
 }
 
 #clientConnectButton {
@@ -347,4 +353,17 @@ button {
 .domain, .tick {
   color: #D4D4D4;
   opacity: 0.5;
+}
+
+.user-logs{
+  line-height: 28px;
+  width:360px;
+  font-size: 14px;
+}
+
+
+
+
+.question-lables{
+  line-height:20px;
 }
