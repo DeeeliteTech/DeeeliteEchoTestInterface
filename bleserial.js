@@ -36,7 +36,7 @@ function connect() {
     console.log('Requesting Bluetooth Device...');
     navigator.bluetooth.requestDevice({
         filters: [{
-            namePrefix: "DeeeLite"
+            // namePrefix: ""
         }]
         , optionalServices: [bleNusServiceUUID]
         , acceptAllDevices: false
@@ -108,7 +108,7 @@ function onDisconnected() {
 function handleNotifications(event) {
     console.log('notification');
     let value = event.target.value;
-    // Convert raw data bytes to character values and use these to 
+    // Convert raw data bytes to character values and use these to
     // construct a string.
     let str = "";
     for (let i = 0; i < value.byteLength; i++) {

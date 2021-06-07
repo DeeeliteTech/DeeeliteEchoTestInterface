@@ -69,7 +69,9 @@
           <img class="svg-icon" id="actuator-toggle" src="public/paused.svg" alt="Paused icon" />
           <label class='mono' id="actuator-state-label"> Actuator paused</label>
           <!-- <button class="actuator-control" id="start-button" onclick="startActuator()">Run</button> -->
+          <!-- <button onclick =startActuator() style="margin-left:15px; font-size:11px; padding:0.2em,0.4em; cursor:pointer;" > pulse</button> -->
         </div>
+
 
         <div class="flex">
           <div class='round'>
@@ -149,6 +151,9 @@
           </td>
         </tr>
       </table>
+      <br>
+
+
 
       <br>
       <!-- <p class="margin_left_30" style="font-size:14px; color: #DDDDDD">*Strength ranges from 0-100.Duration is in millisecond.</p> -->
@@ -207,7 +212,7 @@
           <br>
           <span class="highlight"> Drag the orange dots </span> to explore different patterns.
           <br>
-          <span class="highlight"> Press - on keyboard </span> to delete an existing dot.
+          <span class="highlight"> Press "D" key on keyboard </span> to delete an existing dot.
           <br>
           <span class="highlight"> Use the slider</span> to adjust the pitch of the vibration.
         </p>
@@ -227,7 +232,7 @@
       </div>
       <br>
       <div class="center">
-        <button id="update-button" onclick="startActuator()"> Run </button>
+        <button id="update-button" onclick="update()"> Update </button>
       </div>
     </div>
 

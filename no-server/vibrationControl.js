@@ -7,19 +7,19 @@
  var width = 0;
  var height = 0;
 
-  var margin = {
-      top: 80,
-      right: 20,
-      bottom: 40,
-      left: 40
-    },
-presets = [
-      "K0F31D1000 K50F31D1000 ",
-      "K15F31D200 K0F31D100 K40F31D200 K0F31D550 ",
-      "R7F31D628 R40F31D1142 R24F31D552 R30F31D1028 R7F31D571 K7F31D590 R0F31D742 R26F31D666 R46F31D838 R30F31D1161 R8F31D685 R0F31D1161 ",
-      "R11F31D414 R20F31D414 R54F31D628 R22F31D585 R39F31D485 R30F31D371 R17F31D557 R4F31D300 R20F31D428 R24F31D442 R16F31D842 R1F31D1342 "
-    ]
- width =  700 - margin.left - margin.right;
+ var margin = {
+     top: 80,
+     right: 20,
+     bottom: 40,
+     left: 40
+   },
+   presets = [
+     "K0F31D1000 K50F31D1000 ",
+     "K15F31D200 K0F31D100 K40F31D200 K0F31D550 ",
+     "R7F31D628 R40F31D1142 R24F31D552 R30F31D1028 R7F31D571 K7F31D590 R0F31D742 R26F31D666 R46F31D838 R30F31D1161 R8F31D685 R0F31D1161 ",
+     "R11F31D414 R20F31D414 R54F31D628 R22F31D585 R39F31D485 R30F31D371 R17F31D557 R4F31D300 R20F31D428 R24F31D442 R16F31D842 R1F31D1342 "
+   ]
+ width = 700 - margin.left - margin.right;
  height = 400 - margin.top - margin.bottom;
  console.log(width);
  console.log(height);
@@ -50,10 +50,10 @@ presets = [
    let currentGraphSVG = d3.select("#" + actuatorName + "_graph").append("svg");
    let points = [
      [0, 0],
-     [1, 0],
-     [1, 40],
-     [2, 40],
-     [2, 0]
+     [0.5, 0],
+     [0.5, 80],
+     [1, 80],
+     [1, 0]
    ];
    let maxX = Math.max(...points);
    // console.log(formattedData);
@@ -278,7 +278,7 @@ presets = [
      console.log(tagName);
      if (!selectedPointData) return;
      switch (d3.event.keyCode) {
-       case 189:
+       case 68:
          {
            event.preventDefault();
            const i = dataPoints.indexOf(selectedPointData);
@@ -357,6 +357,24 @@ presets = [
    document.getElementById(actuatorName + "_code").value += "K0F31D100 "
    parseVibratorCode("vibrator_code");
 
+
+ }
+
+ function printSettings() {
+   let currentSetting = document.getElementById("vibrator_code").value;
+   let currentdate = new Date();
+   let datetime = "Last Sync: " + currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/"
+                + currentdate.getFullYear() + " @ "
+                + currentdate.getHours() + ":"
+                + currentdate.getMinutes() + ":"
+                + currentdate.getSeconds();
+   // let timestamp = newDate.getTime();
+   // newDate.setTime(timestamp * 1000);
+   // dateString = newDate.toUTCString();
+   document.getElementById("timpestamps").innerHTML += currentSetting + "," +  datetime;
+  var _br = document.createElement('hr');
+   document.getElementById("timpestamps").appendChild(_br)
 
  }
 
@@ -582,4 +600,10 @@ presets = [
    }
    let codeInput = document.getElementById("vibrator_code");
    codeInput.value = result.trim() + " ";
+ }
+
+ function update() {
+   startActuator();
+   printSettings();
+
  }
