@@ -51,14 +51,14 @@
    let points = [
      [0, 0],
      [1000, 0],
-     [1000, 80],
-     [2000, 80],
+     [1000, 60],
+     [2000, 60],
      [2000, 0]
    ];
    let maxX = Math.max(...points);
    // console.log(formattedData);
 
-   updateSVG(currentGraphSVG, points, actuatorName, 1500);
+   updateSVG(currentGraphSVG, points, actuatorName, 2500);
    convertDataToVibrationCode(points);
 
  }
