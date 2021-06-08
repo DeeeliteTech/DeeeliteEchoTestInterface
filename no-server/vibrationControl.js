@@ -525,6 +525,7 @@
        }
      }
    }
+
    //send actuator control commands
    var actuatorsSendString = "N "; //stop all actuators
    if (document.getElementById("loopSet").checked) {
@@ -541,9 +542,9 @@
    //end command
    actuatorsSendString = actuatorsSendString + "\n";
    console.log(actuatorsSendString);
-   if (maxLoopTime > 0) {
-     endPlayTimeoutID = setTimeout(endOfActuator, maxLoopTime);
-   }
+   // if (maxLoopTime > 0) {
+   //   endPlayTimeoutID = setTimeout(endOfActuator, maxLoopTime);
+   // }
    nusSendString(actuatorsSendString);
    running = true;
  }
