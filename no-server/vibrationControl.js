@@ -50,15 +50,15 @@
    let currentGraphSVG = d3.select("#" + actuatorName + "_graph").append("svg");
    let points = [
      [0, 0],
-     [0.5, 0],
-     [0.5, 80],
-     [1, 80],
-     [1, 0]
+     [1000, 0],
+     [1000, 80],
+     [2000, 80],
+     [2000, 0]
    ];
    let maxX = Math.max(...points);
    // console.log(formattedData);
 
-   updateSVG(currentGraphSVG, points, actuatorName, 4);
+   updateSVG(currentGraphSVG, points, actuatorName, 1500);
    convertDataToVibrationCode(points);
 
  }
@@ -78,7 +78,7 @@
        let currentResult = "";
        let currentTime = dataPoints[i][0];
        let currentStrength = dataPoints[i][1];
-       let duration = (currentTime - prevTime) * 1000;
+       let duration = (currentTime - prevTime) ;
        duration = Math.trunc(duration);
        currentStrength = Math.trunc(currentStrength);
        if (prevStrength != currentStrength) {
@@ -430,7 +430,7 @@
          let val_str = oneCode.substring(1, locationOfF); //get intensity value
          let dur_str = oneCode.substring(locationOfD + 1); //get duration value
          let strVal = parseInt(val_str) //convert intensity string to int
-         let durVal = parseFloat(dur_str) / 1000 //convert duration string to float
+         let durVal = parseFloat(dur_str) //convert duration string to float
          console.log(durVal);
          if (isNaN(strVal) || isNaN(durVal) || (durVal < 0.01)) return;
          if (oneCode[0] == "K") {
