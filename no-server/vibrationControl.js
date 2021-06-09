@@ -17,7 +17,11 @@
      "K0F31D1000 K50F31D1000 ",
      "K15F31D200 K0F31D100 K40F31D200 K0F31D550 ",
      "R7F31D628 R40F31D1142 R24F31D552 R30F31D1028 R7F31D571 K7F31D590 R0F31D742 R26F31D666 R46F31D838 R30F31D1161 R8F31D685 R0F31D1161 ",
-     "R11F31D414 R20F31D414 R54F31D628 R22F31D585 R39F31D485 R30F31D371 R17F31D557 R4F31D300 R20F31D428 R24F31D442 R16F31D842 R1F31D1342 "
+     "R11F31D414 R20F31D414 R54F31D628 R22F31D585 R39F31D485 R30F31D371 R17F31D557 R4F31D300 R20F31D428 R24F31D442 R16F31D842 R1F31D1342 ",
+     "R20F31D1000 K20F31D1000 R0F31D1000 K0F31D1000 R40F31D1000 K40F31D1000 R0F31D1000 K0F31D415 ",
+     "R21F31D417 R44F31D750 R56F31D1821 R30F31D556 R28F31D597 R40F31D856 K40F31D1000 R0F31D1000 K0F31D415 ",
+     "K21F31D2181 K0F31D1487 K49F31D1890 K0F31D1451 K0F31D415 ",
+     "R58F31D1238 R21F31D942 R32F31D491 R20F31D821 R48F31D570 R22F31D696 R50F31D849 R0F31D1399 R18F31D326 R0F31D598 "
    ]
  width = 700 - margin.left - margin.right;
  height = 400 - margin.top - margin.bottom;
@@ -51,18 +55,16 @@
    let points = [
      [0, 0],
      [1000, 0],
-     [1000, 60],
-     [2000, 60],
+     [1000, 50],
+     [2000, 50],
      [2000, 0]
    ];
    let maxX = Math.max(...points);
    // console.log(formattedData);
-
-   updateSVG(currentGraphSVG, points, actuatorName, 2500);
+   updateSVG(currentGraphSVG, points, actuatorName, 2200);
    convertDataToVibrationCode(points);
 
  }
-
 
 
  //this function converts the data point on the graph to string to send to actuator
@@ -131,7 +133,7 @@
      .append("g")
      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-   let timeFormat = d3.timeFormat("%M:%S");
+
 
 
    let x = d3.scaleLinear()
@@ -242,7 +244,7 @@
      .attr('transform', 'translate(0,' + height + ')')
      .call(xAxis.ticks(5))
      .call(xAxis.tickFormat(function(d) {
-       return d + 's'
+       return d/1000 + 's'
      }));
 
    let tickLabels = ['0', '', '', '', '', 'max'];
@@ -379,9 +381,6 @@
  }
 
  window.onload = function() {
-
-
-
    resetGraph("vibrator");
  }
 
@@ -430,7 +429,7 @@
          let val_str = oneCode.substring(1, locationOfF); //get intensity value
          let dur_str = oneCode.substring(locationOfD + 1); //get duration value
          let strVal = parseInt(val_str) //convert intensity string to int
-         let durVal = parseFloat(dur_str) //convert duration string to float
+         let durVal = parseFloat(dur_str)  //convert duration string to float
          console.log(durVal);
          if (isNaN(strVal) || isNaN(durVal) || (durVal < 0.01)) return;
          if (oneCode[0] == "K") {
@@ -525,6 +524,7 @@
        }
      }
    }
+
    //send actuator control commands
    var actuatorsSendString = "N "; //stop all actuators
    if (document.getElementById("loopSet").checked) {
@@ -541,9 +541,9 @@
    //end command
    actuatorsSendString = actuatorsSendString + "\n";
    console.log(actuatorsSendString);
-   if (maxLoopTime > 0) {
-     endPlayTimeoutID = setTimeout(endOfActuator, maxLoopTime);
-   }
+   // if (maxLoopTime > 0) {
+   //   endPlayTimeoutID = setTimeout(endOfActuator, maxLoopTime);
+   // }
    nusSendString(actuatorsSendString);
    running = true;
  }
@@ -559,12 +559,6 @@
    }
  }
 
- function endOfActuator() {
-   console.log("Play ends");
-   if (document.getElementById("loopSet").checked) {
-     startActuator();
-   }
- }
 
  function stopActuator() {
    console.log("stopActuator");

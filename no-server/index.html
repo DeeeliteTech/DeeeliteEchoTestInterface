@@ -18,7 +18,44 @@
 <link rel="stylesheet" href="main.css">
 
 <script>
-  initGraph("vibrator");
+  function updateTextRating(val) {
+    document.getElementById('rating_val').innerHTML=val;
+  }
+
+  function saveToCloud() {
+    var shortID = document.getElementById('textShortID').value;
+    var userName = document.getElementById('textUserName').value;
+    var presetElement = document.getElementById('presets-menu');
+    var presetName = presetElement.options[presetElement.selectedIndex].text;
+    var vibratorSetting = document.getElementById('vibrator_code').value;
+    var notes = document.getElementById('textNotes').value;
+    var rating = document.getElementById('rating_val').innerHTML;
+    var age = document.getElementById('age_select').value;
+    var occupation = document.getElementById('occupation').value;
+    var activity = document.getElementById('activityNotes').value;
+
+
+    var data = new FormData();
+    data.append('entry.1795158497', shortID);
+    data.append('entry.73818570', userName);
+    data.append('entry.680191963',age)
+    data.append('entry.840664421', presetName);
+    data.append('entry.13846705', vibratorSetting);
+    data.append('entry.1403535318', notes);
+    data.append('entry.1300999916', rating);
+    data.append('entry.1649925906', occupation);
+    data.append('entry.1030646389', occupation);
+
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://cors-anywhere.deqing.workers.dev/?https://docs.google.com/forms/d/e/1FAIpQLSf8yqVax-KR3s37N-WvDXOyZTqpGfal-2uVxOSSRqzFNcbNmA/formResponse', true);
+    xhr.onload = function () {
+      // do something to response
+      //console.log(this.responseText);
+      console.log("XMLHttpRequest to google form status: "+this.status);
+    };
+    xhr.send(data);
+  }
 </script>
 
 
@@ -55,6 +92,10 @@
           <option value=2>Doppel</option>
           <option value=3>Irregular</option>
           <option value=4>Echo</option>
+          <option value=5>linear fade</option>
+          <option value=6>random 1</option>
+          <option value=7>random 2</option>
+          <option value=8>random 3</option>
         </select>
       </div>
 
@@ -108,22 +149,61 @@
                 <input type="number" min="1" max="99999" id="vibrator_keepoff_duration_input" value="1000">
                 <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepoff_strength_input','vibrator_keepoff_duration_input','K','vibrator_code')">ADD</button>
               </div>
+              <br>
+              <label class="mono">Code</label>
+              <input type="text" id="vibrator_code" size="40" oninput="parseVibratorCode('vibrator_code')" value="K0F31D1000 K40F31D1000">
           </td>
         </tr>
       </table>
       <br>
 
-      <label class="mono">Code</label>
-      <input type="text" id="vibrator_code" size="50" oninput="parseVibratorCode('vibrator_code')" value="K0F31D1000 K40F31D1000">
-      <br>
-      <div id="timpestamps" style="width:360px">
-        <p id="timpestamps" style="font-size:12px; color: #DDDDDD"><b>Logs</b><br></p>
-      </div>
 
-      <!-- <div>
-        <input type="text" id="savePresetName" />
-        <button onclick="savePreset()">Save preset</button>
-      </div> -->
+
+      <br>
+      <!-- <p class="margin_left_30" style="font-size:14px; color: #DDDDDD">*Strength ranges from 0-100.Duration is in millisecond.</p> -->
+
+      <div class="user-logs">
+        <h3>User Logs</h3>
+        <label>Short ID</label>
+        <input type="text" id="textShortID" value="defaultShortID" />
+        <button class="btn-small"> Generate</button>
+
+
+        <br>
+        <label>User Name</label>
+        <input type="text" id="textUserName" value="defaultUserName" />
+        <br>
+        <label>Age</label>
+
+        <select id="age_select">
+          <option value=1>
+            <16</option> <option value=2>16-25
+          </option>
+          <option value=3>25-35</option>
+          <option value=4>35-45</option>
+          <option value=5>45-55</option>
+          <option value=5>>55</option>
+        </select>
+        <br>
+        <label>Occupation</label>
+        <input type="text" id="occupation" value="" />
+        <br>
+        <label>Can you use 5 adjectives to describehow you felt</label>
+        <textarea id="textNotes" rows="2" cols="40">Leave some notes</textarea>
+        <br>
+        <br>
+        <label class="question-lables">Can you think of an activity you would engage in while wearing this</label>
+        <textarea id="activityNotes" rows="2" cols="40">Leave some notes</textarea>
+        <br>
+        <br>
+        <label class="question-lables" >From 1-10, how pleasant would your rate your experience</label>
+        <span id="rating_val">5</span>
+        <br>
+        <input class="slider" id="inputRating" style="margin-left:0; margin-top:10px" type="range" min="1" max="10" step="1" value="5" oninput="updateTextRating(this.value)" />
+        <br>
+        <br>
+        <button onclick="saveToCloud()">Save to Cloud</button>
+      </div>
 
 
       <div style="height: 1000px"></div>

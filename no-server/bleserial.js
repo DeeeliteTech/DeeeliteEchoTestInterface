@@ -21,7 +21,7 @@ function connectionToggle() {
 // Sets button to either Connect or Disconnect
 function setConnButtonState(enabled) {
     if (enabled) {
-        document.getElementById("clientConnectButton").innerHTML = "Disconnect Arduino";
+        document.getElementById("clientConnectButton").innerHTML = "Disconnect " + bleDevice.name;
     }
     else {
         document.getElementById("clientConnectButton").innerHTML = "Connect Arduino";
