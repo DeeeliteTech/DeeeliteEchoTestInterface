@@ -46,6 +46,7 @@
    let currentPresets = presets[selectedValue - 1];
    document.getElementById("vibrator_code").value = currentPresets;
    parseVibratorCode("vibrator_code");
+   startActuator();
    // updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, currentPresets, actuatorName, maxX * 1.5);
  }
 
@@ -61,7 +62,7 @@
    ];
    let maxX = Math.max(...points);
    // console.log(formattedData);
-   updateSVG(currentGraphSVG, points, actuatorName, 2200);
+   updateSVG(currentGraphSVG, points, actuatorName, 2500);
    convertDataToVibrationCode(points);
 
  }
@@ -80,7 +81,7 @@
        let currentResult = "";
        let currentTime = dataPoints[i][0];
        let currentStrength = dataPoints[i][1];
-       let duration = (currentTime - prevTime) ;
+       let duration = (currentTime - prevTime);
        duration = Math.trunc(duration);
        currentStrength = Math.trunc(currentStrength);
        if (prevStrength != currentStrength) {
@@ -115,13 +116,15 @@
 
    }
 
-   console.log(codeResult);
+   // console.log(codeResult);
 
    //update the codeinput field to reflect changes
    let codeInput = document.getElementById("vibrator_code");
    codeInput.value = codeResult.trim() + " ";
 
    return codeResult;
+   // stopActuator();
+   update();
  }
 
 
@@ -244,7 +247,7 @@
      .attr('transform', 'translate(0,' + height + ')')
      .call(xAxis.ticks(5))
      .call(xAxis.tickFormat(function(d) {
-       return d/1000 + 's'
+       return d / 1000 + 's'
      }));
 
    let tickLabels = ['0', '', '', '', '', 'max'];
@@ -312,6 +315,8 @@
 
    function dragended(d) {
      d3.select(this).classed('active', false);
+     console.log("drag ended")
+     startActuator();
 
    }
 
@@ -358,6 +363,7 @@
 
    document.getElementById(actuatorName + "_code").value += "K0F31D100 "
    parseVibratorCode("vibrator_code");
+   startActuator();
 
 
  }
@@ -365,18 +371,18 @@
  function printSettings() {
    let currentSetting = document.getElementById("vibrator_code").value;
    let currentdate = new Date();
-   let datetime = "Last Sync: " + currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/"
-                + currentdate.getFullYear() + " @ "
-                + currentdate.getHours() + ":"
-                + currentdate.getMinutes() + ":"
-                + currentdate.getSeconds();
+   let datetime = "Last Sync: " + currentdate.getDate() + "/" +
+     (currentdate.getMonth() + 1) + "/" +
+     currentdate.getFullYear() + " @ " +
+     currentdate.getHours() + ":" +
+     currentdate.getMinutes() + ":" +
+     currentdate.getSeconds();
    // let timestamp = newDate.getTime();
    // newDate.setTime(timestamp * 1000);
    // dateString = newDate.toUTCString();
-   document.getElementById("timpestamps").innerHTML += currentSetting + "," +  datetime;
-  var _br = document.createElement('hr');
-   document.getElementById("timpestamps").appendChild(_br)
+   //  document.getElementById("timpestamps").innerHTML += currentSetting + "," +  datetime;
+   // var _br = document.createElement('hr');
+   //  document.getElementById("timpestamps").appendChild(_br)
 
  }
 
@@ -429,7 +435,7 @@
          let val_str = oneCode.substring(1, locationOfF); //get intensity value
          let dur_str = oneCode.substring(locationOfD + 1); //get duration value
          let strVal = parseInt(val_str) //convert intensity string to int
-         let durVal = parseFloat(dur_str)  //convert duration string to float
+         let durVal = parseFloat(dur_str) //convert duration string to float
          console.log(durVal);
          if (isNaN(strVal) || isNaN(durVal) || (durVal < 0.01)) return;
          if (oneCode[0] == "K") {
@@ -466,7 +472,7 @@
    }
 
    let formattedData = [];
-   formattedData.push([0, 0]);
+   // formattedData.push([0, 0]);
    let xData = [];
    for (let i = 0; i < dataset.length; i++) {
      let point = [];
@@ -480,7 +486,7 @@
    console.log(formattedData);
    actuatorsDictionary[actuatorName + "Dataset"] = dataset;
    //let currentSVG = actuatorsDictionary[actuatorName + "Graph"].svg;
-   updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, formattedData, actuatorName, maxX * 1.2);
+   updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, formattedData, actuatorName, maxX * 1.5);
    // updateGraph(actuatorName);
  }
 
@@ -506,10 +512,10 @@
 
  function startActuator() {
    console.log("startActuator");
-   document.getElementById('actuator-toggle').src = "public/running.svg";
-   let statusLable = document.getElementById('actuator-state-label');
-   statusLable.innerHTML = "Actuator Running";
-   statusLable.style.color = "#44CD5A";
+   // document.getElementById('actuator-toggle').src = "public/running.svg";
+   // let statusLable = document.getElementById('actuator-state-label');
+   // statusLable.innerHTML = "Actuator Running";
+   // statusLable.style.color = "#44CD5A";
    // var repeat_count = parseInt(document.getElementById("repeat_count").value);
    // stopActuator();
    var maxLoopTime = 0;
@@ -562,9 +568,9 @@
 
  function stopActuator() {
    console.log("stopActuator");
-   document.getElementById('actuator-toggle').src = "public/paused.svg";
-   document.getElementById('actuator-state-label').innerHTML = "Actuator Paused";
-   document.getElementById('actuator-state-label').style.color = "#FF0000";
+   // document.getElementById('actuator-toggle').src = "public/paused.svg";
+   // document.getElementById('actuator-state-label').innerHTML = "Actuator Paused";
+   // document.getElementById('actuator-state-label').style.color = "#FF0000";
    clearTimeout(endPlayTimeoutID);
    nusSendString('N \n');
    running = false;
@@ -576,7 +582,6 @@
    let freqFirstPart = currentCommand.slice(0, fIndex + 1); //This includes f
    let dSecondPart = currentCommand.slice(dIndex);
    let newString = freqFirstPart + currentValue.toString() + dSecondPart;
-   console.log(newString);
    return newString;
  }
 
@@ -594,6 +599,12 @@
    }
    let codeInput = document.getElementById("vibrator_code");
    codeInput.value = result.trim() + " ";
+ }
+
+
+ function onMouseUp() {
+   console.log('onmouseup')
+   startActuator();
  }
 
  function update() {

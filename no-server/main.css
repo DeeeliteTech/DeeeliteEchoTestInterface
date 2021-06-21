@@ -112,9 +112,10 @@ button {
   color: #F1F1F1;
 }
 
-.flex {
+.loop-flex {
   display: flex;
   align-items: center;
+  margin:8px 0px;
 }
 
 .btn-small{
@@ -132,18 +133,39 @@ button {
   font-size: 14px;
   line-height: 16px;
   cursor: pointer;
+
 }
 
 .actuator-ctrl {
   display: flex;
   align-items: center;
   margin: 10px 0px;
+
 }
 
 .actuator-ctrl label {
   color: #FF0000;
   cursor: pointer;
 }
+
+.start-ctrl{
+  margin:14px 0px;
+}
+#start-button{
+  text-transform: capitalize;
+  background-color: #44CD5A;
+  border: none;
+  padding:7px 14px;
+}
+
+#stop-button{
+  margin-left:5px;
+  text-transform: capitalize;
+  background-color: #D1583D;
+  border: none;
+  padding:7px 14px;
+}
+
 
 .svg-icon {
   margin-right: 9px;
@@ -209,6 +231,13 @@ button {
 .round input[type="checkbox"]:checked+#round-box:after {
   opacity: 1;
   border-color: #fff;
+}
+
+.slidecontainer{
+  width:90%;
+  display: flex;
+  align-items: center;
+  margin:12px 0px
 }
 
 .presets-container {

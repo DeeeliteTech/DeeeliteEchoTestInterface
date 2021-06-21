@@ -256,6 +256,8 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
 
   function dragended(d) {
     d3.select(this).classed('active', false);
+    console.log("drag end")
+    startActuator();
   }
 
 
