@@ -1,97 +1,259 @@
-html,
-body {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-weight: inherit;
-    font-size: 100%;
-    font-family: "Roboto",sans-serif;
-    font-style: normal;
-    /* font-weight: 900; */
-    letter-spacing:1.5px
-    vertical-align: baseline;
-    line-height: 1.6;
+/* @import url(//db.onlinewebfonts.com/c/031da03967812d134ed68febd3ba78a9?family=GT+America);
+
+@font-face {
+  font-family: "GT America";
+  src: url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.eot");
+  src: url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.woff") format("woff"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.svg#GT America") format("svg");
+} */
+
+@font-face {
+font-family: "GT-America";
+src: url("public/GT-America-Mono-Medium.woff"),
+url("./public/GT-America-Standard-Regular.woff"),
+url("./public/GT-America-Standard-Medium.woff"),
+url("./public/source/GT-America-Standard-Bold.woff"),
+url("./public/source/GT-America-Standard-Light.woff");
 }
 
-p{
-  width:80%;
-  color: #696969;
-  line-height: 1.4;
+html,
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-size: 100%;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  /* font-weight: 900; */
+  letter-spacing: 1.5px vertical-align: baseline;
+  line-height: 1.6;
+}
 
+p {
+  width: 80%;
+  color: #696969;
+  line-height: 1.7;
+  font-size: 13px;
+  font-family: "Roboto Mono";
+  font-style: normal;
+  color: #eee;
 }
 
 hr {
-  opacity:0.7;
-
+  opacity: 0.7;
 }
 
-h2{
-  margin-bottom:0.5em;
+h2 {
+  margin-bottom: 0.5em;
+  font-family: GT America;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 29px;
+  /* identical to box height */
+  color: #FFFFFF;
 }
-#canvas{
-  display:flex;
 
+h3 {
+  font-family: GT America;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 28px;
+  /* identical to box height, or 156% */
+  letter-spacing: 0.15px;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  margin: 5px 0px
 }
 
-#admin-control{
+button {
+  border: 1px solid #FFFFFF;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 0.45em 1em;
+  font-family: Inter, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 14px;
+  align-items: center;
+  text-align: center;
+  background: none;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+#canvas {
+  display: flex;
+}
+
+#admin-control {
   /* margin-left: 30px; */
-  background-color: #000;
-  padding:30px 30px 30px 60px;
+  background-color: #373F4B;
+  padding: 30px 30px 30px 60px;
   color: #fff;
-
-
 }
 
-.center{
+.center {
   margin: auto;
   width: 30%;
   /* border: 3px solid green; */
   padding: 10px;
-
 }
 
-.actuator-control{
-  border: none;
-  color: white;
-  padding: 5px 15px;
-
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
+.mono {
+  font-family: "Roboto Mono";
+  font-style: normal;
   font-size: 14px;
-  cursor: pointer;
-  border-radius: 6px
+  line-height: 20px;
+  letter-spacing: 0.15px;
+  color: #F1F1F1;
 }
 
-#start-button{
-  background-color: #4CAF50; /* Green */
-  margin-right: 3px;
-  margin-left: 12px;
+.flex {
+  display: flex;
+  align-items: center;
 }
 
-#stop-button{
-  background-color: #FF0000; /* red */
-  margin-right: 5px;
+.btn-small{
+    padding: 0.3em 1em;
+    font-size:12px;
 }
 
-#user-control{
-  padding:30px 20px 30px 40px;
-}
-
-.slidercontainer{
-  width:100%;
-  padding:5px 10px 10px 30px;
-}
-
-.slider{
-  -webkit-appearance: none;
-  width: 70%;
-  height: 10px;
+#clientConnectButton {
+  /* Group 14 */
+  border: none;
+  background: #8B99AF;
   border-radius: 5px;
-  background: #d3d3d3;
+  filter: drop-shadow(4px 4px 4px rgba(29, 45, 70, 0.8));
+  padding: 0.7em 1.2em;
+  font-size: 14px;
+  line-height: 16px;
+  cursor: pointer;
+}
+
+.actuator-ctrl {
+  display: flex;
+  align-items: center;
+  margin: 10px 0px;
+}
+
+.actuator-ctrl label {
+  color: #FF0000;
+  cursor: pointer;
+}
+
+.svg-icon {
+  margin-right: 9px;
+  width: 20px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.svg-icon : hover {
+  width: 26px;
+}
+
+#loopSet {
+  margin-right: 12px;
+}
+
+.round {
+  position: relative
+}
+
+.round #round-box {
+  background-color: #DCDCDC;
+  border: 0px;
+  border-radius: 50%;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.round #round-box:after {
+  border: 2px solid #CECECE;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 3.5px;
+  left: 3.5px;
+  position: absolute;
+  top: 6px;
+  transform: rotate(-45deg);
+  width: 9px;
+}
+
+.bold {
+  font-size: 16px;
+  font-family: GT America;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.round input[type="checkbox"] {
+  /* visibility: hidden; */
+}
+
+.round input[type="checkbox"]:checked+#round-box {
+  background-color: #44CD5A;
+  border-color: #4f4f4f;
+  border: none;
+}
+
+.round input[type="checkbox"]:checked+#round-box:after {
+  opacity: 1;
+  border-color: #fff;
+}
+
+.presets-container {
+  padding: 20px 0px;
+}
+
+.add-segments {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 20px;
+  font-size: 12px;
+}
+
+.add-segments button {
+  font-size: 12px;
+}
+
+#user-control {
+  padding: 30px 20px 30px 80px;
+  background-color: #37383b;
+  width: 100%;
+}
+
+.slidercontainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  top: 440px;
+  color: white;
+  width: 75%;
+  /* padding: 5px 10px 5px 10px; */
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 5px;
+  border-radius: 8px;
+  background: #c4c4c4;
+  margin-left: 10px;
+  margin-right: 10px;
   outline: none;
-  opacity: 0.7;
+  opacity: 0.8;
   -webkit-transition: .2s;
   transition: opacity .2s;
 }
@@ -106,7 +268,7 @@ h2{
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: steelblue;
+  background: #FFA800;
   cursor: pointer;
 }
 
@@ -118,39 +280,90 @@ h2{
   cursor: pointer;
 }
 
-
-
-.control-type{
+.control-type {
   font-weight: bold;
-
 }
 
-#reset-button{
-  border: solid 1px #367BF5;
-  padding: 0.6em 1em;
+.graph-container {
+  position: relative;
+}
+
+#user-ctl-bttns {
+  position: absolute;
+  z-dex: 100;
+  top: 25px;
+  left: 12px;
+}
+
+#user-ctl-bttns button {
+  width: 85px;
+  height: 30px;
+  border: solid 1px #DDA046;
+  background: #DDA046;
+  box-shadow: 0px 4px 4px #424242;
+  padding: 0.6em 0.1em;
   text-align: center;
   display: inline-block;
+  font-size: 12px;
+  font-family: "Roboto Mono";
+  cursor: pointer;
+  border-radius: 3px;
+  color: #000;
+}
+
+.highlight {
+  background-color: #FFA800;
+  font-weight: bold;
+  color: black;
+}
+
+.graph-container {
+  position: relative;
+}
+
+#update-button {
+  position: relative;
+  top: 430px;
+  right: 30px;
+  border: solid 2px #44CD5A;
+  padding: 0.8em 1em;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: #44CD5A;
+  color: #000;
+}
+
+#update-button:hover {
+  background-color: #44CD5A;
+  color: #fff;
+  border: solid 3px #44CD5A;
+}
+
+#vibrator_graph {
+  position: absolute;
+  ;
+  margin: 10px 5px 10px 0px;
+  background-color: #373F4B;
+  box-shadow: 4px 4px 8px 2px rgba(4, 4, 4, 0.33);
+}
+
+.domain, .tick {
+  color: #D4D4D4;
+  opacity: 0.5;
+}
+
+.user-logs{
+  line-height: 28px;
+  width:360px;
   font-size: 14px;
-  cursor: pointer;
-  border-radius: 6px;
-  background:none;
-  color:#367BF5;
-
-
 }
 
-#update-button{
-  border: none;
-  padding: 0.6em 1.3em;
-  text-align: center;
-  display: inline-block;
-  font-size: 18px;
-  cursor: pointer;
-  border-radius: 6px;
-  background-color: #4CAF50;
-  color:#fff;
-}
 
-#vibrator_graph{
-  margin:30px 5px 10px 0px;
+
+
+.question-lables{
+  line-height:20px;
 }

@@ -3,104 +3,206 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+  <!-- <link href="//db.onlinewebfonts.com/c/031da03967812d134ed68febd3ba78a9?family=GT+America" rel="stylesheet" type="text/css"/> -->
   <title>Test BLE</title>
 </head>
 <!-- Load in the d3 library -->
 <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
 <script src="d3.v5.min.js"></script>
 <script src="bleserial.js"></script>
+<!-- <script src="keybinding.js"></script> -->
 <script src="vibrationControl.js"></script>
 <script src="accessServer.js"></script>
 
 <link rel="stylesheet" href="main.css">
 
-<!-- <script>
-  initGraph("vibrator");
-</script> -->
+<script>
+  function updateTextRating(val) {
+    document.getElementById('rating_val').innerHTML=val;
+  }
+
+  function saveToCloud() {
+    var shortID = document.getElementById('textShortID').value;
+    var userName = document.getElementById('textUserName').value;
+    var presetElement = document.getElementById('presets-menu');
+    var presetName = presetElement.options[presetElement.selectedIndex].text;
+    var vibratorSetting = document.getElementById('vibrator_code').value;
+    var notes = document.getElementById('textNotes').value;
+    var rating = document.getElementById('rating_val').innerHTML;
+    var age = document.getElementById('age_select').value;
+    var occupation = document.getElementById('occupation').value;
+    var activity = document.getElementById('activityNotes').value;
+
+
+    var data = new FormData();
+    data.append('entry.1795158497', shortID);
+    data.append('entry.73818570', userName);
+    data.append('entry.680191963',age)
+    data.append('entry.840664421', presetName);
+    data.append('entry.13846705', vibratorSetting);
+    data.append('entry.1403535318', notes);
+    data.append('entry.1300999916', rating);
+    data.append('entry.1649925906', occupation);
+    data.append('entry.1030646389', occupation);
+
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://cors-anywhere.deqing.workers.dev/?https://docs.google.com/forms/d/e/1FAIpQLSf8yqVax-KR3s37N-WvDXOyZTqpGfal-2uVxOSSRqzFNcbNmA/formResponse', true);
+    xhr.onload = function () {
+      // do something to response
+      //console.log(this.responseText);
+      console.log("XMLHttpRequest to google form status: "+this.status);
+    };
+    xhr.send(data);
+  }
+</script>
 
 
 <body>
   <div id="canvas">
     <div id="admin-control">
       <h2> Admin Control</h2>
+      <div>
+        <button onclick="connectionToggle()" style="margin:10px 0px;" id="clientConnectButton">Connect Motherboard</button>
+        <div class='actuator-ctrl' onclick=actuatorToggle()>
+          <img class="svg-icon" id="actuator-toggle" src="public/paused.svg" alt="Paused icon" />
+          <label class='mono' id="actuator-state-label"> Actuator paused</label>
+          <!-- <button class="actuator-control" id="start-button" onclick="startActuator()">Run</button> -->
+          <!-- <button onclick =startActuator() style="margin-left:15px; font-size:11px; padding:0.2em,0.4em; cursor:pointer;" > pulse</button> -->
+        </div>
 
-      <label>Current User: </label>
-      <label id="emailID"></label>
-      <br>
-      <label>Short ID: </label>
-      <input type="text" id="shortIDText" size="10" />
-      <label>Name: </label>
-      <input type="name" id="name" size="10" />
-      <br>
-      <div id="preset">
-        <label>Load preset:</label>
-        <select id="presetsFromServer" onchange="selectPreset()">
-          <option value=1>Preset 1</option>
-          <option value=2>Preset 2</option>
-          <option value=3>Preset 3</option>
-        </select>
-      </div>
-      <hr>
-      <div style="margin: 14px 0px 14px 0px">
-        <button onclick="connectionToggle()" id="clientConnectButton" style="padding:5px">Connect Motherboard</button>
-        <button class="actuator-control" id="start-button" onclick="startActuator()">Run</button>
-        <button class="actuator-control" id="stop-button" onclick="stopActuator()">Stop</button>
-        <br>
-        <div style="margin: 14px 0px 14px 0px">
-          <label>Repeat: </label>
-          <input id="repeat_count" type="number" min="1" max="99" value="1" />
-          <label>Loop: </label>
-          <input type="checkbox" id="loopSet">
+
+        <div class="flex">
+          <div class='round'>
+            <!-- <label>Repeat: </label>
+          <input id="repeat_count" type="number" min="1" max="99" value="1" /> -->
+            <input type="checkbox" id="loopSet">
+            <label id="round-box" for="loopSet"></label>
+          </div>
+          <label class='mono'>Loop</label>
         </div>
       </div>
-      <hr>
+
+
+      <div class="presets-container">
+        <h3>Load preset</h3>
+        <select id="presets-menu" onchange="selectPreset()">
+          <option value=1>Basic</option>
+          <option value=2>Doppel</option>
+          <option value=3>Irregular</option>
+          <option value=4>Echo</option>
+          <option value=5>linear fade</option>
+          <option value=6>random 1</option>
+          <option value=7>random 2</option>
+          <option value=8>random 3</option>
+        </select>
+      </div>
+
+
       <table>
         <tr>
           <td>
-            <h4 style="margin-top:0.19em;margin-bottom:0.19em;">ADD SEGMENTS</h4>
-            <label class="control-type">Ramp On</label>
-            <br>
-            <label>Strength: </label>
-            <input type="number" min="0" max="100" id="vibrator_rampon_strength_input" value="40">
-            <label>Duration: </label>
-            <input type="number" min="1" max="99999" id="vibrator_rampon_duration_input" value="1000">
-            <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampon_strength_input','vibrator_rampon_duration_input','R','vibrator_code')">ADD</button>
-            <br>
-            <label class="control-type">Ramp Off</label>
-            <br>
-            <label>Strength: </label>
-            <input type="number" min="0" max="100" id="vibrator_rampoff_strength_input" value="0" disabled>
-            <label>Duration: </label>
-            <input type="number" min="1" max="99999" id="vibrator_rampoff_duration_input" value="1000">
-            <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampoff_strength_input','vibrator_rampoff_duration_input','R','vibrator_code')">ADD</button>
-            <br>
-            <hr>
-            <label class="control-type">Keep On</label>
-            <br>
-            <label>Strength: </label>
-            <input type="number" min="0" max="100" id="vibrator_keepon_strength_input" value="40">
-            <label>Duration: </label>
-            <input type="number" min="1" max="99999" id="vibrator_keepon_duration_input" value="1000">
-            <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepon_strength_input','vibrator_keepon_duration_input','K','vibrator_code')">ADD</button>
-            <br>
-            <label class="control-type">Keep Off</label>
-            <br>
-            <label>Strength: </label>
-            <input type="number" min="0" max="100" id="vibrator_keepoff_strength_input" value="0" disabled>
-            <label>Duration: </label>
-            <input type="number" min="1" max="99999" id="vibrator_keepoff_duration_input" value="1000">
-            <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepoff_strength_input','vibrator_keepoff_duration_input','K','vibrator_code')">ADD</button>
+            <h3 style="margin-top:0.19em;margin-bottom:0.19em;">ADD SEGMENTS</h4>
+              <div class='add-segments'>
+                <label class="control-type">Ramp On</label>
+                <br>
+                <!-- <div class="strength-ctrl"> -->
+                <label>Strength: </label>
+                <input type="number" min="0" max="100" id="vibrator_rampon_strength_input" value="40">
+                <!-- </div> -->
+                <!-- <div class="strength-ctrl"> -->
+                <label>Duration: </label>
+                <input type="number" min="1" max="99999" id="vibrator_rampon_duration_input" value="1000">
+                <!-- </div> -->
+                <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampon_strength_input','vibrator_rampon_duration_input','R','vibrator_code')">ADD</button>
+                <br>
+              </div>
+              <div class='add-segments'>
+                <label class="control-type">Ramp Off</label>
+                <br>
+                <label>Strength: </label>
+                <input type="number" min="0" max="100" id="vibrator_rampoff_strength_input" value="0" disabled>
+                <label>Duration: </label>
+                <input type="number" min="1" max="99999" id="vibrator_rampoff_duration_input" value="1000">
+                <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampoff_strength_input','vibrator_rampoff_duration_input','R','vibrator_code')">ADD</button>
+              </div>
+
+              <hr>
+              <div class='add-segments'>
+                <label class="control-type">Keep On</label>
+                <br>
+
+                <label>Strength: </label>
+                <input type="number" min="0" max="100" id="vibrator_keepon_strength_input" value="40">
+                <label>Duration: </label>
+                <input type="number" min="1" max="99999" id="vibrator_keepon_duration_input" value="1000">
+                <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepon_strength_input','vibrator_keepon_duration_input','K','vibrator_code')">ADD</button>
+              </div>
+
+              <div class='add-segments'>
+                <label class="control-type">Keep Off</label>
+                <br>
+                <label>Strength: </label>
+                <input type="number" min="0" max="100" id="vibrator_keepoff_strength_input" value="0" disabled>
+                <label>Duration: </label>
+                <input type="number" min="1" max="99999" id="vibrator_keepoff_duration_input" value="1000">
+                <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepoff_strength_input','vibrator_keepoff_duration_input','K','vibrator_code')">ADD</button>
+              </div>
+              <br>
+              <label class="mono">Code</label>
+              <input type="text" id="vibrator_code" size="40" oninput="parseVibratorCode('vibrator_code')" value="K0F31D1000 K40F31D1000">
           </td>
         </tr>
       </table>
       <br>
-      <label>Code</label>
-      <input type="text" id="vibrator_code" size="50" oninput="parseVibratorCode('vibrator_code')" / </div> <br>
-      <p class="margin_left_30" style="font-size:14px; color: #DDDDDD">*Strength ranges from 0-100.Duration is in millisecond.</p>
 
-      <div>
-        <input type="text" id="savePresetName" />
-        <button onclick="savePreset()">Save preset</button>
+
+
+      <br>
+      <!-- <p class="margin_left_30" style="font-size:14px; color: #DDDDDD">*Strength ranges from 0-100.Duration is in millisecond.</p> -->
+
+      <div class="user-logs">
+        <h3>User Logs</h3>
+        <label>Short ID</label>
+        <input type="text" id="textShortID" value="defaultShortID" />
+        <button class="btn-small"> Generate</button>
+
+
+        <br>
+        <label>User Name</label>
+        <input type="text" id="textUserName" value="defaultUserName" />
+        <br>
+        <label>Age</label>
+
+        <select id="age_select">
+          <option value=1>
+            <16</option> <option value=2>16-25
+          </option>
+          <option value=3>25-35</option>
+          <option value=4>35-45</option>
+          <option value=5>45-55</option>
+          <option value=5>>55</option>
+        </select>
+        <br>
+        <label>Occupation</label>
+        <input type="text" id="occupation" value="" />
+        <br>
+        <label>Can you use 5 adjectives to describehow you felt</label>
+        <textarea id="textNotes" rows="2" cols="40">Leave some notes</textarea>
+        <br>
+        <br>
+        <label class="question-lables">Can you think of an activity you would engage in while wearing this</label>
+        <textarea id="activityNotes" rows="2" cols="40">Leave some notes</textarea>
+        <br>
+        <br>
+        <label class="question-lables" >From 1-10, how pleasant would your rate your experience</label>
+        <span id="rating_val">5</span>
+        <br>
+        <input class="slider" id="inputRating" style="margin-left:0; margin-top:10px" type="range" min="1" max="10" step="1" value="5" oninput="updateTextRating(this.value)" />
+        <br>
+        <br>
+        <button onclick="saveToCloud()">Save to Cloud</button>
       </div>
 
 
@@ -110,23 +212,31 @@
     <div id="user-control">
       <h2> User Control </h2>
       <div id="instruct">
-        <p> The following graph reflects the wave pattern you are experiencing. Drag the blue dots on the graph to find your opimized setting.
-          Use the slider below to adjust how fast it vibrates.</p>
+        <p> The following graph reflects the wave pattern you are experiencing.
+          <br>
+          <span class="highlight"> Drag the orange dots </span> to explore different patterns.
+          <br>
+          <span class="highlight"> Press "D" key on keyboard </span> to delete an existing dot.
+          <br>
+          <span class="highlight"> Use the slider</span> to adjust the pitch of the vibration.
+        </p>
       </div>
-      <div id="presets">
-        <button id="reset-button" onclick="addPoint()"> Add points </button>
 
+      <div class="graph-container">
+        <svg id="vibrator_graph" width="75%" height=400> </svg>
+        <div id="user-ctl-bttns">
+          <button id="add-button" onclick="addPoint('vibrator')"> Add points </button>
+        </div>
       </div>
-      <svg id="vibrator_graph" width="700" height="350"></svg>
-      <!-- <script src="vibrationControl.js"></script> -->
+
       <div class="slidercontainer">
-        <label>Pitch </label>
-        <input class="slider" id="vibrator_freq_input" type="range" min="10" max="100" step="1" value="31" oninput="showVal(this,'vibrator_freq_val')" />
-        <span id="vibrator_freq_val">31</span>``
+        <label class="bold">Pitch </label>
+        <input class="slider" id="vibrator_freq_input" type="range" min="0" max="60" step="1" value="31" oninput="showVal(this,'vibrator_freq_val')" />
+        <span id="vibrator_freq_val">31</span>
       </div>
       <br>
       <div class="center">
-        <button id="update-button" onclick="startActuator()"> Run </button>
+        <button id="update-button" onclick="update()"> Update </button>
       </div>
     </div>
 
