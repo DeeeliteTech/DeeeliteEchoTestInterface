@@ -65,15 +65,7 @@
       <h2> Admin Control</h2>
       <div>
         <button onclick="connectionToggle()" style="margin:10px 0px;" id="clientConnectButton">Connect Motherboard</button>
-        <div class='actuator-ctrl' onclick=actuatorToggle()>
-          <img class="svg-icon" id="actuator-toggle" src="public/paused.svg" alt="Paused icon" />
-          <label class='mono' id="actuator-state-label"> Actuator paused</label>
-          <!-- <button class="actuator-control" id="start-button" onclick="startActuator()">Run</button> -->
-          <!-- <button onclick =startActuator() style="margin-left:15px; font-size:11px; padding:0.2em,0.4em; cursor:pointer;" > pulse</button> -->
-        </div>
-
-
-        <div class="flex">
+        <div class="loop-flex">
           <div class='round'>
             <!-- <label>Repeat: </label>
           <input id="repeat_count" type="number" min="1" max="99" value="1" /> -->
@@ -83,6 +75,27 @@
           <label class='mono'>Loop</label>
         </div>
       </div>
+
+        <div class="start-ctrl">
+        <button id="start-button" onclick="startActuator()">RUN</button>
+        <button id="stop-button" onclick="stopActuator()">STOP</button>
+        </div>
+        <!-- <div class='actuator-ctrl' onclick=actuatorToggle()>
+          <img class="svg-icon" id="actuator-toggle" src="public/paused.svg" alt="Paused icon" />
+          <label class='mono' id="actuator-state-label"> Actuator paused</label>
+
+        </div> -->
+
+
+      <!-- <div class="slidecontainer">
+        <label class="mono">Intensity</label>
+        <input type="range" min="1" max="100" value="50" class="slider" id="intensityRange">
+      </div> -->
+
+
+
+
+
 
 
       <div class="presets-container">
@@ -231,7 +244,7 @@
 
       <div class="slidercontainer">
         <label class="bold">Pitch </label>
-        <input class="slider" id="vibrator_freq_input" type="range" min="0" max="60" step="1" value="31" oninput="showVal(this,'vibrator_freq_val')" />
+        <input class="slider" id="vibrator_freq_input" type="range" min="0" max="60" step="1" value="31" onmouseup="onMouseUp();" oninput="showVal(this,'vibrator_freq_val')" />
         <span id="vibrator_freq_val">31</span>
       </div>
       <br>
