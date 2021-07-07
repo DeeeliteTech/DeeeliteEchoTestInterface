@@ -51,7 +51,7 @@
     xhr.open('POST', 'https://cors-anywhere.deqing.workers.dev/?https://docs.google.com/forms/d/e/1FAIpQLSf8yqVax-KR3s37N-WvDXOyZTqpGfal-2uVxOSSRqzFNcbNmA/formResponse', true);
     xhr.onload = function () {
       // do something to response
-      //console.log(this.responseText);
+
       console.log("XMLHttpRequest to google form status: "+this.status);
     };
     xhr.send(data);
@@ -177,8 +177,12 @@
 
       <div class="user-logs">
         <h3>User Logs</h3>
-        <label>Short ID</label>
-        <input type="text" id="textShortID" value="defaultShortID" />
+
+        <label>print settings</label>
+        <br>
+        <span id="timestamps"></span>
+
+        <!-- <input type="text" id="textShortID" value="defaultShortID" />
         <button class="btn-small"> Generate</button>
 
 
@@ -213,6 +217,7 @@
         <span id="rating_val">5</span>
         <br>
         <input class="slider" id="inputRating" style="margin-left:0; margin-top:10px" type="range" min="1" max="10" step="1" value="5" oninput="updateTextRating(this.value)" />
+        <br> -->
         <br>
         <br>
         <button onclick="saveToCloud()">Save to Cloud</button>
@@ -249,7 +254,7 @@
       </div>
       <br>
       <div class="center">
-        <button id="update-button" onclick="update()"> Update </button>
+        <button id="update-button" onclick="printSettings()"> Save </button>
       </div>
     </div>
 

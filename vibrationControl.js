@@ -370,19 +370,19 @@
 
  function printSettings() {
    let currentSetting = document.getElementById("vibrator_code").value;
-   let currentdate = new Date();
-   let datetime = "Last Sync: " + currentdate.getDate() + "/" +
-     (currentdate.getMonth() + 1) + "/" +
-     currentdate.getFullYear() + " @ " +
-     currentdate.getHours() + ":" +
-     currentdate.getMinutes() + ":" +
-     currentdate.getSeconds();
+   // let currentdate = new Date();
+   // let datetime = "Last Sync: " + currentdate.getDate() + "/" +
+   //   (currentdate.getMonth() + 1) + "/" +
+   //   currentdate.getFullYear() + " @ " +
+   //   currentdate.getHours() + ":" +
+   //   currentdate.getMinutes() + ":" +
+   //   currentdate.getSeconds();
    // let timestamp = newDate.getTime();
    // newDate.setTime(timestamp * 1000);
    // dateString = newDate.toUTCString();
-   //  document.getElementById("timpestamps").innerHTML += currentSetting + "," +  datetime;
-   // var _br = document.createElement('hr');
-   //  document.getElementById("timpestamps").appendChild(_br)
+    document.getElementById("timestamps").innerHTML += currentSetting + ","
+   var _br = document.createElement('hr');
+    document.getElementById("timestamps").appendChild(_br)
 
  }
 
