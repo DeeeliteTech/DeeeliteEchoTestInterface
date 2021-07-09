@@ -24,31 +24,31 @@
 
   function saveToCloud() {
     var shortID = document.getElementById('textShortID').value;
-    var userName = document.getElementById('textUserName').value;
-    var presetElement = document.getElementById('presets-menu');
-    var presetName = presetElement.options[presetElement.selectedIndex].text;
+    // var userName = document.getElementById('textUserName').value;
+    // var presetElement = document.getElementById('presets-menu');
+    // var presetName = presetElement.options[presetElement.selectedIndex].text;
     var vibratorSetting = document.getElementById('vibrator_code').value;
-    var notes = document.getElementById('textNotes').value;
-    var rating = document.getElementById('rating_val').innerHTML;
-    var age = document.getElementById('age_select').value;
-    var occupation = document.getElementById('occupation').value;
-    var activity = document.getElementById('activityNotes').value;
+    // var notes = document.getElementById('textNotes').value;
+    // var rating = document.getElementById('rating_val').innerHTML;
+    // var age = document.getElementById('age_select').value;
+    // var occupation = document.getElementById('occupation').value;
+    // var activity = document.getElementById('activityNotes').value;
 
 
     var data = new FormData();
-    data.append('entry.1795158497', shortID);
-    data.append('entry.73818570', userName);
-    data.append('entry.680191963',age)
-    data.append('entry.840664421', presetName);
-    data.append('entry.13846705', vibratorSetting);
-    data.append('entry.1403535318', notes);
-    data.append('entry.1300999916', rating);
-    data.append('entry.1649925906', occupation);
-    data.append('entry.1030646389', occupation);
+    data.append('entry.1507632918', shortID);
+    // data.append('entry.73818570', userName);
+    // data.append('entry.680191963',age)
+    // data.append('entry.840664421', presetName);
+    data.append('entry.1924737665', vibratorSetting);
+    // data.append('entry.1403535318', notes);
+    // data.append('entry.1300999916', rating);
+    // data.append('entry.1649925906', occupation);
+    // data.append('entry.1030646389', occupation);
 
 
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://cors-anywhere.deqing.workers.dev/?https://docs.google.com/forms/d/e/1FAIpQLSf8yqVax-KR3s37N-WvDXOyZTqpGfal-2uVxOSSRqzFNcbNmA/formResponse', true);
+    xhr.open('POST', 'https://cors-anywhere.deqing.workers.dev/?https://docs.google.com/forms/d/e/1FAIpQLSen2T2G3I4G-tGnavmMEpWxBW2ZPD7mlxQjImJFwEh9m7dyCA/formResponse', true);
     xhr.onload = function () {
       // do something to response
 
@@ -177,13 +177,14 @@
 
       <div class="user-logs">
         <h3>User Logs</h3>
-
-        <label>print settings</label>
+        <input type="text" id="textShortID" value="defaultShortID"/>
+        <br>
+        <!-- <label>print settings</label> -->
         <br>
         <span id="timestamps"></span>
 
-        <!-- <input type="text" id="textShortID" value="defaultShortID" />
-        <button class="btn-small"> Generate</button>
+
+          <!-- <button class="btn-small"> Generate</button>
 
 
         <br>
@@ -248,7 +249,7 @@
       </div>
 
       <div class="slidercontainer">
-        <label class="bold">Pitch </label>
+        <label class="bold">Intensity </label>
         <input class="slider" id="vibrator_freq_input" type="range" min="0" max="60" step="1" value="31" onmouseup="onMouseUp();" oninput="showVal(this,'vibrator_freq_val')" />
         <span id="vibrator_freq_val">31</span>
       </div>
