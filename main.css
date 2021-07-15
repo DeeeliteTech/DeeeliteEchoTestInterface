@@ -5,14 +5,13 @@
   src: url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.eot");
   src: url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.woff") format("woff"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.svg#GT America") format("svg");
 } */
-
 @font-face {
-font-family: "GT-America";
-src: url("public/GT-America-Mono-Medium.woff"),
-url("./public/GT-America-Standard-Regular.woff"),
-url("./public/GT-America-Standard-Medium.woff"),
-url("./public/source/GT-America-Standard-Bold.woff"),
-url("./public/source/GT-America-Standard-Light.woff");
+  font-family: "GT-America";
+  src: url("public/GT-America-Mono-Medium.woff"),
+    url("./public/GT-America-Standard-Regular.woff"),
+    url("./public/GT-America-Standard-Medium.woff"),
+    url("./public/source/GT-America-Standard-Bold.woff"),
+    url("./public/source/GT-America-Standard-Light.woff");
 }
 
 html,
@@ -46,7 +45,7 @@ hr {
 
 h2 {
   margin-bottom: 0.5em;
-  font-family: GT America;
+  font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 28px;
@@ -56,7 +55,7 @@ h2 {
 }
 
 h3 {
-  font-family: GT America;
+  font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: 900;
   font-size: 16px;
@@ -83,6 +82,12 @@ button {
   background: none;
   color: #FFFFFF;
   cursor: pointer;
+}
+
+input[type=text] {
+  border-width:0px;
+  border:none;
+  outline:none;
 }
 
 #canvas {
@@ -115,12 +120,12 @@ button {
 .loop-flex {
   display: flex;
   align-items: center;
-  margin:8px 0px;
+  margin: 8px 0px;
 }
 
-.btn-small{
-    padding: 0.3em 1em;
-    font-size:12px;
+.btn-small {
+  padding: 0.3em 1em;
+  font-size: 12px;
 }
 
 #clientConnectButton {
@@ -133,14 +138,12 @@ button {
   font-size: 14px;
   line-height: 16px;
   cursor: pointer;
-
 }
 
 .actuator-ctrl {
   display: flex;
   align-items: center;
   margin: 10px 0px;
-
 }
 
 .actuator-ctrl label {
@@ -148,24 +151,24 @@ button {
   cursor: pointer;
 }
 
-.start-ctrl{
-  margin:14px 0px;
+.start-ctrl {
+  margin: 14px 0px;
 }
-#start-button{
+
+#start-button {
   text-transform: capitalize;
   background-color: #44CD5A;
   border: none;
-  padding:7px 14px;
+  padding: 7px 14px;
 }
 
-#stop-button{
-  margin-left:5px;
+#stop-button {
+  margin-left: 5px;
   text-transform: capitalize;
   background-color: #D1583D;
   border: none;
-  padding:7px 14px;
+  padding: 7px 14px;
 }
-
 
 .svg-icon {
   margin-right: 9px;
@@ -233,15 +236,16 @@ button {
   border-color: #fff;
 }
 
-.slidecontainer{
-  width:90%;
+.slidecontainer {
+  width: 90%;
   display: flex;
   align-items: center;
-  margin:12px 0px
+  margin: 12px 0px
 }
 
 .presets-container {
   padding: 20px 0px;
+  width: 280px;
 }
 
 .add-segments {
@@ -256,6 +260,16 @@ button {
 .add-segments button {
   font-size: 12px;
 }
+
+#vibrator_code{
+  margin-top:14px;
+  background-color: #373F4B;
+  border:none;
+  color:#FFA800;
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
 
 #user-control {
   padding: 30px 20px 30px 80px;
@@ -350,25 +364,38 @@ button {
   position: relative;
 }
 
-#update-button {
+
+.user_save_ctrl{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  right:120px;
+  padding: 10px;
   position: relative;
   top: 430px;
+
+}
+
+#update-button {
+  /* position: relative;
+  top: 430px; */
   right: 30px;
-  border: solid 2px #44CD5A;
-  padding: 0.8em 1em;
+  border: solid 2px #38ef7d;
+  padding: 0.6em 1em;
   text-align: center;
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
   border-radius: 6px;
-  background-color: #44CD5A;
-  color: #000;
+  background-color: none;
+  color: #38ef7d;
 }
 
 #update-button:hover {
-  background-color: #44CD5A;
+  background-color: #38ef7d;
   color: #fff;
-  border: solid 3px #44CD5A;
+  border: solid 3px #38ef7d;
 }
 
 #vibrator_graph {
@@ -384,15 +411,111 @@ button {
   opacity: 0.5;
 }
 
-.user-logs{
+.user-logs {
   line-height: 28px;
-  width:360px;
+  width: 300px;
   font-size: 14px;
+}
+
+.question-lables {
+  line-height: 20px;
+}
+
+.toggle-box {
+  display: none;
+}
+
+.toggle-box+label {
+  cursor: pointer;
+  display: block;
+  font-weight: bold;
+  line-height: 21px;
+  margin-bottom: 5px;
+}
+
+.toggle-box+label+div {
+  display: none;
+  margin-bottom: 10px;
+}
+
+.toggle-box:checked+label+div {
+  display: block;
+}
+
+.toggle-box+label:before {
+  background-color: #4F5150;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  color: #FFFFFF;
+  content: "+";
+  display: block;
+  float: left;
+  font-weight: bold;
+  height: 20px;
+  line-height: 20px;
+  margin-right: 5px;
+  text-align: center;
+  width: 20px;
+}
+
+.form__group{
+  padding-right:20px;
+}
+
+.form__field {
+  font-family: inherit;
+  border: 0;
+  border-bottom: 2px solid grey;
+  outline: 0;
+  font-size: 1.3rem;
+  color: white;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown ~ .form__label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+  }
+}
+
+.form__field:focus {
+  ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #11998e;
+    font-weight:700;
+  }
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+
+  border-image: linear-gradient(to right, #11998e,#38ef7d);
+  border-image-slice: 1;
+}
+/* reset input */
+.form__field{
+  &:required,&:invalid { box-shadow:none; }
 }
 
 
 
+#cloud_save_bttn{
+position:fixed;
 
-.question-lables{
-  line-height:20px;
+
+}
+#cloud_save_bttn:hover{
+  background-color: white;
+  color:black;
+
 }

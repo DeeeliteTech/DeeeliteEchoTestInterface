@@ -19,15 +19,18 @@
 
 <script>
   function updateTextRating(val) {
-    document.getElementById('rating_val').innerHTML=val;
+    document.getElementById('rating_val').innerHTML = val;
   }
 
   function saveToCloud() {
-    var shortID = document.getElementById('textShortID').value;
+    // var shortID = document.getElementById('textShortID').value;
     // var userName = document.getElementById('textUserName').value;
     // var presetElement = document.getElementById('presets-menu');
     // var presetName = presetElement.options[presetElement.selectedIndex].text;
-    var vibratorSetting = document.getElementById('vibrator_code').value;
+    let vibratorSetting = document.getElementById('vibrator_code').value;
+    let settingName=document.getElementById('setting_name').value;
+    console.log(settingName);
+    let fullLog = document.getElementById('timestamps').textContent;
     // var notes = document.getElementById('textNotes').value;
     // var rating = document.getElementById('rating_val').innerHTML;
     // var age = document.getElementById('age_select').value;
@@ -35,12 +38,16 @@
     // var activity = document.getElementById('activityNotes').value;
 
 
-    var data = new FormData();
-    data.append('entry.1507632918', shortID);
+    let data = new FormData();
+    // data.append('entry.1795158497', shortID);
     // data.append('entry.73818570', userName);
     // data.append('entry.680191963',age)
     // data.append('entry.840664421', presetName);
+    data.append('entry.1324336708',settingName);
+
     data.append('entry.1924737665', vibratorSetting);
+    data.append('entry.587857681',fullLog);
+
     // data.append('entry.1403535318', notes);
     // data.append('entry.1300999916', rating);
     // data.append('entry.1649925906', occupation);
@@ -49,10 +56,10 @@
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'https://cors-anywhere.deqing.workers.dev/?https://docs.google.com/forms/d/e/1FAIpQLSen2T2G3I4G-tGnavmMEpWxBW2ZPD7mlxQjImJFwEh9m7dyCA/formResponse', true);
-    xhr.onload = function () {
+    xhr.onload = function() {
       // do something to response
 
-      console.log("XMLHttpRequest to google form status: "+this.status);
+      console.log("XMLHttpRequest to google form status: " + this.status);
     };
     xhr.send(data);
   }
@@ -76,15 +83,15 @@
         </div>
       </div>
 
-        <div class="start-ctrl">
+      <!-- <div class="start-ctrl">
         <button id="start-button" onclick="startActuator()">RUN</button>
         <button id="stop-button" onclick="stopActuator()">STOP</button>
-        </div>
-        <!-- <div class='actuator-ctrl' onclick=actuatorToggle()>
-          <img class="svg-icon" id="actuator-toggle" src="public/paused.svg" alt="Paused icon" />
-          <label class='mono' id="actuator-state-label"> Actuator paused</label>
+      </div> -->
+      <div class='actuator-ctrl' onclick=actuatorToggle()>
+        <img class="svg-icon" id="actuator-toggle" src="public/paused.svg" alt="Paused icon" />
+        <label class='mono' id="actuator-state-label"> Actuator paused</label>
 
-        </div> -->
+      </div>
 
 
       <!-- <div class="slidecontainer">
@@ -110,81 +117,82 @@
           <option value=7>random 2</option>
           <option value=8>random 3</option>
         </select>
+        <br>
+        <label class="mono">Code</label>
+        <input type="text" id="vibrator_code" size="30" oninput="parseVibratorCode('vibrator_code')" value="K0F31D1000 K40F31D1000">
       </div>
 
 
-      <table>
-        <tr>
-          <td>
-            <h3 style="margin-top:0.19em;margin-bottom:0.19em;">ADD SEGMENTS</h4>
-              <div class='add-segments'>
-                <label class="control-type">Ramp On</label>
-                <br>
-                <!-- <div class="strength-ctrl"> -->
-                <label>Strength: </label>
-                <input type="number" min="0" max="100" id="vibrator_rampon_strength_input" value="40">
-                <!-- </div> -->
-                <!-- <div class="strength-ctrl"> -->
-                <label>Duration: </label>
-                <input type="number" min="1" max="99999" id="vibrator_rampon_duration_input" value="1000">
-                <!-- </div> -->
-                <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampon_strength_input','vibrator_rampon_duration_input','R','vibrator_code')">ADD</button>
-                <br>
-              </div>
-              <div class='add-segments'>
-                <label class="control-type">Ramp Off</label>
-                <br>
-                <label>Strength: </label>
-                <input type="number" min="0" max="100" id="vibrator_rampoff_strength_input" value="0" disabled>
-                <label>Duration: </label>
-                <input type="number" min="1" max="99999" id="vibrator_rampoff_duration_input" value="1000">
-                <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampoff_strength_input','vibrator_rampoff_duration_input','R','vibrator_code')">ADD</button>
-              </div>
 
-              <hr>
-              <div class='add-segments'>
-                <label class="control-type">Keep On</label>
-                <br>
+      <input class="toggle-box" id="identifier-1" type="checkbox">
+      <label for="identifier-1">ADD SEGMENTS</label>
+      <div>
+        <!-- <h3 style="margin-top:0.19em;margin-bottom:0.19em;">ADD SEGMENTS</h4> -->
+        <div class='add-segments'>
+          <label class="control-type">Ramp On</label>
+          <br>
+          <!-- <div class="strength-ctrl"> -->
+          <label>Strength: </label>
+          <input type="number" min="0" max="100" id="vibrator_rampon_strength_input" value="40">
+          <!-- </div> -->
+          <!-- <div class="strength-ctrl"> -->
+          <label>Duration: </label>
+          <input type="number" min="1" max="99999" id="vibrator_rampon_duration_input" value="1000">
+          <!-- </div> -->
+          <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampon_strength_input','vibrator_rampon_duration_input','R','vibrator_code')">ADD</button>
+          <br>
+        </div>
+        <div class='add-segments'>
+          <label class="control-type">Ramp Off</label>
+          <br>
+          <label>Strength: </label>
+          <input type="number" min="0" max="100" id="vibrator_rampoff_strength_input" value="0" disabled>
+          <label>Duration: </label>
+          <input type="number" min="1" max="99999" id="vibrator_rampoff_duration_input" value="1000">
+          <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_rampoff_strength_input','vibrator_rampoff_duration_input','R','vibrator_code')">ADD</button>
+        </div>
 
-                <label>Strength: </label>
-                <input type="number" min="0" max="100" id="vibrator_keepon_strength_input" value="40">
-                <label>Duration: </label>
-                <input type="number" min="1" max="99999" id="vibrator_keepon_duration_input" value="1000">
-                <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepon_strength_input','vibrator_keepon_duration_input','K','vibrator_code')">ADD</button>
-              </div>
+        <hr>
+        <div class='add-segments'>
+          <label class="control-type">Keep On</label>
+          <br>
 
-              <div class='add-segments'>
-                <label class="control-type">Keep Off</label>
-                <br>
-                <label>Strength: </label>
-                <input type="number" min="0" max="100" id="vibrator_keepoff_strength_input" value="0" disabled>
-                <label>Duration: </label>
-                <input type="number" min="1" max="99999" id="vibrator_keepoff_duration_input" value="1000">
-                <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepoff_strength_input','vibrator_keepoff_duration_input','K','vibrator_code')">ADD</button>
-              </div>
-              <br>
-              <label class="mono">Code</label>
-              <input type="text" id="vibrator_code" size="40" oninput="parseVibratorCode('vibrator_code')" value="K0F31D1000 K40F31D1000">
-          </td>
-        </tr>
-      </table>
-      <br>
+          <label>Strength: </label>
+          <input type="number" min="0" max="100" id="vibrator_keepon_strength_input" value="40">
+          <label>Duration: </label>
+          <input type="number" min="1" max="99999" id="vibrator_keepon_duration_input" value="1000">
+          <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepon_strength_input','vibrator_keepon_duration_input','K','vibrator_code')">ADD</button>
+        </div>
 
-
-
-      <br>
-      <!-- <p class="margin_left_30" style="font-size:14px; color: #DDDDDD">*Strength ranges from 0-100.Duration is in millisecond.</p> -->
-
-      <div class="user-logs">
-        <h3>User Logs</h3>
-        <input type="text" id="textShortID" value="defaultShortID"/>
+        <div class='add-segments'>
+          <label class="control-type">Keep Off</label>
+          <br>
+          <label>Strength: </label>
+          <input type="number" min="0" max="100" id="vibrator_keepoff_strength_input" value="0" disabled>
+          <label>Duration: </label>
+          <input type="number" min="1" max="99999" id="vibrator_keepoff_duration_input" value="1000">
+          <button onclick="vibratorAddControl('vibrator_freq_input','vibrator_keepoff_strength_input','vibrator_keepoff_duration_input','K','vibrator_code')">ADD</button>
+        </div>
         <br>
-        <!-- <label>print settings</label> -->
+
+      </div>
+
+
+
+      <!-- <p class="margin_left_30" style="font-size:14px; color: #DDDDDD">*Strength ranges from 0-100.Duration is in millisecond.</p> -->
+      <input class="toggle-box" style="margin-top:12px" id="identifier-2" type="checkbox">
+      <label for="identifier-2" style="margin-top:12px">USER LOGS</label>
+      <div class="user-logs">
+        <!-- <h3>User Logs</h3> -->
+        <!-- <input type="text" id="textShortID" value="defaultShortID" /> -->
+
+        <label>print settings</label>
         <br>
         <span id="timestamps"></span>
+      </div>
 
 
-          <!-- <button class="btn-small"> Generate</button>
+      <!-- <button class="btn-small"> Generate</button>
 
 
         <br>
@@ -219,11 +227,9 @@
         <br>
         <input class="slider" id="inputRating" style="margin-left:0; margin-top:10px" type="range" min="1" max="10" step="1" value="5" oninput="updateTextRating(this.value)" />
         <br> -->
-        <br>
-        <br>
-        <button onclick="saveToCloud()">Save to Cloud</button>
-      </div>
-
+      <br>
+      <br>
+      <button onclick="saveToCloud()" id="cloud_save_bttn">Save to Cloud</button>
 
       <div style="height: 1000px"></div>
     </div>
@@ -254,7 +260,13 @@
         <span id="vibrator_freq_val">31</span>
       </div>
       <br>
-      <div class="center">
+
+      <div class="user_save_ctrl">
+        <div class="form__group field">
+          <input type="input" class="form__field" placeholder="Name" name="name" id='setting_name' required />
+          <!-- <label for="name" class="form__label">Name</label> -->
+        </div>
+
         <button id="update-button" onclick="printSettings()"> Save </button>
       </div>
     </div>

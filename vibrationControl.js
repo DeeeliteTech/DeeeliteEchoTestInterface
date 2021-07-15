@@ -380,9 +380,12 @@
    // let timestamp = newDate.getTime();
    // newDate.setTime(timestamp * 1000);
    // dateString = newDate.toUTCString();
-    document.getElementById("timestamps").innerHTML += currentSetting + ","
-   var _br = document.createElement('hr');
-    document.getElementById("timpstamps").appendChild(_br)
+    let settingName=document.getElementById("setting_name").value;
+    document.getElementById("timestamps").innerHTML += settingName + ": " + currentSetting + ","
+    var _br = document.createElement('br');
+
+    document.getElementById("timestamps").append(_br)
+    saveToCloud();
 
  }
 
@@ -512,10 +515,10 @@
 
  function startActuator() {
    console.log("startActuator");
-   // document.getElementById('actuator-toggle').src = "public/running.svg";
-   // let statusLable = document.getElementById('actuator-state-label');
-   // statusLable.innerHTML = "Actuator Running";
-   // statusLable.style.color = "#44CD5A";
+   document.getElementById('actuator-toggle').src = "public/running.svg";
+   let statusLable = document.getElementById('actuator-state-label');
+   statusLable.innerHTML = "Actuator Running";
+   statusLable.style.color = "#44CD5A";
    // var repeat_count = parseInt(document.getElementById("repeat_count").value);
    // stopActuator();
    var maxLoopTime = 0;
@@ -568,9 +571,9 @@
 
  function stopActuator() {
    console.log("stopActuator");
-   // document.getElementById('actuator-toggle').src = "public/paused.svg";
-   // document.getElementById('actuator-state-label').innerHTML = "Actuator Paused";
-   // document.getElementById('actuator-state-label').style.color = "#FF0000";
+   document.getElementById('actuator-toggle').src = "public/paused.svg";
+   document.getElementById('actuator-state-label').innerHTML = "Actuator Paused";
+   document.getElementById('actuator-state-label').style.color = "#FF0000";
    clearTimeout(endPlayTimeoutID);
    nusSendString('N \n');
    running = false;
