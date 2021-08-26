@@ -11,8 +11,8 @@ font-family: "GT-America";
 src: url("public/GT-America-Mono-Medium.woff"),
 url("./public/GT-America-Standard-Regular.woff"),
 url("./public/GT-America-Standard-Medium.woff"),
-url("./public/source/GT-America-Standard-Bold.woff"),
-url("./public/source/GT-America-Standard-Light.woff");
+url("./public/GT-America-Standard-Bold.woff"),
+url("./public/GT-America-Standard-Light.woff");
 }
 
 html,
@@ -26,7 +26,8 @@ body {
   font-family: "Roboto", sans-serif;
   font-style: normal;
   /* font-weight: 900; */
-  letter-spacing: 1.5px vertical-align: baseline;
+  letter-spacing: 1.5px ;
+  vertical-align: baseline;
   line-height: 1.6;
 }
 
@@ -174,9 +175,9 @@ button {
   cursor: pointer;
 }
 
-.svg-icon : hover {
-  width: 26px;
-}
+/*.svg-icon : hover {*/
+/*  width: 26px;*/
+/*}*/
 
 #loopSet {
   margin-right: 12px;
