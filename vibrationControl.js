@@ -402,7 +402,7 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
         } else {
             if (selectedPoints.includes(this)) {
                 let originPointData = [currentX, currentY];
-                console.log(originPointData);
+                // console.log(originPointData);
                 let delta = [x(d[0]) - originPointData[0], y(d[1]) - originPointData[1]];
                 selectedPoints.forEach(
                     (point) => {
