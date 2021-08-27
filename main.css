@@ -6,12 +6,21 @@
   src: url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.woff") format("woff"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.svg#GT America") format("svg");
 } */
 @font-face {
+<<<<<<< HEAD
   font-family: "GT-America";
   src: url("public/GT-America-Mono-Medium.woff"),
     url("./public/GT-America-Standard-Regular.woff"),
     url("./public/GT-America-Standard-Medium.woff"),
     url("./public/source/GT-America-Standard-Bold.woff"),
     url("./public/source/GT-America-Standard-Light.woff");
+=======
+font-family: "GT-America";
+src: url("public/GT-America-Mono-Medium.woff"),
+url("./public/GT-America-Standard-Regular.woff"),
+url("./public/GT-America-Standard-Medium.woff"),
+url("./public/GT-America-Standard-Bold.woff"),
+url("./public/GT-America-Standard-Light.woff");
+>>>>>>> main
 }
 
 html,
@@ -25,7 +34,8 @@ body {
   font-family: "Roboto", sans-serif;
   font-style: normal;
   /* font-weight: 900; */
-  letter-spacing: 1.5px vertical-align: baseline;
+  letter-spacing: 1.5px ;
+  vertical-align: baseline;
   line-height: 1.6;
 }
 
@@ -177,9 +187,9 @@ input[type=text] {
   cursor: pointer;
 }
 
-.svg-icon : hover {
-  width: 26px;
-}
+/*.svg-icon : hover {*/
+/*  width: 26px;*/
+/*}*/
 
 #loopSet {
   margin-right: 12px;
