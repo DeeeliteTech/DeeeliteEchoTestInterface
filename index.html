@@ -65,7 +65,6 @@
     }
 </script>
 
-
 <body>
 <div id="canvas">
     <div id="admin-control">
@@ -259,10 +258,25 @@
         </div>
 
         <div class="slidercontainer">
-            <label class="bold">Intensity </label>
-            <input class="slider" id="vibrator_freq_input" type="range" min="0" max="60" step="1" value="31"
-                   onmouseup="onMouseUp();" oninput="showVal(this,'vibrator_freq_val')"/>
-            <span id="vibrator_freq_val">31</span>
+<!--            <div>-->
+                <label class="bold">Intensity </label>
+                <input class="slider" id="vibrator_freq_input" type="range" min="0" max="60" step="1" value="31"
+                       onmouseup="onMouseUp();" oninput="showVal(this,'vibrator_freq_val')"/>
+                <span id="vibrator_freq_val">31</span>
+<!--            </div>-->
+
+<!--            <div>-->
+<!--                <label class="bold">Gap Scale </label>-->
+<!--                <input class="slider" id="gap_scale_input" type="range" min="0" max="2" step="0.1" value="1.0"-->
+<!--                       onmouseup="onMouseUp();" oninput="changeGap(this,'data_points_gap_scale')"/>-->
+<!--                <span id="data_points_gap_scale">1.0</span>-->
+<!--            </div>-->
+        </div>
+        <div class="slidercontainer">
+                <label class="bold">Gap Scale</label>
+                <input class="slider" id="gap_scale_input" type="range" min="0.01" max="2" step="0.01" value="1.0"
+                       onmouseup="onMouseUpSlide(this,'data_points_gap_scale');" oninput="changeGap(this,'data_points_gap_scale')"/>
+                <span id="data_points_gap_scale">1.0</span>
         </div>
         <br>
 

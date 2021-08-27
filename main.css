@@ -6,21 +6,12 @@
   src: url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.woff") format("woff"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/031da03967812d134ed68febd3ba78a9.svg#GT America") format("svg");
 } */
 @font-face {
-<<<<<<< HEAD
-  font-family: "GT-America";
-  src: url("public/GT-America-Mono-Medium.woff"),
-    url("./public/GT-America-Standard-Regular.woff"),
-    url("./public/GT-America-Standard-Medium.woff"),
-    url("./public/source/GT-America-Standard-Bold.woff"),
-    url("./public/source/GT-America-Standard-Light.woff");
-=======
 font-family: "GT-America";
 src: url("public/GT-America-Mono-Medium.woff"),
 url("./public/GT-America-Standard-Regular.woff"),
 url("./public/GT-America-Standard-Medium.woff"),
 url("./public/GT-America-Standard-Bold.woff"),
 url("./public/GT-America-Standard-Light.woff");
->>>>>>> main
 }
 
 html,
@@ -290,6 +281,7 @@ input[type=text] {
 .slidercontainer {
   position: relative;
   display: flex;
+  /*flex-direction: column;*/
   align-items: center;
   top: 440px;
   color: white;

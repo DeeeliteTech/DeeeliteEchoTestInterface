@@ -1,15 +1,12 @@
 //Created by Huiyi Chen and Deqing Sun, May 2021
-//TODO:
-// 1. 100 is a little bit too small
 //Updated by Rui An:
-//1: It's very important to keep data flow order clear, we get from data to the parse code not the other way around
-//2: Previous ramp on and ramp off add segments behavior are wrong
 
 let actuatorsDictionary = {};
 let endPlayTimeoutID = null;
 
 let width = 0;
 let height = 0;
+let scaleAccumulator = 1.0;
 
 let margin = {
         top: 80,
@@ -36,10 +33,13 @@ let selectedPoint = null;
 let selectedPointData = null;
 
 let selectedPoints = [];
-
+let currentSVG = null;
 let running = false;
-
 let currentDataPoints = [];
+let currentactuatorName =  "vibrator";
+
+let currentMaxX = 2500;
+
 
 function selectPreset() {
     // let addPointButton = document.getElementById("reset-button");
@@ -136,8 +136,8 @@ function convertDataToVibrationCode(dataPoints) {
 
 //this function allows the graph to update with draggable events
 function updateSVG(svg, dataPoints, actuatorName, domainMax) {
-    currentDataPoints = dataPoints;
 
+    currentDataPoints = dataPoints;
     svg.selectAll('*').remove();
     svg.attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -549,12 +549,13 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
         yAxis: yAxis,
         line: graphLine,
         circle: circle,
-        dataset: dataPoints,
+        dataset: currentDataPoints,
         focus: focus,
         drag: drag
     }
 
     actuatorsDictionary[actuatorName + "Graph"] = newGraphElement;
+    currentSVG = svg;
 }
 
 function setFreq(frequencyInputID, codeInputID) {
@@ -827,12 +828,55 @@ function showVal(slider, textID) {
     codeInput.value = result.trim() + " ";
 }
 
+function changeGap(slider, textID) {
+    let value_txt_div = document.getElementById(textID);
+    let newGapScaleValue = slider.value;
+    value_txt_div.innerHTML = newGapScaleValue;
+    newGapScaleValue = parseFloat(newGapScaleValue);
+    currentDataPoints.forEach((point) => {
+        point[0] /= scaleAccumulator;
+        point[0] *= newGapScaleValue;
+    })
+    scaleAccumulator = newGapScaleValue;
+    convertDataToVibrationCode(currentDataPoints);
+    let dataMaxX = currentDataPoints[currentDataPoints.length - 1][0];
+    if (dataMaxX > currentMaxX) {
+        currentMaxX = dataMaxX * 2;
+    }
+    updateSVG(currentSVG, currentDataPoints, currentactuatorName, currentMaxX);
+}
+
+function onMouseUpSlide(slider, textID) {
+    // let value_txt_div = document.getElementById(textID);
+    // let newGapScaleValue = slider.value;
+    // newGapScaleValue = parseFloat(newGapScaleValue);
+    // currentDataPoints.forEach((point) => {
+    //     point[0] *= newGapScaleValue;
+    // })
+    // let domainMax = currentDataPoints[currentDataPoints.length - 1][0];
+    // updateSVG(currentSVG, currentDataPoints, currentactuatorName, 2000);
+
+    console.log('onmouseup')
+    startActuator();
+}
+
 function onMouseUp() {
     console.log('onmouseup')
     startActuator();
 }
 
+
 function update() {
     startActuator();
     printSettings();
 }
+
+
+
+
+
+
+
+
+
+

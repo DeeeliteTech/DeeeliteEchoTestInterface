@@ -2,15 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab116d57-bd4d-4d95-ace1-772db51ca530" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/DeeeliteEchoTestInterface.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keybinding.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vibrationControl.js" beforeDir="false" afterPath="$PROJECT_DIR$/vibrationControl.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +14,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/vibrationControl.js" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectId" id="1xGtxO1Zc2lmuvKQfoMA2eCdVDJ" />
   <component name="ProjectViewState">
@@ -42,7 +39,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1629993498821</updated>
-      <workItem from="1629993500028" duration="26034000" />
+      <workItem from="1629993500028" duration="26887000" />
+      <workItem from="1630096076694" duration="31000" />
+      <workItem from="1630096132020" duration="61000" />
+      <workItem from="1630096203780" duration="125000" />
+      <workItem from="1630096355598" duration="3202000" />
     </task>
     <servers />
   </component>
