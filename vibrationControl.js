@@ -20,9 +20,9 @@ let margin = {
         "R7F31D628 R40F31D1142 R24F31D552 R30F31D1028 R7F31D571 K7F31D590 R0F31D742 R26F31D666 R46F31D838 R30F31D1161 R8F31D685 R0F31D1161 ",
         "R11F31D414 R20F31D414 R54F31D628 R22F31D585 R39F31D485 R30F31D371 R17F31D557 R4F31D300 R20F31D428 R24F31D442 R16F31D842 R1F31D1342 ",
         "R20F31D1000 K20F31D1000 R0F31D1000 K0F31D1000 R40F31D1000 K40F31D1000 R0F31D1000 K0F31D415 ",
-        "R21F31D417 R44F31D750 R56F31D1821 R30F31D556 R28F31D597 R40F31D856 K40F31D1000 R0F31D1000 K0F31D415 ",
-        "K21F31D2181 K0F31D1487 K49F31D1890 K0F31D1451 K0F31D415 ",
-        "R58F31D1238 R21F31D942 R32F31D491 R20F31D821 R48F31D570 R22F31D696 R50F31D849 R0F31D1399 R18F31D326 R0F31D598 "
+        "K30F58D200 K0F58D100 K65F58D200 K0F58D500 ",
+        "R0F58D121 K0F58D71 R8F58D17 R5F58D32 R65F58D49 K65F58D51 R3F58D67 R8F58D67 R18F58D37 R19F58D32 R0F58D70 K0F58D374 "
+        // "R58F31D1238 R21F31D942 R32F31D491 R20F31D821 R48F31D570 R22F31D696 R50F31D849 R0F31D1399 R18F31D326 R0F31D598 "
     ]
 width = 700 - margin.left - margin.right;
 height = 400 - margin.top - margin.bottom;
@@ -740,10 +740,10 @@ function parseVibratorCode(codeInputID) {
 
 function startActuator() {
     console.log("startActuator");
-    // document.getElementById('actuator-toggle').src = "public/running.svg";
-    // let statusLable = document.getElementById('actuator-state-label');
-    // statusLable.innerHTML = "Actuator Running";
-    // statusLable.style.color = "#44CD5A";
+    document.getElementById('actuator-toggle').src = "public/running.svg";
+    let statusLable = document.getElementById('actuator-state-label');
+    statusLable.innerHTML = "Actuator Running";
+    statusLable.style.color = "#44CD5A";
     // let repeat_count = parseInt(document.getElementById("repeat_count").value);
     // stopActuator();
     let maxLoopTime = 0;
@@ -795,9 +795,9 @@ function actuatorToggle() {
 
 function stopActuator() {
     console.log("stopActuator");
-    // document.getElementById('actuator-toggle').src = "public/paused.svg";
-    // document.getElementById('actuator-state-label').innerHTML = "Actuator Paused";
-    // document.getElementById('actuator-state-label').style.color = "#FF0000";
+    document.getElementById('actuator-toggle').src = "public/paused.svg";
+    document.getElementById('actuator-state-label').innerHTML = "Actuator Paused";
+    document.getElementById('actuator-state-label').style.color = "#FF0000";
     clearTimeout(endPlayTimeoutID);
     nusSendString('N \n');
     running = false;
@@ -870,13 +870,3 @@ function update() {
     startActuator();
     printSettings();
 }
-
-
-
-
-
-
-
-
-
-
