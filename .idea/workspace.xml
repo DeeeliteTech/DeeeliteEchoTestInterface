@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ab116d57-bd4d-4d95-ace1-772db51ca530" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vibrationControl.js" beforeDir="false" afterPath="$PROJECT_DIR$/vibrationControl.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,6 +26,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -43,7 +42,9 @@
       <workItem from="1630096076694" duration="31000" />
       <workItem from="1630096132020" duration="61000" />
       <workItem from="1630096203780" duration="125000" />
-      <workItem from="1630096355598" duration="3202000" />
+      <workItem from="1630096355598" duration="3780000" />
+      <workItem from="1630597160701" duration="1460000" />
+      <workItem from="1630634082382" duration="187000" />
     </task>
     <servers />
   </component>
