@@ -214,6 +214,7 @@ function updateSVG(svg, dataPoints, actuatorName, domainMax) {
             //UPdate domaim max
             updateSVG(svg, currentDataPoints, actuatorName, domainMax);
             convertDataToVibrationCode(currentDataPoints);
+            startActuator();
         })
         .on("mousedown", function () {
             // Clear the previous selections
@@ -750,12 +751,12 @@ function startActuator() {
     let maxLoopTime = 0;
     let actuatorsDictionaryKeys = Object.keys(actuatorsDictionary)
     for (i = 0; i < actuatorsDictionaryKeys.length; i++) {
-        let keyStr = actuatorsDictionaryKeys[i];
-        if (keyStr.endsWith("Dataset")) {
-            let dataSet = actuatorsDictionary[keyStr];
-            if (dataSet.length > 0) {
-                let time_total = dataSet[dataSet.length - 1].x * 2;
-                if (time_total > maxLoopTime) maxLoopTime = time_total;
+                    let keyStr = actuatorsDictionaryKeys[i];
+                    if (keyStr.endsWith("Dataset")) {
+                        let dataSet = actuatorsDictionary[keyStr];
+                        if (dataSet.length > 0) {
+                            let time_total = dataSet[dataSet.length - 1].x * 2;
+                            if (time_total > maxLoopTime) maxLoopTime = time_total;
             }
         }
     }
@@ -767,11 +768,13 @@ function startActuator() {
     }
     //send vibrator
     let vibratorCodeContent = document.getElementById("vibrator_code").value.trim();
+    console.log(vibratorCodeContent);
     if (vibratorCodeContent.length > 0) {
         actuatorsSendString = actuatorsSendString + "V ";
-        for (j = 0; j < 2; j++) {
-            actuatorsSendString = actuatorsSendString + vibratorCodeContent + " ";
-        }
+        actuatorsSendString = actuatorsSendString + vibratorCodeContent + " ";
+        // for (j = 0; j < 2; j++) {
+        //     actuatorsSendString = actuatorsSendString + vibratorCodeContent + " ";
+        // }
     }
     //end command
     actuatorsSendString = actuatorsSendString + "\n";
