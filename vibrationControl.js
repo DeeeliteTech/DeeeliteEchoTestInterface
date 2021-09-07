@@ -152,10 +152,13 @@ function convertDataToVibrationCode(dataPoints) {
 
     }
 
-
     //update the codeinput field to reflect changes
     let codeInput = document.getElementById("vibrator_code");
     codeInput.value = codeResult.trim() + " ";
+
+    let endTime = dataPoints[dataPoints.length - 1][0] / 1000.0;
+    let bpm = 60.0 / endTime;
+    document.getElementById("bpmValue").innerHTML = Math.round(bpm);
 
     return codeResult;
     update();
@@ -744,6 +747,11 @@ function parseVibratorCode(codeInputID) {
     actuatorsDictionary[actuatorName + "Dataset"] = dataset;
     //let currentSVG = actuatorsDictionary[actuatorName + "Graph"].svg;
     updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, formattedData, actuatorName, maxX * 1.5);
+
+    let endTime = formattedData[formattedData.length - 1][0] / 1000.0;
+    let bpm = 60.0 / endTime;
+    document.getElementById("bpmValue").innerHTML = Math.round(bpm);
+
     // updateGraph(actuatorName);
 }
 

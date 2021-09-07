@@ -283,11 +283,17 @@
 <!--            </div>-->
         </div>
         <div class="slidercontainer">
-                <label class="bold">Gap Scale</label>
+                <label class="bold">Scale</label>
                 <input class="slider" id="gap_scale_input" type="range" min="0.01" max="2" step="0.01" value="1.0"
                        onmouseup="onMouseUpSlide(this,'data_points_gap_scale');" oninput="changeGap(this,'data_points_gap_scale')"/>
                 <span id="data_points_gap_scale">1.0</span>
         </div>
+
+        <div class="slidercontainer">
+            <label class="bold">BPM</label>
+            <div id="bpmValue">22</div>
+        </div>
+
         <br>
 
         <div class="user_save_ctrl">
