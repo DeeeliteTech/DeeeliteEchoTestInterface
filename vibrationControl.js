@@ -730,6 +730,11 @@ function parseVibratorCode(codeInputID) {
     actuatorsDictionary[actuatorName + "Dataset"] = dataset;
     //let currentSVG = actuatorsDictionary[actuatorName + "Graph"].svg;
     updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, formattedData, actuatorName, maxX * 1.5);
+
+    let endTime = formattedData[formattedData.length - 1][0] / 1000.0;
+    let bpm = 60.0 / endTime;
+    document.getElementById("bpmValue").innerHTML = Math.round(bpm);
+
     // updateGraph(actuatorName);
 }
 
