@@ -289,6 +289,11 @@ input[type=text] {
   /* padding: 5px 10px 5px 10px; */
 }
 
+#bpmValue {
+  width: 100%;
+  text-align: center;
+}
+
 .slider {
   -webkit-appearance: none;
   width: 100%;
