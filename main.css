@@ -289,6 +289,23 @@ input[type=text] {
   /* padding: 5px 10px 5px 10px; */
 }
 
+.slidercontainer button{
+  width: 95px;
+  height: 35px;
+  border: solid 1px #DDA046;
+  background: #DDA046;
+  box-shadow: 0px 4px 4px #424242;
+  padding: 0.6em 0.1em;
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  font-family: "Roboto mono";
+  cursor: pointer;
+  border-radius: 3px;
+  color: #000;
+  margin-right: 10px;
+}
+
 #bpmValue {
   width: 100%;
   text-align: left;

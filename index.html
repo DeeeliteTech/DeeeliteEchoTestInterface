@@ -122,6 +122,8 @@
                 <option value=17>heartbeat 7:BPM 90</option>
                 <option value=18>heartbeat 7:BPM 100</option>
                 <option value=19>heartbeat 7:reversed</option>
+                <option value=20>Energizing beat 1</option>
+                <option value=21>Energizing beat 2</option>
             </select>
             <br>
             <label class="mono">Code</label>
@@ -271,7 +273,7 @@
         <div class="slidercontainer">
 <!--            <div>-->
                 <label class="bold">Intensity </label>
-                <input class="slider" id="vibrator_freq_input" type="range" min="0" max="60" step="1" value="31"
+                <input class="slider" id="vibrator_freq_input" type="range" min="0" max="250" step="1" value="31"
                        onmouseup="onMouseUp();" oninput="showVal(this,'vibrator_freq_val')"/>
                 <span id="vibrator_freq_val">31</span>
 <!--            </div>-->
@@ -293,6 +295,11 @@
         <div class="slidercontainer">
             <label class="bold">BPM</label>
             <div id="bpmValue">22</div>
+        </div>
+        <br>
+        <div class ="slidercontainer">
+            <button onclick="toggleRelaxMode"> Relaxing </button>
+            <button onclick="toggleEnergizeMode"> Energizing </button>
         </div>
 
         <br>
