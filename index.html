@@ -271,20 +271,21 @@
         </div>
 
         <div class="slidercontainer">
-<!--            <div>-->
-                <label class="bold">Intensity </label>
-                <input class="slider" id="vibrator_freq_input" type="range" min="0" max="250" step="1" value="31"
-                       onmouseup="onMouseUp();" oninput="showVal(this,'vibrator_freq_val')"/>
-                <span id="vibrator_freq_val">31</span>
-<!--            </div>-->
-
-<!--            <div>-->
-<!--                <label class="bold">Gap Scale </label>-->
-<!--                <input class="slider" id="gap_scale_input" type="range" min="0" max="2" step="0.1" value="1.0"-->
-<!--                       onmouseup="onMouseUp();" oninput="changeGap(this,'data_points_gap_scale')"/>-->
-<!--                <span id="data_points_gap_scale">1.0</span>-->
-<!--            </div>-->
+            <!--            <div>-->
+            <label class="bold">Intensity </label>
+            <input class="slider" id="vibrator_intensity_input" type="range" min="0.01" max="3" step="0.1" value="1"
+                   onmouseup="onMouseUp();" oninput="showIntensityVal(this,'vibrator_intensity_val')"/>
+            <span id="vibrator_intensity_val">1</span>
         </div>
+
+        <div class="slidercontainer">
+<!--            <div>-->
+                <label class="bold">Frequency </label>
+                <input class="slider" id="vibrator_freq_input" type="range" min="0" max="250" step="1" value="31"
+                       onmouseup="onMouseUp();" oninput="showFrequencyVal(this,'vibrator_freq_val')"/>
+                <span id="vibrator_freq_val">31</span>
+        </div>
+
         <div class="slidercontainer">
                 <label class="bold">Scale</label>
                 <input class="slider" id="gap_scale_input" type="range" min="0.01" max="2" step="0.01" value="1.0"
@@ -294,9 +295,17 @@
 
         <div class="slidercontainer">
             <label class="bold">BPM</label>
+            <input class="slider" id="bpm_input" type="range" min="1" max="150" step="1" value="60.0"
+                   onmouseup="onMouseUpSlide(this,'BPM');" oninput="changeBPM(this,'BPM')"/>
+            <span id="BPM">60.0</span>
+        </div>
+
+        <div class="slidercontainer">
+            <label class="bold">BPM</label>
             <div id="bpmValue">22</div>
         </div>
         <br>
+
         <div class ="slidercontainer">
             <button onclick="toggleRelaxMode"> Relaxing </button>
             <button onclick="toggleEnergizeMode"> Energizing </button>

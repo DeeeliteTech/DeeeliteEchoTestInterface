@@ -7,6 +7,8 @@ let endPlayTimeoutID = null;
 let width = 0;
 let height = 0;
 let scaleAccumulator = 1.0;
+let intensityAccumulator = 1.0;
+let boundScaler = 1.25;
 
 let margin = {
         top: 80,
@@ -102,7 +104,7 @@ function initGraph(actuatorName) {
     ];
     let maxX = Math.max(...points);
     // console.log(formattedData);
-    updateSVG(currentGraphSVG, points, actuatorName, 2500);
+    updateSVG(currentGraphSVG, points, actuatorName, 2000 * boundScaler);
     convertDataToVibrationCode(points);
 
 }
@@ -165,7 +167,8 @@ function convertDataToVibrationCode(dataPoints) {
 
     let endTime = dataPoints[dataPoints.length - 1][0] / 1000.0;
     let bpm = 60.0 / endTime;
-    document.getElementById("bpmValue").innerHTML = Math.round(bpm);
+    document.getElementById("BPM").innerHTML = Math.round(bpm);
+    document.getElementById("bpm_input").value = Math.round(bpm);
 
     return codeResult;
     update();
@@ -173,6 +176,7 @@ function convertDataToVibrationCode(dataPoints) {
 
 //this function allows the graph to update with draggable events
 function updateSVG(svg, dataPoints, actuatorName, domainMax) {
+    // domainMax = dataPoints[dataPoints.length-1][0] * boundScaler;
 
     currentDataPoints = dataPoints;
     svg.selectAll('*').remove();
@@ -625,9 +629,8 @@ function addPoint(actuatorName) {
     let lastPoint = currentDataPoints[length - 1];
     let newPoint = [lastPoint[0] + 200, 0]; // make the last point's y 0 so we can have a closed loop
     currentDataPoints.push(newPoint);
-    updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, currentDataPoints, actuatorName, newPoint[0] * 1.5);
+    updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, currentDataPoints, actuatorName, newPoint[0] * boundScaler);
     convertDataToVibrationCode(currentDataPoints);
-
 }
 
 function printSettings() {
@@ -750,14 +753,16 @@ function parseVibratorCode(codeInputID) {
 
     formattedData = Array.from(new Set(formattedData.map(JSON.stringify)), JSON.parse);
     let maxX = Math.max(...xData);
+    currentMaxX = maxX;
 
     actuatorsDictionary[actuatorName + "Dataset"] = dataset;
     //let currentSVG = actuatorsDictionary[actuatorName + "Graph"].svg;
-    updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, formattedData, actuatorName, maxX * 1.5);
+    updateSVG(actuatorsDictionary[actuatorName + "Graph"].svg, formattedData, actuatorName, maxX * boundScaler);
 
     let endTime = formattedData[formattedData.length - 1][0] / 1000.0;
     let bpm = 60.0 / endTime;
-    document.getElementById("bpmValue").innerHTML = Math.round(bpm);
+    document.getElementById("BPM").innerHTML = Math.round(bpm);
+    document.getElementById("bpm_input").value = Math.round(bpm);
 
     // updateGraph(actuatorName);
 }
@@ -857,7 +862,29 @@ function replaceCommandValue(currentValue, currentCommand) {
     return newString;
 }
 
-function showVal(slider, textID) {
+
+function showIntensityVal(slider, textID) {
+    let value_txt_div = document.getElementById(textID);
+    let currentCodeToProcess = document.getElementById("vibrator_code").value.trim();
+    let newIntensityValue = slider.value;
+    value_txt_div.innerHTML = newIntensityValue;
+    let currentIntensityValue = parseFloat(newIntensityValue);
+    currentDataPoints.forEach((point) => {
+        point[1] /= intensityAccumulator;
+        point[1] *= currentIntensityValue;
+    })
+    intensityAccumulator = currentIntensityValue;
+    convertDataToVibrationCode(currentDataPoints);
+
+    let dataMaxX = currentDataPoints[currentDataPoints.length - 1][0];
+    if (dataMaxX > currentMaxX) {
+        currentMaxX = dataMaxX * boundScaler;
+    }
+
+    updateSVG(currentSVG, currentDataPoints, currentactuatorName, currentMaxX);
+}
+
+function showFrequencyVal(slider, textID) {
     let value_txt_div = document.getElementById(textID);
     let currentCodeToProcess = document.getElementById("vibrator_code").value.trim();
     let newFreqValue = slider.value;
@@ -873,6 +900,43 @@ function showVal(slider, textID) {
     codeInput.value = result.trim() + " ";
 }
 
+function changeBPM(slider, textID) {
+    let value_txt_div = document.getElementById(textID);
+    let newBPM = slider.value;
+    value_txt_div.innerHTML = newBPM;
+
+    let newBPMValue = parseInt(newBPM);
+    let endValue =  60.0/newBPMValue;
+    let currentEndValue = currentDataPoints[currentDataPoints.length - 1][0] / 1000;
+    let adjustmentScale  =  endValue / currentEndValue;
+    let frontAdjustmentScale = 1.0;
+    if (adjustmentScale > 1.0) {
+        frontAdjustmentScale = (adjustmentScale - 1.0) / 1.5 + 1.0
+    }
+    else {
+        frontAdjustmentScale = 1.0 - (1.0 - adjustmentScale) * 1.5;
+    }
+
+    for (let i=0; i<currentDataPoints.length-1 ; i++) {
+        currentDataPoints[i][0] *= frontAdjustmentScale;
+    }
+    currentDataPoints[currentDataPoints.length-1][0] *= adjustmentScale;
+
+    // currentDataPoints.forEach((point) => {
+    //     point[0] *= adjustmentScale;
+    // })
+    // console.log(adjustmentScale);
+    // console.log("0asdf");
+
+
+    convertDataToVibrationCode(currentDataPoints);
+    let dataMaxX = currentDataPoints[currentDataPoints.length - 1][0];
+    if (dataMaxX > currentMaxX) {
+        currentMaxX = dataMaxX * boundScaler;
+    }
+    updateSVG(currentSVG, currentDataPoints, currentactuatorName, currentMaxX);
+}
+
 function changeGap(slider, textID) {
     let value_txt_div = document.getElementById(textID);
     let newGapScaleValue = slider.value;
@@ -886,7 +950,7 @@ function changeGap(slider, textID) {
     convertDataToVibrationCode(currentDataPoints);
     let dataMaxX = currentDataPoints[currentDataPoints.length - 1][0];
     if (dataMaxX > currentMaxX) {
-        currentMaxX = dataMaxX * 2;
+        currentMaxX = dataMaxX * boundScaler;
     }
     updateSVG(currentSVG, currentDataPoints, currentactuatorName, currentMaxX);
 }
