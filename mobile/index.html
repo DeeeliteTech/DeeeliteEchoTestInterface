@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+  <!-- <link href="//db.onlinewebfonts.com/c/031da03967812d134ed68febd3ba78a9?family=GT+America" rel="stylesheet" type="text/css"/> -->
+  <title>Test BLE Mobile</title>
+</head>
+<!-- Load in the d3 library -->
+<!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
+<!-- <script src="d3.v5.min.js"></script> -->
+<script src="mobileBleserial.js"></script>
+<script src="mobileVibrationControl.js"></script>
+<!-- <script src="vibrationControl.js"></script> -->
+<link rel="stylesheet" href="main.css">
+
+<body>
+  <div class='canvas'>
+    <div id='actuator-ctr-container'>
+      <div id='actuator-ctr'>
+        <h3>Echo Testing Interface</h3>
+        <button onclick="connectionToggle()" id="clientConnectButton" >Connect to Device</button>
+        <div>
+          <button id="buttonOn">On </button>
+          <button id="buttonOff">Off </button>
+        </div>
+      </div>
+    </div>
+    <div id='user-ctr-container'>
+      <div id="user-ctr">
+        <div id="pattern-sel">
+          <button id="singleButton" onclick="changePreset(0)">Single</button>
+          <button id="doubleButton" style="background: #000000; color: white" onclick="changePreset(1)">Double</button>
+        </div>
+        <div id="firefly"></div>
+        <div class="slidecontainer">
+          <label>Intensity</label>
+          <input type="range" min="0.01" max="3" value="1" step="0.1" class="slider" id="intensityRange" onmouseup="mobileOnMouseUp();"  oninput="mobileShowIntensityChange(this, 'intensityRange')">
+        </div>
+        <div class="slidecontainer">
+          <label>BPM</label>
+          <input type="range" min="1" max="150" value="50" step="1" class="slider" id="speedRange" onmouseup="mobileOnMouseUp();" oninput="mobileChangeBPM(this, 'speedRange')">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</html>

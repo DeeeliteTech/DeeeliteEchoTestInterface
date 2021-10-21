@@ -10,6 +10,9 @@ let scaleAccumulator = 1.0;
 let intensityAccumulator = 1.0;
 let boundScaler = 1.25;
 
+let frontAdjustmentScaleAccumulator = 1.0;
+let adjustmentScaleAccumulator = 1.0;
+
 let margin = {
         top: 80,
         right: 20,
@@ -907,8 +910,14 @@ function changeBPM(slider, textID) {
 
     let newBPMValue = parseInt(newBPM);
     let endValue =  60.0/newBPMValue;
+
+    currentDataPoints[currentDataPoints.length-1][0] /= adjustmentScaleAccumulator;
     let currentEndValue = currentDataPoints[currentDataPoints.length - 1][0] / 1000;
     let adjustmentScale  =  endValue / currentEndValue;
+
+    currentDataPoints[currentDataPoints.length-1][0] *= adjustmentScale;
+    adjustmentScaleAccumulator = adjustmentScale;
+
     let frontAdjustmentScale = 1.0;
     if (adjustmentScale > 1.0) {
         frontAdjustmentScale = (adjustmentScale - 1.0) / 1.5 + 1.0
@@ -918,15 +927,15 @@ function changeBPM(slider, textID) {
     }
 
     for (let i=0; i<currentDataPoints.length-1 ; i++) {
+        currentDataPoints[i][0] /= frontAdjustmentScaleAccumulator;
         currentDataPoints[i][0] *= frontAdjustmentScale;
     }
-    currentDataPoints[currentDataPoints.length-1][0] *= adjustmentScale;
 
-    // currentDataPoints.forEach((point) => {
-    //     point[0] *= adjustmentScale;
-    // })
-    // console.log(adjustmentScale);
-    // console.log("0asdf");
+    frontAdjustmentScaleAccumulator = frontAdjustmentScale;
+
+    currentDataPoints[currentDataPoints.length-1][0] /= adjustmentScaleAccumulator;
+    currentDataPoints[currentDataPoints.length-1][0] *= adjustmentScale;
+    adjustmentScaleAccumulator = adjustmentScale;
 
 
     convertDataToVibrationCode(currentDataPoints);
@@ -947,6 +956,7 @@ function changeGap(slider, textID) {
         point[0] *= newGapScaleValue;
     })
     scaleAccumulator = newGapScaleValue;
+
     convertDataToVibrationCode(currentDataPoints);
     let dataMaxX = currentDataPoints[currentDataPoints.length - 1][0];
     if (dataMaxX > currentMaxX) {

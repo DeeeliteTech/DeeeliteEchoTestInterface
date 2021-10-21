@@ -13,7 +13,7 @@ var margin = {
 
 let selectedPoint = null;
 
-presets = [
+mobilePresets = [
   "K0F31D1000 K50F31D1000",
   "K15F31D200 K0F31D100 K40F31D200 K0F31D550", "K0F31D1000 K50F31D1000 R0F31D1000"
 ]
