@@ -7,7 +7,6 @@ let mobilePresets = [
 ]
 let currentMobileVibrationCode = mobilePresets[1];
 let mobileRunning = false;
-
 let mobileIntensityAccumulator = 1.0;
 let mobileGapAccumulator = 1.0;
 let mobileBoundScaler = 1.25;
@@ -34,6 +33,7 @@ function mobileChangeBPM(slider, textID) {
 
     let newBPMValue = parseInt(newBPM);
     let endValue =  60.0/newBPMValue;
+    document.getElementById("mobileBPMValue").innerHTML = newBPMValue.toString();
 
     mobileCurrentDataPoints[mobileCurrentDataPoints.length - 1][0] /= mobileAdjustmentScaleAccumulator;
     let currentEndValue = mobileCurrentDataPoints[mobileCurrentDataPoints.length - 1][0] / 1000;
@@ -62,6 +62,7 @@ function mobileChangeBPM(slider, textID) {
 function mobileShowIntensityChange(slider, textID) {
     let value_txt_div = document.getElementById(textID);
     let newIntensityValue = slider.value;
+    document.getElementById("mobileIntensityValue").innerHTML = newIntensityValue.toString();
     value_txt_div.innerHTML = newIntensityValue;
     let currentCodeToProcess = currentMobileVibrationCode;
     let currentIntensityValue = parseFloat(newIntensityValue);
@@ -226,6 +227,8 @@ function changePreset(index) {
     mobileStartActuator();
     let currentBPM = 60 / mobileCurrentDataPoints[mobileCurrentDataPoints.length - 1][0] * 1000;
     currentBPM = Math.floor(currentBPM);
+    document.getElementById("mobileBPMValue").innerHTML = currentBPM.toString();
+
     console.log(currentBPM);
     document.getElementById("speedRange").value = currentBPM;
 }
@@ -233,8 +236,130 @@ function changePreset(index) {
 document.addEventListener("DOMContentLoaded", function() {
     mobileParseVibrationCode();
     mobileStartActuator();
-
     let currentBPM = 60 / mobileCurrentDataPoints[mobileCurrentDataPoints.length - 1][0] * 1000;
     currentBPM = Math.floor(currentBPM);
     document.getElementById("speedRange").value = currentBPM;
+    document.getElementById("mobileBPMValue").innerHTML = currentBPM.toString();
+    init();
+    //animation();
 });
+
+// import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.120.1/build/three.module.js';
+// import Stats from 'https://cdn.jsdelivr.net/npm/three@0.120.1/examples/jsm/libs/stats.module.min.js';
+// import Firefly from "./Firefly.js";
+
+//THREEJS
+let camera, scene, renderer;
+let geometry, material, mesh;
+let fireflies = [];
+
+window.addEventListener( 'resize', onWindowResize, false );
+
+function onWindowResize(){
+    let firefly = document.getElementById('firefly');
+    let fireflyDimension = firefly.getBoundingClientRect();
+    let ratio = fireflyDimension.width / fireflyDimension.height ;
+    camera.aspect = ratio;
+    camera.updateProjectionMatrix();
+    renderer.setSize( fireflyDimension.width, fireflyDimension.height );
+}
+
+function init() {
+
+    let BLOOM_SCENE = 1
+    const bloomLayer = new THREE.Layers();
+    bloomLayer.set( BLOOM_SCENE );
+
+    let firefly = document.getElementById('firefly');
+    let fireflyDimension = firefly.getBoundingClientRect();
+    let ratio = fireflyDimension.width / fireflyDimension.height ;
+
+    camera = new THREE.PerspectiveCamera( 70, ratio, 0.01, 10 );
+
+    camera.position.z = 1;
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xFFBE63);
+    // scene.background = new THREE.Color(0x);
+
+
+    let number = 20;
+    for (let i=0; i<number; i++) {
+        let firefly = new Firefly(fireflyDimension.width, fireflyDimension.height, scene);
+        firefly.plane.layers.enable(BLOOM_SCENE);
+        fireflies.push(firefly);
+    }
+
+    // geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
+    // material = new THREE.MeshNormalMaterial();
+    // mesh = new THREE.Mesh( geometry, material );
+    // scene.add( mesh );
+
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    renderer.setSize( fireflyDimension.width, fireflyDimension.height );
+    renderer.setAnimationLoop( animation );
+    // renderer.toneMapping = THREE.ReinhardToneMapping;
+    // renderer.setClearColor(new THREE.Color(0xFFBE63));
+
+    // const params = {
+    //     exposure: 1,
+    //     bloomStrength: 0.001,
+    //     bloomThreshold: 0.0,
+    //     bloomRadius: 1
+    // };
+    //
+    // const renderScene = new RenderPass( scene, camera );
+    // renderScene.clearAlpha = 1;
+    // const clearPass = new ClearPass(scene.background, 1);
+    // const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
+    // bloomPass.threshold = params.bloomThreshold;
+    // bloomPass.strength = params.bloomStrength;
+    // bloomPass.radius = params.bloomRadius;
+    //
+    // bloomComposer = new EffectComposer( renderer );
+    // // composer.addPass(clearPass);
+    // bloomComposer.addPass( renderScene );
+    // bloomComposer.addPass( bloomPass );
+    //
+    // const finalPass = new ShaderPass(
+    //     new THREE.ShaderMaterial( {
+    //         uniforms: {
+    //             baseTexture: { value: null },
+    //             bloomTexture: { value: bloomComposer.renderTarget2.texture }
+    //         },
+    //         vertexShader: document.getElementById( 'vertexshader' ).textContent,
+    //         fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+    //         defines: {}
+    //     } ), "baseTexture"
+    // );
+    // finalPass.needsSwap = true;
+    //
+    // finalComposer = new EffectComposer( renderer );
+    // finalComposer.addPass( renderScene );
+    // finalComposer.addPass( finalPass );
+    // bloomComposer.renderToScreen = false;
+
+    // composer.addPass(clearPass);
+    // composer.addPass( renderScene );
+
+
+    // composer.addPass( renderScene );
+    firefly.appendChild( renderer.domElement );
+
+}
+
+function animation( time ) {
+    // console.log(time/1000);
+    // mesh.rotation.x = time / 2000;
+    // mesh.rotation.y = time / 1000;
+    let currentBPM = parseInt(document.getElementById("speedRange").value);
+    fireflies.forEach((firefly) => {
+        firefly.update(time/1000);
+        firefly.bpm = currentBPM;
+        // console.log(firefly.plane.position);
+    });
+    // bloomComposer.render();
+    // finalComposer.render();
+    renderer.render( scene, camera );
+}
+
+
