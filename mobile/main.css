@@ -48,7 +48,7 @@ button {
   box-sizing: border-box;
   color: black;
   text-align: center;
-  padding: 0.85em 0.6em;
+  padding: 0.85em 0.7em;
   line-height: 15px;
   color: #212121;
   margin: 8px 0px;
@@ -73,7 +73,7 @@ button {
 
 .slider {
   -webkit-appearance: none;
-  width: 40%;
+  width: 35%;
   height: 4px;
   border-radius: 3px;
   background: #fafafa;
