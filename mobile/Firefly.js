@@ -13,12 +13,13 @@ class Firefly {
         this.vel.multiplyScalar(velScaler);
 
         this.bpm = 30;
+        this.started = false;
 
         // this.pos = new THREE.Vector3(0,0,0);
         // this.vel = new THREE.Vector3(0,0,0);
         // this.acc = new THREE.Vector3(0,0,0);
 
-        this.size  = Math.random() * 0.1;
+        this.size  = Math.random() * 0.03;
         this.geometry = new THREE.CircleGeometry(this.size, 32);
         this.material = new THREE.MeshBasicMaterial( {color: 0xfff1be, side: THREE.DoubleSide} );
         this.material.transparent = true;
@@ -33,11 +34,9 @@ class Firefly {
     bounds() {
         if (this.pos.x <= -this.width/2  || this.pos.x >= this.width/2) {
             this.vel.x *= -1;
-            console.log("boudn");
         }
         if (this.pos.y <= -this.height/2 || this.pos.y >= this.height/2) {
             this.vel.y *= -1;
-            console.log("boudn");
         }
         // return this;
     }
@@ -46,11 +45,13 @@ class Firefly {
     update(time) {
         // this.vel.add(this.acc);
         // this.plane.material.color.a = Math.abs(Math.sin(time));
-        let scaler = 60 / this.bpm;
-        let current = time % scaler;
-        this.plane.material.opacity = Math.abs(Math.sin(current * Math.PI/2));
-        this.pos.add(this.vel);
-        this.plane.position.set(this.pos.x, this.pos.y, this.pos.z);
-        this.bounds();
+        if (this.started) {
+            let scaler = 60 / this.bpm;
+            let current = time % scaler;
+            this.plane.material.opacity = Math.abs(Math.sin(current * Math.PI/2));
+            this.pos.add(this.vel);
+            this.plane.position.set(this.pos.x, this.pos.y, this.pos.z);
+            this.bounds();
+        }
     }
 }
