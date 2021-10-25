@@ -7,7 +7,7 @@ html, body {
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  font-size: 120.5%;
+  font-size: 1.7em;
   /*line-height: 15px;*/
 }
 
@@ -15,7 +15,7 @@ h3 {
   font-family: Hiragino Kaku Gothic Pro;
   font-style: normal;
   /* font-weight: bold; */
-  font-size: 120.5%;
+
   line-height: 24px;
 
 
@@ -24,8 +24,8 @@ h3 {
 label{
   font-family: Hiragino Kaku Gothic Pro;
   font-style: normal;
-  font-size: 14px;
-  margin-right:4px;
+  font-size: 0.9em;
+  margin-right:0.6em;
 
 }
 
@@ -35,8 +35,8 @@ button {
   box-sizing: border-box;
   color: white;
   text-align: center;
-  padding: 8px 8px;
-  font-size: 13px;
+  padding: 0.8em;
+  font-size: 0.8em;
   line-height: 15px;
   /*color: #212121;*/
   margin: 8px 0px;
@@ -48,8 +48,7 @@ button {
   box-sizing: border-box;
   color: black;
   text-align: center;
-  padding: 18px 18px;
-  font-size: 1.9em;
+  padding: 0.85em 0.6em;
   line-height: 15px;
   color: #212121;
   margin: 8px 0px;
@@ -74,7 +73,7 @@ button {
 
 .slider {
   -webkit-appearance: none;
-  width: 18%;
+  width: 40%;
   height: 4px;
   border-radius: 3px;
   background: #fafafa;
@@ -83,6 +82,7 @@ button {
 
   -webkit-transition: .2s;
   transition: opacity .2s;
+  margin-right: 1em;
 }
 
 .slider:hover {
@@ -131,11 +131,12 @@ button {
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top:0.7em;
 }
 
 #pattern-sel button{
   background: none;
-  padding:6px 10px;
+  /* padding:6px 10px; */
 }
 
 #firefly {
