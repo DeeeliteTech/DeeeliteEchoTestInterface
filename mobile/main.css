@@ -73,7 +73,7 @@ button {
 
 .slider {
   -webkit-appearance: none;
-  width: 35%;
+  width: 40%;
   height: 4px;
   border-radius: 3px;
   background: #fafafa;
@@ -140,7 +140,7 @@ button {
 }
 
 #firefly {
-    height: 65%;
+    height: 55%;
   /*background-color: #FFBE63;*/
   /*height: 180px;*/
 }
