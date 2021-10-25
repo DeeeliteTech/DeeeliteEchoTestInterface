@@ -136,6 +136,22 @@ function mobileStartActuator() {
     console.log(actuatorsSendString);
     nusSendString(actuatorsSendString);
     mobileRunning = true;
+
+    document.getElementById("buttonOn").style.background = "#ffffff";
+    document.getElementById("buttonOff").style.background = "#ffffff";
+    document.getElementById("buttonOn").style.color = "#000000";
+    document.getElementById("buttonOff").style.color = "#000000";
+
+    document.getElementById("buttonOn").style.background = "#000000";
+    document.getElementById("buttonOn").style.color = "#ffffff";
+}
+
+function mobileActuatorToggle() {
+    if (mobileRunning) {
+        mobileStopActuator();
+    } else {
+        mobileStartActuator();
+    }
 }
 
 function mobileParseVibrationCode() {
@@ -206,21 +222,31 @@ function mobileStopActuator() {
     console.log("stopActuator");
     nusSendString('N \n');
     mobileRunning = false;
+
+    document.getElementById("buttonOn").style.background = "#ffffff";
+    document.getElementById("buttonOff").style.background = "#ffffff";
+    document.getElementById("buttonOn").style.color = "#000000";
+    document.getElementById("buttonOff").style.color = "#000000";
+
+    document.getElementById("buttonOff").style.background = "#000000";
+    document.getElementById("buttonOff").style.color = "#ffffff";
 }
 
 function changePreset(index) {
     resetParametersValue();
     if(index === 0) {
-        document.getElementById("singleButton").style.background = "#000000";
-        document.getElementById("singleButton").style.color = "#ffffff";
-        document.getElementById("doubleButton").style.background = "#FFBE63";
-        document.getElementById("doubleButton").style.color = "#000000";
-    }
-    else {
+        document.getElementById("singleButton").style.background = "#ffffff";
+        document.getElementById("singleButton").style.color = "#000000";
+
         document.getElementById("doubleButton").style.background = "#000000";
         document.getElementById("doubleButton").style.color = "#ffffff";
-        document.getElementById("singleButton").style.background = "#FFBE63";
-        document.getElementById("singleButton").style.color = "#000000";
+    }
+    else {
+        document.getElementById("doubleButton").style.background = "#ffffff";
+        document.getElementById("doubleButton").style.color = "#000000";
+
+        document.getElementById("singleButton").style.background = "#000000";
+        document.getElementById("singleButton").style.color = "#ffffff";
     }
     currentMobileVibrationCode = mobilePresets[index];
     mobileParseVibrationCode();
@@ -234,12 +260,18 @@ function changePreset(index) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    window.mobileOnMouseUp = mobileOnMouseUp;
+    window.mobileChangeBPM = mobileChangeBPM;
+    window.mobileShowIntensityChange = mobileShowIntensityChange;
+    window.mobileActuatorToggle = mobileActuatorToggle;
+    window.changePreset = changePreset;
+
     mobileParseVibrationCode();
-    mobileStartActuator();
     let currentBPM = 60 / mobileCurrentDataPoints[mobileCurrentDataPoints.length - 1][0] * 1000;
     currentBPM = Math.floor(currentBPM);
     document.getElementById("speedRange").value = currentBPM;
     document.getElementById("mobileBPMValue").innerHTML = currentBPM.toString();
+    // mobileStartActuator();
     init();
     //animation();
 });
@@ -252,6 +284,11 @@ document.addEventListener("DOMContentLoaded", function() {
 let camera, scene, renderer;
 let geometry, material, mesh;
 let fireflies = [];
+let bloomComposer;
+
+import { EffectComposer } from "https://threejs.org/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "https://threejs.org/examples/jsm/postprocessing/RenderPass.js";
+import { UnrealBloomPass} from "https://threejs.org/examples/jsm/postprocessing/UnrealBloomPass.js"  ;
 
 window.addEventListener( 'resize', onWindowResize, false );
 
@@ -270,19 +307,19 @@ function init() {
     const bloomLayer = new THREE.Layers();
     bloomLayer.set( BLOOM_SCENE );
 
-    let firefly = document.getElementById('firefly');
-    let fireflyDimension = firefly.getBoundingClientRect();
+    let fireflyContainer = document.getElementById('firefly');
+    let fireflyDimension = fireflyContainer.getBoundingClientRect();
     let ratio = fireflyDimension.width / fireflyDimension.height ;
 
     camera = new THREE.PerspectiveCamera( 70, ratio, 0.01, 10 );
 
     camera.position.z = 1;
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xFFBE63);
-    // scene.background = new THREE.Color(0x);
+    // scene.background = new THREE.Color(0xFFBE63);
+    scene.background = new THREE.Color(0x000000);
 
 
-    let number = 20;
+    let number = 50;
     for (let i=0; i<number; i++) {
         let firefly = new Firefly(fireflyDimension.width, fireflyDimension.height, scene);
         firefly.plane.layers.enable(BLOOM_SCENE);
@@ -300,50 +337,27 @@ function init() {
     // renderer.toneMapping = THREE.ReinhardToneMapping;
     // renderer.setClearColor(new THREE.Color(0xFFBE63));
 
-    // const params = {
-    //     exposure: 1,
-    //     bloomStrength: 0.001,
-    //     bloomThreshold: 0.0,
-    //     bloomRadius: 1
-    // };
-    //
-    // const renderScene = new RenderPass( scene, camera );
-    // renderScene.clearAlpha = 1;
+    const params = {
+        exposure: 1,
+        bloomStrength: 3.5,
+        bloomThreshold: 0.0,
+        bloomRadius: 1.2
+    };
+
+    const renderScene = new RenderPass( scene, camera );
+    renderScene.clearAlpha = 1;
     // const clearPass = new ClearPass(scene.background, 1);
-    // const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
-    // bloomPass.threshold = params.bloomThreshold;
-    // bloomPass.strength = params.bloomStrength;
-    // bloomPass.radius = params.bloomRadius;
+    const bloomPass = new UnrealBloomPass( new THREE.Vector2( fireflyDimension.width, fireflyDimension.height ), 1.5, 0.4, 0.85 );
+    bloomPass.threshold = params.bloomThreshold;
+    bloomPass.strength = params.bloomStrength;
+    bloomPass.radius = params.bloomRadius;
     //
-    // bloomComposer = new EffectComposer( renderer );
+    bloomComposer = new EffectComposer( renderer );
     // // composer.addPass(clearPass);
-    // bloomComposer.addPass( renderScene );
-    // bloomComposer.addPass( bloomPass );
+    bloomComposer.addPass( renderScene );
+    bloomComposer.addPass( bloomPass );
     //
-    // const finalPass = new ShaderPass(
-    //     new THREE.ShaderMaterial( {
-    //         uniforms: {
-    //             baseTexture: { value: null },
-    //             bloomTexture: { value: bloomComposer.renderTarget2.texture }
-    //         },
-    //         vertexShader: document.getElementById( 'vertexshader' ).textContent,
-    //         fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
-    //         defines: {}
-    //     } ), "baseTexture"
-    // );
-    // finalPass.needsSwap = true;
-    //
-    // finalComposer = new EffectComposer( renderer );
-    // finalComposer.addPass( renderScene );
-    // finalComposer.addPass( finalPass );
-    // bloomComposer.renderToScreen = false;
-
-    // composer.addPass(clearPass);
-    // composer.addPass( renderScene );
-
-
-    // composer.addPass( renderScene );
-    firefly.appendChild( renderer.domElement );
+    fireflyContainer.appendChild( renderer.domElement );
 
 }
 
@@ -353,13 +367,14 @@ function animation( time ) {
     // mesh.rotation.y = time / 1000;
     let currentBPM = parseInt(document.getElementById("speedRange").value);
     fireflies.forEach((firefly) => {
-        firefly.update(time/1000);
+        firefly.started = mobileRunning;
         firefly.bpm = currentBPM;
+        firefly.update(time/1000);
         // console.log(firefly.plane.position);
     });
-    // bloomComposer.render();
+    bloomComposer.render();
     // finalComposer.render();
-    renderer.render( scene, camera );
+    // renderer.render( scene, camera );
 }
 
 

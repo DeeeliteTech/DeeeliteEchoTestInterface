@@ -6,11 +6,11 @@
   <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
   <!-- <link href="//db.onlinewebfonts.com/c/031da03967812d134ed68febd3ba78a9?family=GT+America" rel="stylesheet" type="text/css"/> -->
   <title>Test BLE Mobile</title>
-  <script src="http://threejs.org/build/three.min.js"></script>
-  <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
-<!--  <script type="module" src="http://threejs.org/examples/jsm/postprocessing/EffectComposer.js"></script>-->
-<!--  <script type="module" src="http://threejs.org/examples/jsm/postprocessing/RenderPass.js"></script>-->
-<!--  <script type="module" src="http://threejs.org/examples/jsm/postprocessing/UnrealBloomPass.js"></script>-->
+  <script src="https://threejs.org/build/three.min.js"></script>
+  <script type="module" src="https://threejs.org/examples/jsm/postprocessing/EffectComposer.js"></script>
+  <script type="module" src="https://threejs.org/examples/jsm/postprocessing/RenderPass.js"></script>
+  <script type="module" src="https://threejs.org/examples/jsm/postprocessing/UnrealBloomPass.js"></script>
+  <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
 </head>
 <!-- Load in the d3 library -->
 <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
@@ -19,7 +19,7 @@
 
 <script src="mobileBleserial.js"></script>
 <script src="Firefly.js"></script>
-<script src="mobileVibrationControl.js"></script>
+<script type="module" src="mobileVibrationControl.js"></script>
 <!-- <script src="vibrationControl.js"></script> -->
 <link rel="stylesheet" href="main.css">
 
@@ -28,10 +28,10 @@
     <div id='actuator-ctr-container'>
       <div id='actuator-ctr'>
         <h3>Echo Testing Interface</h3>
-        <button onclick="connectionToggle()" id="clientConnectButton" >Connect to Device</button>
+        <button class="upButton" onclick="connectionToggle()" id="clientConnectButton" >Connect to Device</button>
         <div>
-          <button id="buttonOn" onclick="connectionToggle()">On </button>
-          <button id="buttonOff" onclick="connectionToggle()">Off </button>
+          <button class="upButton" id="buttonOn" onclick="mobileActuatorToggle()">On </button>
+          <button class="upButton" id="buttonOff" onclick="mobileActuatorToggle()">Off </button>
         </div>
       </div>
     </div>
@@ -43,14 +43,14 @@
         </div>
         <div id="firefly"></div>
         <div class="slidecontainer">
-          <label>Intensity</label>
+          <label style="color: white">Intensity</label>
           <input type="range" min="0.01" max="3" value="1" step="0.1" class="slider" id="intensityRange" onmouseup="mobileOnMouseUp();"  oninput="mobileShowIntensityChange(this, 'intensityRange')">
-          <label id="mobileIntensityValue">1</label>
+          <label style = "color:white" id="mobileIntensityValue">1</label>
         </div>
         <div class="slidecontainer">
-          <label>BPM</label>
+          <label style="color: white">BPM</label>
           <input type="range" min="1" max="150" value="50" step="1" class="slider" id="speedRange" onmouseup="mobileOnMouseUp();" oninput="mobileChangeBPM(this, 'speedRange')">
-          <label id="mobileBPMValue">50</label>
+          <label style ="color: white" id="mobileBPMValue">50</label>
         </div>
       </div>
     </div>

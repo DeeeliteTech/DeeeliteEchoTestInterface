@@ -20,17 +20,11 @@ function connectionToggle() {
 }
 // Sets button to either Connect or Disconnect
 function setConnButtonState(enabled) {
-    document.getElementById("buttonOn").style.background = "#ffffff";
-    document.getElementById("buttonOff").style.background = "#ffffff";
-    document.getElementById("buttonOn").style.color = "#000000";
-    document.getElementById("buttonOff").style.color = "#000000";
     if (enabled) {
-        document.getElementById("buttonOn").style.background = "#000000";
-        document.getElementById("buttonOn").style.color = "#ffffff";
+        document.getElementById("clientConnectButton").innerHTML = "Disconnect " + bleDevice.name;
     }
     else {
-        document.getElementById("buttonOff").style.background = "#000000";
-        document.getElementById("buttonOff").style.color = "#ffffff";
+        document.getElementById("clientConnectButton").innerHTML = "Connect Motherboard";
     }
 }
 
