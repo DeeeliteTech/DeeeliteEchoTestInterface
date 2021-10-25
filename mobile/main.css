@@ -65,7 +65,7 @@ button {
 }
 
 .slidecontainer{
-  margin:20px 0px;
+  margin:30px 0px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -140,7 +140,7 @@ button {
 }
 
 #firefly {
-    height: 50%;
+    height: 60%;
   /*background-color: #FFBE63;*/
   /*height: 180px;*/
 }
