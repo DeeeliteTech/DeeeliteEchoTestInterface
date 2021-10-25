@@ -73,7 +73,7 @@ button {
 
 .slider {
   -webkit-appearance: none;
-  width: 40%;
+  width: 50%;
   height: 4px;
   border-radius: 3px;
   background: #fafafa;
@@ -92,8 +92,8 @@ button {
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 15px;
-  height: 15px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: white;
   cursor: pointer;
