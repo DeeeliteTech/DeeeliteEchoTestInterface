@@ -12,7 +12,7 @@ class Firefly {
         this.vel = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, 0);
         this.vel.multiplyScalar(velScaler);
 
-        this.bpm = 30;
+        this.bpm =30;
         this.started = false;
 
         // this.pos = new THREE.Vector3(0,0,0);
@@ -20,7 +20,7 @@ class Firefly {
         // this.acc = new THREE.Vector3(0,0,0);
 
         this.size  = Math.random() * 0.03;
-        this.geometry = new THREE.CircleGeometry(this.size, 32);
+        this.geometry = new THREE.CircleGeometry(this.size, 12);
         this.material = new THREE.MeshBasicMaterial( {color: 0xfff1be, side: THREE.DoubleSide} );
         this.material.transparent = true;
         this.plane = new THREE.Mesh( this.geometry, this.material );
