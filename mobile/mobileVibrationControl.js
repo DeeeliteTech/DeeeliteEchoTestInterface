@@ -124,6 +124,7 @@ function mobileConvertDataToVibrationCode() {
 }
 
 function mobileStartActuator() {
+    console.log("change the data and start");
     let actuatorsSendString = "N "; //stop all actuators
     actuatorsSendString = actuatorsSendString + "L ";
     let vibratorCodeContent = currentMobileVibrationCode.trim();
