@@ -140,14 +140,16 @@ button {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top:0.7em;
-  height: 3%;
+  /*margin-top:0.7em;*/
+  height: 6%;
 }
 
 #mobile-presets-menu {
     width: 30%;
-    font-size: 17pt;
+    font-size: 30pt;
     text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #pattern-sel button{
