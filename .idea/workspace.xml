@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="bbaf2793-87e4-4b7d-8c7b-39c3e895ca7e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/mobileVibrationControl.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/mobileVibrationControl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/main.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +52,7 @@
       <workItem from="1634761432609" duration="28113000" />
       <workItem from="1635273878390" duration="2046000" />
       <workItem from="1635359345482" duration="183000" />
-      <workItem from="1635866201245" duration="2989000" />
+      <workItem from="1635866201245" duration="3991000" />
     </task>
     <servers />
   </component>

@@ -141,6 +141,13 @@ button {
   display: flex;
   justify-content: center;
   margin-top:0.7em;
+  height: 3%;
+}
+
+#mobile-presets-menu {
+    width: 30%;
+    font-size: 17pt;
+    text-align: center;
 }
 
 #pattern-sel button{
